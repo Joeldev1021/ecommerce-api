@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const ProductSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: [true, "name is required"]
   },
   state: {
     type: Boolean,
@@ -13,7 +13,7 @@ const ProductSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: [true, "user is required"]
   },
   price: {
     type: Number,
@@ -33,6 +33,9 @@ const ProductSchema = new Schema({
     default: true
   }
 
+}{
+  timestamps: true,
+  versionKey: false
 });
 
 module.exports = model("Product", ProductSchema);
