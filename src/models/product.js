@@ -22,7 +22,7 @@ const ProductSchema = new Schema({
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category",
-    required: true
+    required: [true, "category is required"]
   },
   description: String,
 
@@ -33,7 +33,7 @@ const ProductSchema = new Schema({
     default: true
   }
 
-}{
+}, {
   timestamps: true,
   versionKey: false
 });

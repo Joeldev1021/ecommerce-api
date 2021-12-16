@@ -1,9 +1,14 @@
+const User = require("../models/user");
+
 const getUser = (req, res) => {
   res.send("user");
 };
 
-const createUser = (req, res) => {
-  res.send("create user");
+const createUser = (req, res, next) => {
+  const { name, email, password, role } = req.body;
+  const user = new User({ name, email, password, role });
+  console.log(user);
+  res.send("create hola");
 };
 
 const editeUser = (req, res) => {

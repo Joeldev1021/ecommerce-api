@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 require("dotenv").config();
 const { connDb } = require("../database/config");
 
@@ -8,9 +9,9 @@ class Server {
     this.port = process.env.PORT || 3000;
     this.paths = {
       auth: "/api/auth",
-      users: "/api/users",
-      categories: "/api/categories",
-      products: "/api/products"
+      user: "/api/user",
+      categorie: "/api/categorie",
+      product: "/api/product"
     };
 
     // connect to the database
@@ -26,6 +27,7 @@ class Server {
   middlewares () {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(morgan("dev"));
   }
 
   async connecMongoDB () {
@@ -34,8 +36,9 @@ class Server {
 
   routes () {
     this.app.use(this.paths.auth, require("../routes/auth.routes"));
-    this.app.use(this.paths.categories, require("../routes/category.routes"));
-    this.app.use(this.paths.products, require("../routes/products.routes"));
+    this.app.use(this.paths.categorie, require("../routes/category.routes"));
+    this.app.use(this.paths.product, require("../routes/products.routes"));
+    this.app.use(this.paths.user, require("../routes/user.routes"));
   }
 
   listen () {
