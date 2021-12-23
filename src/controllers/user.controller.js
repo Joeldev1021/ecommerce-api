@@ -4,11 +4,16 @@ const getUser = (req, res) => {
   res.send("user");
 };
 
-const createUser = (req, res, next) => {
+const createUser = async (req, res, next) => {
   const { name, email, password, role } = req.body;
   const user = new User({ name, email, password, role });
-  console.log(user);
-  res.send("create hola");
+  try {
+    const userSave = await user.save();
+    res.json(`${userSave.name} created`);
+  } catch (error) {
+    if (error.code === 11000) res.status(400).json({ message: "The email already exists" });
+    next();
+  }
 };
 
 const editeUser = (req, res) => {
