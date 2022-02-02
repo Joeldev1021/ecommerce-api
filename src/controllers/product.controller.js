@@ -1,17 +1,19 @@
-const cretaeProduct = (req, res) => {
-  res.send("create product");
-};
+class ProductController {
+    async cretaeProduct (req, res) {
+        res.send("create product");
+    };
 
-const getProduct = (req, res) => {
-  res.send("get product");
-};
+    async getProduct (req, res) {
+        res.send("get product");
+    };
 
-const editeProduct = (req, res) => {
-  res.send("edite product");
-};
+    async editeProduct (req, res) {
+        res.send("edite product");
+    };
 
-const deleteProduct = (req, res) => {
-  res.send("delete product");
-};
+    async deleteProduct (req, res) {
+        res.send("delete product");
+    }
+}
 
-module.exports = { cretaeProduct, getProduct, editeProduct, deleteProduct };
+module.exports = new ProductController();

@@ -1,9 +1,11 @@
-const signin = (req, res) => {
-  res.json("auth signin get");
-};
+class AuthController {
+    signin (req, res) {
+        res.json("auth signin get");
+    };
 
-const signup = (req, res) => {
-  res.json("auth signin post");
-};
+    signup (req, res) {
+        res.json("auth signin post");
+    };
+}
 
-module.exports = { signin, signup };
+module.exports = new AuthController();
