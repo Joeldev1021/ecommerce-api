@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 // get user by id
 class UserController {
-    async getUserByI (req, res) {
+    async getUserById (req, res) {
         try {
             const { id } = req.params;
             const user = User.findById(id);

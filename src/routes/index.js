@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const routes = Router();
-const categoryRoute = require("./category.routes");
+const categoryRoutes = require("./category.routes");
+const productRoutes = require("./products.routes");
+const authRoutes = require("./auth.routes");
 
-routes.use("/category", categoryRoute);
+routes.use("/category", categoryRoutes);
+routes.use("/product", productRoutes);
+routes.use("/auth", authRoutes);
 
 module.exports = routes;
