@@ -7,7 +7,7 @@ class CategoryController {
             const categoryFind = await Category.findOne({ name });
             console.log(categoryFind);
             if (categoryFind) return res.json({ message: "Category already exists" });
-            const category = new Category({ name });
+            const category = new Category(req.body);
             const categorySave = await category.save();
             res.json(`${categorySave.name} created`);
         } catch (error) {
@@ -38,7 +38,7 @@ class CategoryController {
         try {
             const categroyUpdate = await Category.findByIdAndUpdate(req.params.id, req.body);
             if (!categroyUpdate) return res.json({ message: "Category not found" });
-            res.json(categroyUpdate);
+            res.json(`${categroyUpdate.name} updated`);
         } catch (error) {
             res.json({ message: error });
         }
