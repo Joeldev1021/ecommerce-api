@@ -31,7 +31,6 @@ const UserSchema = new Schema({
 });
 
 UserSchema.methods.enCryptPassword = async function (password) {
-    console.log(password);
     return await bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
