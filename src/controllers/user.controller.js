@@ -22,23 +22,6 @@ class UserController {
         }
     };
 
-    async createUser (req, res, next) {
-        const { name, email, password, role } = req.body;
-        try {
-            const userFind = await User.findOne({ email });
-            // find user by email
-            if (userFind) return res.json({ message: "User already exists" });
-            // create new user
-            const user = new User({ name, email, password, role });
-            const userSave = await user.save();
-            console.log("save", userSave);
-            res.json(`${userSave.name} created`);
-        } catch (error) {
-            if (error.code === 11000) res.status(400).json({ message: "The email already exists" });
-            next();
-        }
-    };
-
     async updateUser (req, res) {
         try {
             const { id } = req.params;
