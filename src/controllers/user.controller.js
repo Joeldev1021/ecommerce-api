@@ -1,11 +1,12 @@
 const User = require("../models/user");
+const Role = require("../models/role");
 
 // get user by id
 class UserController {
     async getUserById (req, res) {
         try {
             const { id } = req.params;
-            const user = User.findById(id);
+            const user = await User.findById(id);
             res.json(user);
         } catch (error) {
             res.json({ message: error });
@@ -15,7 +16,7 @@ class UserController {
     // get all users
     async getAllUsers (req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find().select("-password");
             res.json(users);
         } catch (error) {
             res.json({ message: error });
@@ -41,6 +42,11 @@ class UserController {
             res.json({ message: error });
         }
     };
+
+    async getRoles (req, res) {
+        const roles = await Role.find();
+        res.json(roles);
+    }
 }
 
 module.exports = new UserController();
