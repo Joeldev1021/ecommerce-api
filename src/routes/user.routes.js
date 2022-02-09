@@ -1,13 +1,21 @@
 
 const express = require("express");
-const { getAllUsers, deleteUser, updateUser, getUserById } = require("../controllers/user.controller");
+const { getAllUsers, getRoles, deleteUser, updateUser, getUserById } = require("../controllers/user.controller");
+const { isAdmin, validateJWT } = require("../middleware/validateFields");
 
 const router = express.Router();
 
+router.get("/role", getRoles);
 router.get("/all", getAllUsers);
 
-router.get("/:id", getUserById)
+router.get("/:id",
+    validateJWT,
+    isAdmin,
+    getUserById
+)
     .put("/:id", updateUser)
-    .delete("/:id", deleteUser);
+    .delete("/:id",
+
+        deleteUser);
 
 module.exports = router;
