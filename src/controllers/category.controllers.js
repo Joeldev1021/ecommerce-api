@@ -5,7 +5,6 @@ class CategoryController {
         const { name } = req.body;
         try {
             const categoryFind = await Category.findOne({ name });
-            console.log(categoryFind);
             if (categoryFind) return res.json({ message: "Category already exists" });
             const category = new Category(req.body);
             const categorySave = await category.save();
@@ -16,9 +15,15 @@ class CategoryController {
     };
 
     async getAllCategory (req, res) {
+        const { limit = 10, from = 0 } = req.query;
+        const query = { state: true };
         try {
-            const categories = await Category.find();
-            res.json(categories);
+            const [count, categories] = await Promise.all([
+                Category.countDocuments(query),
+                Category.find(query).skip(Number(from)).limit(Number(limit))
+            ]);
+
+            return res.json({ count, categories });
         } catch (error) {
             res.json({ message: error });
         }
