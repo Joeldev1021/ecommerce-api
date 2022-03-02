@@ -1,7 +1,9 @@
-const { validatorRoleDb } = require("./validatorRoleDb");
-const { validationFields } = require("./validationFields");
+const { validCategoryByID, validUserByID, validateRole } = require("./dbValidator");
+const { generateJWT } = require("./generateJWT");
 
 module.exports = {
-    validatorRoleDb,
-    validationFields
+    validCategoryByID,
+    validUserByID,
+    validateRole,
+    generateJWT
 };
