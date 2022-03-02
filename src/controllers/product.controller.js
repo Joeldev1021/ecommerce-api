@@ -13,9 +13,18 @@ class ProductController {
         }
     };
 
+    async getProductById (req, res) {
+        try {
+            const product = await ProductoSchema.findById(req.params.id);
+            if (!product) return res.json({ message: "Product not found" });
+            res.json(product);
+        } catch (error) {
+            res.json({ message: error });
+        }
+    }
+
     async getAllProduct (req, res) {
         try {
-            console.log("hola");
             const product = await ProductoSchema.find();
             res.json(product);
         } catch (error) {
