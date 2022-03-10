@@ -5,9 +5,12 @@ const productRoutes = require("./products.routes");
 const authRoutes = require("./auth.routes");
 const userRoutes = require("./user.routes");
 
-routes.use("/category", categoryRoutes);
 routes.use("/product", productRoutes);
+
+routes.use("/category", categoryRoutes);
+
 routes.use("/auth", authRoutes);
+
 routes.use("/user", userRoutes);
 
 module.exports = routes;
