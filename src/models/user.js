@@ -23,7 +23,7 @@ const UserSchema = new Schema({
         type: String,
         required: false,
         default: "USER_ROLE",
-        enum: ["ADMIN_ROLE", "USER_ROLE", "SUPER_ADMIN_ROLE"]
+        enum: ["ADMIN_ROLE", "USER_ROLE"]
     }
 }, {
     timestamps: false,
