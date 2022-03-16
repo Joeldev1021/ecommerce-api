@@ -40,6 +40,7 @@ class CategoryController {
     };
 
     async updateCategory (req, res) {
+        console.log("update");
         try {
             const categroyUpdate = await Category.findByIdAndUpdate(req.params.id, req.body);
             if (!categroyUpdate) return res.json({ message: "Category not found" });
