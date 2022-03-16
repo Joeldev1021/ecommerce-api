@@ -1,7 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const ControllerAuth = require("../controllers/auth.controller");
-const { validatorFields } = require("../middleware/validatetor");
+const { validatorFields, validateJwt } = require("../middleware/validator");
 
 const router = express.Router();
 
@@ -14,5 +14,7 @@ router.post("/signup", [
     check("role", "Role is invalid"),
     validatorFields
 ], ControllerAuth.signup);
+
+router.post("/signout", validateJwt, ControllerAuth.signout);
 
 module.exports = router;

@@ -3,8 +3,8 @@ const { check } = require("express-validator");
 const router = express.Router();
 
 const CategoryController = require("../controllers/category.controllers");
-const { validCategoryByID } = require("../helpers");
-const { validatorFields, validateJwt, isAdmin } = require("../middleware/validatetor");
+const { validateCategoryByID } = require("../helpers");
+const { validatorFields, validateJwt, isAdmin } = require("../middleware/validator");
 
 router.get("/", CategoryController.getAllCategory);
 
@@ -17,14 +17,14 @@ router.post("/", [
 
 router.get("/:id", [
     check("id", "the ID is invalid").isMongoId(),
-    check("id").custom(validCategoryByID),
+    check("id").custom(validateCategoryByID),
     validateJwt,
     validatorFields
 ], CategoryController.getCategoryById);
 
 router.put("/:id", [
     check("id", "the ID is invalid").isMongoId(),
-    check("id").custom(validCategoryByID),
+    check("id").custom(validateCategoryByID),
     validateJwt,
     isAdmin,
     validatorFields
@@ -32,7 +32,7 @@ router.put("/:id", [
 
 router.delete("/:id", [
     check("id", "the ID is invalid").isMongoId(),
-    check("id").custom(validCategoryByID),
+    check("id").custom(validateCategoryByID),
     validateJwt,
     isAdmin,
     validatorFields
