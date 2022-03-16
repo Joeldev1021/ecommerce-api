@@ -1,5 +1,7 @@
-const category = require("../models/category");
+const Category = require("../models/category");
 const User = require("../models/user");
+const Product = require("../models/product");
+const jwt = require("jsonwebtoken");
 
 const validUserByID = async (id) => {
     const userExists = await User.findById(id);
@@ -9,10 +11,17 @@ const validUserByID = async (id) => {
     }
 };
 
-const validCategoryByID = async (id) => {
-    const categoryExists = await category.findById(id);
+const validateCategoryByID = async (id) => {
+    const categoryExists = await Category.findById(id);
     if (!categoryExists) {
         throw new Error(`This id: category ${id} does not exist`);
+    }
+};
+
+const validateProductByID = async (id) => {
+    const productExists = await Product.findById(id);
+    if (!productExists) {
+        throw new Error(`This id: product ${id} does not exist`);
     }
 };
 
@@ -22,4 +31,14 @@ const validateRole = async (role = "") => {
     }
 };
 
-module.exports = { validUserByID, validCategoryByID, validateRole };
+const generateJWT = (id) => {
+    const token = jwt.sign({ id }, process.env.SECRET_KEY_JWT, { expiresIn: "24h" });
+    return token;
+};
+
+const destroyJwt = (id) => {
+    const res = jwt.sign({ id }, process.env.SECRET_KEY_JWT, { expiresIn: 1 });
+    return res;
+};
+
+module.exports = { validUserByID, validateCategoryByID, validateProductByID, validateRole, generateJWT, destroyJwt };
