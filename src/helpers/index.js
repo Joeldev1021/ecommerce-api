@@ -1,9 +1,10 @@
-const { validCategoryByID, validUserByID, validateRole } = require("./dbValidator");
-const { generateJWT } = require("./generateJWT");
+const { generateJWT, destroyJwt, validateCategoryByID, validateProductByID, validUserByID, validateRole } = require("./dbValidator");
 
 module.exports = {
-    validCategoryByID,
+    validateProductByID,
+    validateCategoryByID,
     validUserByID,
     validateRole,
-    generateJWT
+    generateJWT,
+    destroyJwt
 };
