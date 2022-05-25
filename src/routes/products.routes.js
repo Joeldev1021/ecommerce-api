@@ -1,10 +1,12 @@
 const { Router } = require("express");
 
 const router = Router();
-const { validateProductByID } = require("../helpers");
+const { validateProductByID, validateRole } = require("../helpers");
 const ProductController = require("../controllers/product.controller");
 const { check } = require("express-validator");
-const { validatorFields, isAdmin, validateJwt } = require("../middleware/validator");
+const { validateJwt } = require("../middleware/validateJwt");
+const { isAdmin } = require("../middleware/validateRoles");
+const { validatorFields } = require("../middleware/validateField");
 
 router.get("/", ProductController.getAllProduct);
 
@@ -30,6 +32,7 @@ router.post("/", [
 router.put("/:id", [
     check("id", "the ID is invalid").isMongoId(),
     check("id").custom(validateProductByID),
+    check("role").custom(validateRole),
     validateJwt,
     isAdmin
 ], ProductController.updateProduct);
