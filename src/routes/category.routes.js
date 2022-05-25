@@ -4,7 +4,9 @@ const router = express.Router();
 
 const CategoryController = require("../controllers/category.controllers");
 const { validateCategoryByID } = require("../helpers");
-const { validatorFields, validateJwt, isAdmin } = require("../middleware/validator");
+const { validatorFields } = require("../middleware/validateField");
+const { validateJwt } = require("../middleware/validateJwt");
+const { isAdmin } = require("../middleware/validateRoles");
 
 router.get("/", CategoryController.getAllCategory);
 
