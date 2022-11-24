@@ -1,11 +1,11 @@
-const ProductoSchema = require("../models/product");
+const ProductSchema = require("../models/product");
 
 class ProductController {
     async createProduct (req, res) {
         try {
-            const productFind = await ProductoSchema.findOne({ name: req.body.name });
+            const productFind = await ProductSchema.findOne({ name: req.body.name });
             if (productFind) return res.json({ message: "Product already exists" });
-            const product = new ProductoSchema(req.body);
+            const product = new ProductSchema(req.body);
             const productSave = await product.save();
             res.json(`${productSave.name} created`);
         } catch (error) {
@@ -15,7 +15,7 @@ class ProductController {
 
     async getProductById (req, res) {
         try {
-            const product = await ProductoSchema.findById(req.params.id);
+            const product = await ProductSchema.findById(req.params.id);
             if (!product) return res.json({ message: "Product not found" });
             res.json(product);
         } catch (error) {
@@ -25,7 +25,7 @@ class ProductController {
 
     async getAllProduct (req, res) {
         try {
-            const product = await ProductoSchema.find();
+            const product = await ProductSchema.find();
             res.json(product);
         } catch (error) {
             res.json({ message: error });
@@ -34,7 +34,8 @@ class ProductController {
 
     async updateProduct (req, res) {
         try {
-            const product = await ProductoSchema.findByIdAndUpdate(req.params.id, req.body);
+            const product = await ProductSchema.find(req.params.id);
+            /*  const product = await ProductSchema.findByIdAndUpdate(req.params.id, req.body); */
             if (!product) return res.json({ message: "Product not found" });
             res.json(`${product.name} updated`);
         } catch (error) {
@@ -44,7 +45,7 @@ class ProductController {
 
     async deleteProduct (req, res) {
         try {
-            const product = await ProductoSchema.findByIdAndDelete(req.params.id);
+            const product = await ProductSchema.findByIdAndDelete(req.params.id);
             if (!product) return res.json({ message: "Product not found" });
             res.json(`${product.name} deleted`);
         } catch (error) {

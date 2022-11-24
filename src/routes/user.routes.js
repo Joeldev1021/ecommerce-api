@@ -1,20 +1,21 @@
 /* eslint-disable no-unused-vars */
 const express = require("express");
 const { check } = require("express-validator");
-const { getAllUsers, deleteUser, updateUser, getUserById } = require("../controllers/user.controller");
-const { validUserByID } = require("../helpers");
-const { validateJwt, validatorFields, isAdmin } = require("../middleware/validator");
-
+const UserController = require("../controllers/user.controller");
+const { validUserByID, validateRole } = require("../helpers");
+const { isRole, isAdmin } = require("../middleware/validateRoles");
+const { validatorFields } = require("../middleware/validateField");
+const { validateJwt } = require("../middleware/validateJwt");
 const router = express.Router();
 
-router.get("/all", getAllUsers);
+router.get("/all", UserController.getAllUsers);
 
 router.get("/:id", [
     check("id", "the ID is invalid").isMongoId(),
     check("id").custom(validUserByID),
     validateJwt,
     validatorFields
-], getUserById);
+], UserController.getUserById);
 
 router.put("/:id",
     [
@@ -24,7 +25,7 @@ router.put("/:id",
         isAdmin,
         validatorFields
     ],
-    updateUser);
+    UserController.updateUser);
 
 router.delete("/:id",
     [
@@ -34,6 +35,6 @@ router.delete("/:id",
         isAdmin,
         validatorFields
     ],
-    deleteUser);
+    UserController.deleteUser);
 
 module.exports = router;

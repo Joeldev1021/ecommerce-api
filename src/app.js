@@ -6,7 +6,6 @@ require("./db");
 // routes
 const indexRoute = require("./routes/index");
 const port = process.env.PORT || 3000;
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));

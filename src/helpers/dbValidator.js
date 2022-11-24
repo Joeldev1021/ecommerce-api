@@ -1,6 +1,7 @@
 const Category = require("../models/category");
 const User = require("../models/user");
 const Product = require("../models/product");
+const Role = require("../models/role");
 const jwt = require("jsonwebtoken");
 
 const validUserByID = async (id) => {
@@ -25,14 +26,10 @@ const validateProductByID = async (id) => {
     }
 };
 
-const validateRole = async (role = "") => {
-    if (!role) {
-        throw new Error(`This role: ${role} does not exist`);
-    }
-};
-
 const generateJWT = (id) => {
-    const token = jwt.sign({ id }, process.env.SECRET_KEY_JWT, { expiresIn: "24h" });
+    const token = jwt.sign({ id }, process.env.SECRET_KEY_JWT, {
+        expiresIn: "24h"
+    });
     return token;
 };
 
@@ -41,4 +38,29 @@ const destroyJwt = (id) => {
     return res;
 };
 
-module.exports = { validUserByID, validateCategoryByID, validateProductByID, validateRole, generateJWT, destroyJwt };
+const isValidUpdateRole = (role = "") => {
+    const roles = ["ADMIN_ROLE", "USER_ROLE"];
+
+    if (!role === "") {
+        if (!roles.includes(role)) {
+            throw new Error(`This role: ${role} does not exist in DB`);
+        }
+    }
+};
+
+const validateRole = async (role = "") => {
+    const resultRole = await Role.findOne({ role });
+    if (!resultRole) {
+        throw new Error(`This role: ${role} does not exist in DB`);
+    }
+};
+
+module.exports = {
+    validUserByID,
+    validateCategoryByID,
+    validateProductByID,
+    validateRole,
+    generateJWT,
+    destroyJwt,
+    isValidUpdateRole
+};
