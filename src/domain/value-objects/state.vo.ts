@@ -7,7 +7,7 @@ export class StateVO extends ValueObject<boolean> {
   }
 
   protected assertIsValid(value: boolean): void {
-    if (typeof value === "boolean")
+    if (typeof value !== "boolean")
       throw new VOFormatException(StateVO.name, value);
   }
 }

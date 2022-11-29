@@ -1,11 +1,12 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { ICategory } from "../types/models/category.models";
+import sequelize from "../config/mysql";
 
-const sequelize = new Sequelize("sqlite::memory:");
 export const Category = sequelize.define<ICategory>("Category", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
     allowNull: false,
   },
   name: {

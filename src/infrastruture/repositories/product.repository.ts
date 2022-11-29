@@ -9,6 +9,7 @@ import { StateVO } from "../../domain/value-objects/state.vo";
 import { UuidVO } from "../../domain/value-objects/uuid.vo";
 import { Product } from "../models/product";
 import { IProduct } from "../types/models/product.model";
+import { ProductInterface } from "../types/product.interface";
 
 class ProductRepository implements IProductRepository {
   toPersistance(productDomain: ProductModel): ProductInterface {
@@ -30,8 +31,8 @@ class ProductRepository implements IProductRepository {
       new UuidVO(productPersistance.id),
       new NameVO(productPersistance.name),
       new DescriptionVO(productPersistance.description),
-      new PriceVO(productPersistance.price),
-      new QuantityVO(productPersistance.quantity),
+      new PriceVO(0),
+      new QuantityVO(0),
       new StateVO(productPersistance.state),
       new CreatedAtVO(productPersistance.createdAt)
     );

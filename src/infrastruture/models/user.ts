@@ -1,7 +1,7 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { IUser } from "../types/models/user.model";
+import sequelize from "../config/mysql";
 
-const sequelize = new Sequelize("sqlite::memory:");
 export const User = sequelize.define<IUser>("User", {
   id: {
     type: DataTypes.UUID,

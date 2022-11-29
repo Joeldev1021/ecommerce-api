@@ -9,6 +9,7 @@ class CategoryCreateController {
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;
     try {
+      console.log(id);
       const category = categoryCreateUsecase.execute(
         new UuidVO(id),
         new NameVO(name),

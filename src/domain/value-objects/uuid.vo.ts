@@ -1,13 +1,14 @@
 import { VOFormatException } from "../errors/vo-format.exception";
 import { ValueObject } from "./value-object";
-import uuid from "uuid";
+import uuid from "uuid-random";
 
 export class UuidVO extends ValueObject<string> {
-  public equals(valueObject: UuidVO): boolean {
+  public equals(valueObject: UuidVO) {
     return valueObject.value == this.value;
   }
 
-  protected assertIsValid(value: string): void {
-    if (!uuid.validate(value)) throw new VOFormatException(UuidVO.name, value);
+  protected assertIsValid(value: string) {
+    console.log("value", value);
+    if (!uuid.test(value)) throw new VOFormatException(UuidVO.name, value);
   }
 }

@@ -7,7 +7,7 @@ export class DescriptionVO extends ValueObject<string> {
   }
 
   protected assertIsValid(value: string): void {
-    if (value.length > 10)
+    if (!(value.length > 10))
       throw new VOFormatException(DescriptionVO.name, value);
   }
 }
