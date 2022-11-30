@@ -13,4 +13,10 @@ export interface ICategoryRepository {
   create(category: CategoryModel): Promise<CategoryModel | null>;
 
   findByName(name: NameVO): Promise<CategoryModel | null>;
+
+  delete(categoryId: UuidVO): Promise<number | null>;
+
+  findAll(): Promise<CategoryModel[] | null>;
+
+  update(category: CategoryModel): Promise<CategoryModel | null>;
 }

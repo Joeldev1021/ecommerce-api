@@ -28,6 +28,12 @@ class CategoryRepository implements ICategoryRepository {
     );
   }
 
+  async findAll(): Promise<CategoryModel[] | null> {
+    const category = await Category.findAll();
+    if (!category) return null;
+    return category.map((ctg) => this.toDomain(ctg));
+  }
+
   async findById(id: UuidVO): Promise<CategoryModel | null> {
     const category = await Category.findByPk(id.value);
     if (!category) return null;
@@ -44,6 +50,33 @@ class CategoryRepository implements ICategoryRepository {
     const categoryCreated = await Category.create(this.toPersistance(category));
     if (!categoryCreated) return null;
     return this.toDomain(categoryCreated);
+  }
+
+  async update(category: CategoryModel): Promise<CategoryModel | null> {
+    const { id, name, description, state } = this.toPersistance(category);
+    const categoryUpdate = await Category.update(
+      {
+        name: name,
+        description: description,
+        state: state,
+      },
+      {
+        where: { id: id },
+        returning: true,
+      }
+    );
+    //todo => should return CategoryModel updated
+    return null;
+  }
+
+  async delete(categoryId: UuidVO): Promise<number | null> {
+    const deleteCategory = await Category.destroy({
+      where: {
+        id: categoryId.value,
+      },
+    });
+    if (!deleteCategory) return null;
+    return deleteCategory;
   }
 }
 

@@ -24,7 +24,7 @@ const sequelize = new Sequelize(
       console.error("Unable to connect to the database: ", error);
     });
 
-  await sequelize.sync({ force: true });
+  //  await sequelize.sync({ force: true });
 })();
 
 export default sequelize;

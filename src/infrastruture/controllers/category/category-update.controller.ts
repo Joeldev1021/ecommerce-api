@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import categoryCreateUsecase from "../../../application/usecases/category/category-create.usecase";
+import categoryUpdateUsecase from "../../../application/usecases/category/category-update.usecase";
 import { DescriptionVO } from "../../../domain/value-objects/description.vo";
 import { NameVO } from "../../../domain/value-objects/name.vo";
 import { StateVO } from "../../../domain/value-objects/state.vo";
 import { UuidVO } from "../../../domain/value-objects/uuid.vo";
 
-class CategoryCreateController {
+class CategoryUpdateController {
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;
     try {
-      const category = categoryCreateUsecase.execute(
+      const category = categoryUpdateUsecase.execute(
         new UuidVO(id),
         new NameVO(name),
         new DescriptionVO(description),
@@ -22,4 +22,4 @@ class CategoryCreateController {
   }
 }
 
-export default new CategoryCreateController();
+export default new CategoryUpdateController();

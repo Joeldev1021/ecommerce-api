@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { ICategory } from "../types/models/category.models";
 import sequelize from "../config/mysql";
+import { Product } from "./product";
 
 export const Category = sequelize.define<ICategory>("Category", {
   id: {
@@ -22,9 +23,11 @@ export const Category = sequelize.define<ICategory>("Category", {
     allowNull: true,
     //-> false
   },
-  //todo -> ref-> products
+
   state: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
 });
+
+Category.hasMany(Product, { as: "products" });
