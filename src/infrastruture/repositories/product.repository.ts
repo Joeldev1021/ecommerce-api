@@ -13,16 +13,16 @@ import { ProductInterface } from "../types/product.interface";
 
 class ProductRepository implements IProductRepository {
   toPersistance(productDomain: ProductModel): ProductInterface {
-    const { id, name, description, price, quantity, state, createdAt } =
-      productDomain;
     return {
-      id: id.value,
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      quantity: quantity.value,
-      state: state.value,
-      createdAt: createdAt.value,
+      id: productDomain.id.value,
+      name: productDomain.name.value,
+      description: productDomain.description.value,
+      imageUrl: "",
+      price: productDomain.price.value,
+      categoryId: productDomain.categoryId.value,
+      quantity: productDomain.quantity.value,
+      state: productDomain.state.value,
+      createdAt: productDomain.createdAt.value,
     };
   }
 
@@ -31,6 +31,8 @@ class ProductRepository implements IProductRepository {
       new UuidVO(productPersistance.id),
       new NameVO(productPersistance.name),
       new DescriptionVO(productPersistance.description),
+      null,
+      new UuidVO(productPersistance.categoryId),
       new PriceVO(0),
       new QuantityVO(0),
       new StateVO(productPersistance.state),
@@ -54,6 +56,37 @@ class ProductRepository implements IProductRepository {
     const productCreated = await Product.create(this.toPersistance(product));
     if (!productCreated) return null;
     return this.toDomain(productCreated);
+  }
+
+  async delete(productId: UuidVO): Promise<number | null> {
+    const productDelete = await Product.destroy({
+      where: { id: productId.value },
+    });
+
+    return null;
+  }
+
+  async findAll(): Promise<ProductModel[] | null> {
+    const products = await Product.findAll();
+    if (!products) return null;
+    return products.map((product) => this.toDomain(product));
+  }
+  async update(product: ProductModel): Promise<ProductModel | null> {
+    const { id, name, description, state } = this.toPersistance(product);
+
+    const categoryUpdate = await Product.update(
+      {
+        name: name,
+        description: description,
+        state: state,
+      },
+      {
+        where: { id: id },
+        returning: true,
+      }
+    );
+    //todo => should return productModel updated
+    return null;
   }
 }
 

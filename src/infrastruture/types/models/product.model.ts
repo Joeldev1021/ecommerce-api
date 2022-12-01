@@ -10,4 +10,5 @@ export interface IProduct
   quantity: number;
   createdAt: Date;
   state: boolean;
+  categoryId: string;
 }

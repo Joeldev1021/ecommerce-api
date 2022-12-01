@@ -16,6 +16,7 @@ class ProductCreateUseCase {
     name: NameVO,
     description: DescriptionVO,
     // image: string,
+    categoryId: UuidVO,
     price: PriceVO,
     quantity: QuantityVO,
     state: StateVO
@@ -30,6 +31,8 @@ class ProductCreateUseCase {
         id,
         name,
         description,
+        null,
+        categoryId,
         price,
         quantity,
         state,

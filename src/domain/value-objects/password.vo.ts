@@ -1,6 +1,6 @@
 import { VOFormatException } from "../errors/vo-format.exception";
 import { ValueObject } from "./value-object";
-import uuid from "uuid";
+import bcrypt from "bcrypt";
 
 export class PasswordVO extends ValueObject<string> {
   public equals(valueObject: PasswordVO): boolean {
@@ -9,5 +9,10 @@ export class PasswordVO extends ValueObject<string> {
 
   protected assertIsValid(value: string): void {
     if (value.length > 4) throw new VOFormatException(PasswordVO.name, value);
+  }
+
+  static async create(password: string): Promise<PasswordVO> {
+    const hash = await bcrypt.hash(password, 10);
+    return new PasswordVO(hash);
   }
 }
