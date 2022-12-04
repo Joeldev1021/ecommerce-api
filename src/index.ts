@@ -1,18 +1,19 @@
 import express from "express";
-import indexRoute from "./infrastruture/routes/index";
+import indexRoute from "./shared/infrastruture/routes/index";
 
-const app = express();
+export const startApp = () => {
+  const app = express();
 
-//Connection to database
+  //Connection to database
 
-//app.use(cors())
+  //app.use(cors())
 
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use("/", indexRoute);
-// Public directory
+  // Middlewares
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use("/api", indexRoute);
 
-app.listen(3000, () => {
-  console.log("server running in port 🔥 ", 3000);
-});
+  // Public directory
+
+  return app;
+};
