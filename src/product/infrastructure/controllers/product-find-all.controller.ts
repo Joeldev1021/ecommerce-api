@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
-import productFindAllUsecase from "../../application/usecases/product-find-all.usecase";
+import { ProductFindAllUseCase } from "../../application/usecases/product-find-all.usecase";
 
-class ProductFindAllController {
+export class ProductFindAllController {
+  private _productFindAllUseCase;
+  constructor(dependencies: { productFindAllUseCase: ProductFindAllUseCase }) {
+    this._productFindAllUseCase = dependencies.productFindAllUseCase;
+  }
+
   async execute(req: Request, res: Response, next: NextFunction) {
     try {
-      const product = productFindAllUsecase.execute();
+      const product = this._productFindAllUseCase.execute();
       res.status(200).send(product);
     } catch (error) {
       next(error);
     }
   }
 }
-
-export default new ProductFindAllController();

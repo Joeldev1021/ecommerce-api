@@ -4,7 +4,7 @@ import { User } from "../../../shared/infrastruture/models/user";
 import { UserInterface } from "../types/user.interface";
 import { EmailVO } from "../../domain/value-objects/email.vo";
 
-class UserRepository {
+export class UserRepository {
   /**
    * It takes a UserModel object and returns a UserInterface object
    * @param {UserModel} userDomain - UserModel
@@ -56,5 +56,3 @@ class UserRepository {
     return await User.create(userPersistance);
   }
 }
-
-export default new UserRepository();

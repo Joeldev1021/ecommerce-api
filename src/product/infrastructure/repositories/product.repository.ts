@@ -11,7 +11,7 @@ import { IProduct } from "../../../shared/infrastruture/types/models/product.mod
 import { ProductInterface } from "../types/product.interface";
 import { QuantityVO } from "../../domain/value-objects/quantity.vo";
 
-class ProductRepository implements IProductRepository {
+export class ProductRepository implements IProductRepository {
   toPersistance(productDomain: ProductModel): ProductInterface {
     return {
       product_id: productDomain.id.value,
@@ -91,5 +91,3 @@ class ProductRepository implements IProductRepository {
     return null;
   }
 }
-
-export default new ProductRepository();

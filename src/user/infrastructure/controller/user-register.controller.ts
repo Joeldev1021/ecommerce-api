@@ -1,15 +1,21 @@
 import { NextFunction, Request, Response } from "express";
-import userRegisterUsecase from "../../application/usecase/user-register.usecase";
+import { UserRegisterUseCase } from "../../application/usecase/user-register.usecase";
 import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { EmailVO } from "../../domain/value-objects/email.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { PasswordVO } from "../../domain/value-objects/password.vo";
 
-class UserRegisterController {
+export class UserRegisterController {
+  private _userRegisterUseCase;
+
+  constructor(dependencies: { userRegisterUseCase: UserRegisterUseCase }) {
+    this._userRegisterUseCase = dependencies.userRegisterUseCase;
+  }
+
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, email, password } = req.body;
     try {
-      const user = await userRegisterUsecase.execute(
+      const user = await this._userRegisterUseCase.execute(
         new UuidVO(id),
         new NameVO(name),
         new EmailVO(email),
@@ -22,5 +28,3 @@ class UserRegisterController {
     }
   }
 }
-
-export default new UserRegisterController();

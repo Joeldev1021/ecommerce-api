@@ -7,8 +7,10 @@ import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../shared/infrastruture/models/category";
 import { CategoryInterface } from "../types/category.interface";
 import { ICategory } from "../../../shared/infrastruture/types/models/category.models";
+import { singleton } from "tsyringe";
 
-class CategoryRepository implements ICategoryRepository {
+@singleton()
+export class CategoryRepository implements ICategoryRepository {
   toPersistance(categoryDomain: CategoryModel): CategoryInterface {
     const { id, name, description, state } = categoryDomain;
     return {
@@ -35,6 +37,7 @@ class CategoryRepository implements ICategoryRepository {
   }
 
   async findById(id: UuidVO): Promise<CategoryModel | null> {
+    console.log("repository");
     const category = await Category.findByPk(id.value);
     if (!category) return null;
     return this.toDomain(category);
@@ -47,6 +50,7 @@ class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: CategoryModel): Promise<CategoryModel | null> {
+    console.log("repository");
     const categoryCreated = await Category.create(this.toPersistance(category));
     if (!categoryCreated) return null;
     return this.toDomain(categoryCreated);

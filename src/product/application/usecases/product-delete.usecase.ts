@@ -1,10 +1,14 @@
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
-import productRepository from "../../infrastructure/repositories/product.repository";
+import { IProductRepository } from "../../domain/repositories/product.repository";
+import { ProductRepository } from "../../infrastructure/repositories/product.repository";
 
-class ProductDeleteUseCase {
+export class ProductDeleteUseCase {
+  private _productRepository: IProductRepository;
+  constructor(dependencies: { productRepository: ProductRepository }) {
+    this._productRepository = dependencies.productRepository;
+  }
+
   async execute(id: UuidVO) {
-    return productRepository.delete(id);
+    return this._productRepository.delete(id);
   }
 }
-
-export default new ProductDeleteUseCase();

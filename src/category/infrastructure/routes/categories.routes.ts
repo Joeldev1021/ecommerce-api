@@ -1,16 +1,38 @@
 import { Router } from "express";
-import categoryCreateController from "../controllers/category-create.controller";
-import categoryDeleteController from "../controllers/category-delete.controller";
-import categoryFindAllController from "../controllers/category-find-all.controller";
-import categoryFindByIdController from "../controllers/category-find-by-id-controller";
-import categoryUpdateController from "../controllers/category-update.controller";
+import { container } from "../../../container";
 
 const router = Router();
 
-router.post("/", categoryCreateController.execute);
-router.get("/all", categoryFindAllController.execute);
-router.get("/:id", categoryFindByIdController.execute);
-router.put("/:id", categoryUpdateController.execute);
-router.delete("/:id", categoryDeleteController.execute);
+const categoryCreateController = container.resolve("categoryCreateController");
+const categoryFindAllController = container.resolve(
+  "categoryFindAllController"
+);
+const categoryFindByIdController = container.resolve(
+  "categoryFindByIdController"
+);
+const categoryUpdateController = container.resolve("categoryUpdateController");
+const categoryDeleteController = container.resolve("categoryDeleteController");
+
+router.post(
+  "/",
+  categoryCreateController.execute.bind(categoryCreateController)
+);
+
+router.get(
+  "/all",
+  categoryFindAllController.execute.bind(categoryFindAllController)
+);
+router.get(
+  "/:id",
+  categoryFindByIdController.execute.bind(categoryFindByIdController)
+);
+router.put(
+  "/:id",
+  categoryUpdateController.execute.bind(categoryUpdateController)
+);
+router.delete(
+  "/:id",
+  categoryDeleteController.execute.bind(categoryDeleteController)
+);
 
 export const categoryRoutes = router;

@@ -1,9 +1,12 @@
-import productRepository from "../../infrastructure/repositories/product.repository";
+import { IProductRepository } from "../../domain/repositories/product.repository";
+import { ProductRepository } from "../../infrastructure/repositories/product.repository";
 
-class ProductFindAllUseCase {
+export class ProductFindAllUseCase {
+  private _productRepository: IProductRepository;
+  constructor(dependencies: { productRepository: ProductRepository }) {
+    this._productRepository = dependencies.productRepository;
+  }
   async execute() {
-    return productRepository.findAll();
+    return this._productRepository.findAll();
   }
 }
-
-export default new ProductFindAllUseCase();

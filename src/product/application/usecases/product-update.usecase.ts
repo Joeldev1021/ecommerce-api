@@ -3,9 +3,14 @@ import { DescriptionVO } from "../../../shared/domain/value-objects/description.
 import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
-import productRepository from "../../infrastructure/repositories/product.repository";
+import { IProductRepository } from "../../domain/repositories/product.repository";
+import { ProductRepository } from "../../infrastructure/repositories/product.repository";
 
-class ProductUpdateUseCase {
+export class ProductUpdateUseCase {
+  private _productRepository: IProductRepository;
+  constructor(dependencies: { productRepository: ProductRepository }) {
+    this._productRepository = dependencies.productRepository;
+  }
   async execute(
     id: UuidVO,
     name: NameVO,
@@ -17,5 +22,3 @@ class ProductUpdateUseCase {
     ); */
   }
 }
-
-export default new ProductUpdateUseCase();

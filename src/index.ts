@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import express from "express";
 import indexRoute from "./shared/infrastruture/routes/index";
 
@@ -12,7 +13,6 @@ export const startApp = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use("/api", indexRoute);
-
   // Public directory
 
   return app;
