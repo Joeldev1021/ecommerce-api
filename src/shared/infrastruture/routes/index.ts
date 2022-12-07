@@ -1,18 +1,14 @@
 import "reflect-metadata";
 import { Router } from "express";
-import userRegisterController from "../../../user/infrastructure/controller/user-register.controller";
-import { CategoryCreateController } from "../../../category/infrastructure/controllers/category-create.controller";
-import { container } from "../../../container";
-import { ProductCreateController } from "../../../product/infrastructure/controllers/product-create.controller";
+import { authRoutes } from "../../../user/infrastructure/routes/auth.routes";
+import { categoryRoutes } from "../../../category/infrastructure/routes/categories.routes";
+import { productRoutes } from "../../../product/infrastructure/routes/product.routes";
+
 const router = Router();
 
-const categoryCreateController = container.resolve("categoryCreateController");
+router.use("/auth", authRoutes);
 
-router.use("/user", userRegisterController.execute);
-router.post(
-  "/category",
-  categoryCreateController.execute.bind(categoryCreateController)
-);
-router.use("/product", ProductCreateController.execute);
+router.use("/category", categoryRoutes);
+router.use("/product", productRoutes);
 
 export default router;

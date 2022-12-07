@@ -7,10 +7,10 @@ import { UserRepository } from "../../infrastructure/repositories/user.repositor
 import { UserIdAlreadyInUseException } from "../errors/user-id-already-in-use.exception";
 import { UserEmailAlreadyInUseException } from "../errors/user-email-already-in-use.exception";
 import { EmailVO } from "../../domain/value-objects/email.vo";
+import { IUserRepository } from "../../domain/repositories/user.repository";
 
 export class UserRegisterUseCase {
-  private _userRepository;
-
+  private _userRepository: IUserRepository;
   constructor(dependencies: { userRepository: UserRepository }) {
     this._userRepository = dependencies.userRepository;
   }

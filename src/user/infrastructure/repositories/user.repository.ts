@@ -3,8 +3,13 @@ import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { User } from "../../../shared/infrastruture/models/user";
 import { UserInterface } from "../types/user.interface";
 import { EmailVO } from "../../domain/value-objects/email.vo";
+import { IUserRepository } from "../../domain/repositories/user.repository";
+import { NameVO } from "../../../shared/domain/value-objects/name.vo";
+import { PasswordVO } from "../../domain/value-objects/password.vo";
+import { StateVO } from "../../../shared/domain/value-objects/state.vo";
+import { IUser } from "../../../shared/infrastruture/types/models/user.model";
 
-export class UserRepository {
+export class UserRepository implements IUserRepository {
   /**
    * It takes a UserModel object and returns a UserInterface object
    * @param {UserModel} userDomain - UserModel
@@ -23,14 +28,32 @@ export class UserRepository {
   }
 
   /**
+   * It takes a UserInterface object and returns a UserModel object
+   * @param {UserInterface} userPersistance - UserInterface
+   * @returns A UserModel object
+   */
+  toDomain(userPersistance: UserInterface): UserModel {
+    return {
+      id: new UuidVO(userPersistance.user_id),
+      name: new NameVO(userPersistance.name),
+      email: new EmailVO(userPersistance.email),
+      password: new PasswordVO(userPersistance.password),
+      state: new StateVO(userPersistance.state),
+    };
+  }
+
+  /**
    * "Find a user by email."
    *
    * The function is async, so it returns a promise
    * @param {EmailVO} email - EmailVO - This is the email address that we want to find in the database.
    * @returns A promise that resolves to a User object.
    */
-  async findByEmail(email: EmailVO) {
-    return User.findOne({ where: { email: email.value } });
+
+  async findByEmail(email: EmailVO): Promise<UserModel | null> {
+    const user = await User.findOne({ where: { email: email.value } });
+    if (!user) return null;
+    return this.toDomain(user);
   }
 
   /**
@@ -40,8 +63,10 @@ export class UserRepository {
    * @param {UuidVO} id - UuidVO
    * @returns A promise that resolves to a User instance.
    */
-  async findById(id: UuidVO) {
-    return User.findByPk(id.value);
+  async findById(id: UuidVO): Promise<UserModel | null> {
+    const user = await User.findByPk(id.value);
+    if (!user) return null;
+    return this.toDomain(user);
   }
 
   /**
@@ -51,8 +76,9 @@ export class UserRepository {
    * controller.
    * @returns The userPersistance object is being returned.
    */
-  async create(user: UserModel) {
-    const userPersistance = this.toPersistance(user);
-    return await User.create(userPersistance);
+  async create(user: UserModel): Promise<UserModel | null> {
+    const newUser = await User.create(this.toPersistance(user));
+    if (!newUser) return null;
+    return this.toDomain(newUser);
   }
 }

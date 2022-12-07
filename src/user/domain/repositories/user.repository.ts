@@ -8,9 +8,9 @@ export interface IUserRepository {
 
   toDomain(userPersistance: UserInterface): UserModel;
 
-  findByEmail(email: EmailVO): Promise<UserModel>;
+  findByEmail(email: EmailVO): Promise<UserModel | null>;
 
-  findById(id: UuidVO): Promise<UserModel>;
+  findById(id: UuidVO): Promise<UserModel | null>;
 
-  create(user: UserModel): Promise<UserModel>;
+  create(user: UserModel): Promise<UserModel | null>;
 }

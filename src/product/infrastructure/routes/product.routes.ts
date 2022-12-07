@@ -1,16 +1,32 @@
 import { Router } from "express";
-import productFindAllController from "../controllers/product-find-all.controller";
-import productFindByIdController from "../controllers/product-find-by-id.controller";
-import productCreateController from "../controllers/product-create.controller";
-import productDeleteController from "../controllers/product-delete.controller";
-import productUpdateController from "../controllers/product-update.controller";
+import { container } from "../../../container";
+
+const productFindAllController = container.resolve("productFindAllController");
+const productFindByIdController = container.resolve(
+  "productFindByIdController"
+);
+const productCreateController = container.resolve("productCreateController");
+const productDeleteController = container.resolve("productDeleteController");
+const productUpdateController = container.resolve("productUpdateController");
 
 const router = Router();
 
-router.post("/", productCreateController.execute);
-router.get("/all", productFindAllController.execute);
-router.get("/:id", productFindByIdController.execute);
-router.put("/:id", productUpdateController.execute);
-router.delete("/:id", productDeleteController.execute);
+router.post("/", productCreateController.execute.bind(productCreateController));
+router.get(
+  "/all",
+  productFindAllController.execute.bind(productFindAllController)
+);
+router.get(
+  "/:id",
+  productFindByIdController.execute.bind(productFindByIdController)
+);
+router.put(
+  "/:id",
+  productUpdateController.execute.bind(productUpdateController)
+);
+router.delete(
+  "/:id",
+  productDeleteController.execute.bind(productDeleteController)
+);
 
 export const productRoutes = router;

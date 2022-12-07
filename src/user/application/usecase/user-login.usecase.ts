@@ -5,7 +5,7 @@ import { IUserRepository } from "../../domain/repositories/user.repository";
 import { UserRepository } from "../../infrastructure/repositories/user.repository";
 
 export class UserLoginUseCase {
-  private _userRepository;
+  private _userRepository: IUserRepository;
 
   constructor(dependencies: { userRepository: UserRepository }) {
     this._userRepository = dependencies.userRepository;

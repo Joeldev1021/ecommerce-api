@@ -1,10 +1,15 @@
 import { Router } from "express";
-import userLoginController from "../controller/user-login.controller";
-import userRegisterController from "../controller/user-register.controller";
+import { container } from "../../../container";
 
 const router = Router();
+const userRegisterController = container.resolve("userRegisterController");
+router.post(
+  "/register",
+  userRegisterController.execute.bind(userRegisterController)
+);
 
-router.post("/register", userRegisterController.execute);
-router.post("/login", userLoginController.execute);
+const userLoginController = container.resolve("userLoginController");
+
+router.post("/login", userLoginController.execute.bind(userLoginController));
 
 export const authRoutes = router;

@@ -32,10 +32,10 @@ const container = awilix.createContainer();
 
 container.register({
   userLoginController: awilix.asClass(UserLoginController),
-  userLoginUsecase: awilix.asClass(UserLoginUseCase),
+  userLoginUseCase: awilix.asClass(UserLoginUseCase),
   userRegisterController: awilix.asClass(UserRegisterController),
-  userRegisterUsecase: awilix.asClass(UserRegisterUseCase),
-  userRepository: awilix.asClass(UserRepository),
+  userRegisterUseCase: awilix.asClass(UserRegisterUseCase),
+  userRepository: awilix.asClass(UserRepository).singleton(),
 });
 
 container.register({
