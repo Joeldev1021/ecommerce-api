@@ -8,7 +8,6 @@ export class UuidVO extends ValueObject<string> {
   }
 
   protected assertIsValid(value: string) {
-    console.log("value", value);
     if (!uuid.test(value)) throw new VOFormatException(UuidVO.name, value);
   }
 }

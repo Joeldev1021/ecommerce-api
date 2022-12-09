@@ -8,7 +8,7 @@ export class PasswordVO extends ValueObject<string> {
   }
 
   protected assertIsValid(value: string): void {
-    if (value.length > 4) throw new VOFormatException(PasswordVO.name, value);
+    if (value.length < 4) throw new VOFormatException(PasswordVO.name, value);
   }
 
   static async create(password: string): Promise<PasswordVO> {

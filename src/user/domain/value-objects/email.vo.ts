@@ -8,6 +8,6 @@ export class EmailVO extends ValueObject<string> {
   }
 
   protected assertIsValid(value: string): void {
-    if (isEmail(value)) throw new VOFormatException(EmailVO.name, value);
+    if (!isEmail(value)) throw new VOFormatException(EmailVO.name, value);
   }
 }

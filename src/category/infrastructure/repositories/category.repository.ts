@@ -7,9 +7,7 @@ import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../shared/infrastruture/models/category";
 import { CategoryInterface } from "../types/category.interface";
 import { ICategory } from "../../../shared/infrastruture/types/models/category.models";
-import { singleton } from "tsyringe";
 
-@singleton()
 export class CategoryRepository implements ICategoryRepository {
   toPersistance(categoryDomain: CategoryModel): CategoryInterface {
     const { id, name, description, state } = categoryDomain;

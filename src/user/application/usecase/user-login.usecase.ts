@@ -11,7 +11,5 @@ export class UserLoginUseCase {
     this._userRepository = dependencies.userRepository;
   }
 
-  async execute(id: UuidVO, email: EmailVO, password: PasswordVO) {
-    const userFound = await this._userRepository.findById(id);
-  }
+  async execute(email: EmailVO, password: PasswordVO) {}
 }

@@ -5,7 +5,6 @@ import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { CategoryRepository } from "../../infrastructure/repositories/category.repository";
 import { ICategoryRepository } from "../../domain/repositories/category.repository";
-import { injectable, inject, singleton, container } from "tsyringe";
 import { CategoryIdAlreadyInUseException } from "../error/category-id-already-in-use.exception";
 import { CategoryNameAlreadyInUseException } from "../error/category-name-already-exists.exception";
 
