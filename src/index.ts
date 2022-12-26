@@ -1,19 +1,26 @@
 import "reflect-metadata";
-import express from "express";
-import indexRoute from "./shared/infrastruture/routes/index";
+import express, { Application } from "express";
+//import indexRoute from "./shared/infrastruture/routes/index";
+import { container } from "./container";
 
-export const startApp = () => {
-  const app = express();
+export class Server {
+  private app: Application;
+  private port: string;
+  constructor() {
+    this.app = express();
+    this.port = "5000";
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    //   this.app.use("/api", indexRoute);
+  }
 
-  //Connection to database
+  getServer() {
+    return this.app;
+  }
 
-  //app.use(cors())
-
-  // Middlewares
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  app.use("/api", indexRoute);
-  // Public directory
-
-  return app;
-};
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log("server running in the port 🔥 ", this.port);
+    });
+  }
+}

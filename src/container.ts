@@ -4,13 +4,16 @@ import { CategoryDeleteUseCase } from "./category/application/usecase/category-d
 import { CategoryFindAllUseCase } from "./category/application/usecase/category-find-all.usecase";
 import { CategoryFindByIdUseCase } from "./category/application/usecase/category-find-by-id.usecase";
 import { CategoryUpdateUseCase } from "./category/application/usecase/category-update.usecase";
+import { CategoryCreatedHandler } from "./category/domain/events/category-created.handler";
 import { CategoryCreateController } from "./category/infrastructure/controllers/category-create.controller";
 import { CategoryDeleteController } from "./category/infrastructure/controllers/category-delete.controller";
 import { CategoryFindAllController } from "./category/infrastructure/controllers/category-find-all.controller";
 import { CategoryFindByIdController } from "./category/infrastructure/controllers/category-find-by-id-controller";
 import { CategoryUpdateController } from "./category/infrastructure/controllers/category-update.controller";
 
-import { CategoryRepository } from "./category/infrastructure/repositories/category.repository";
+import categoryRepository, {
+  CategoryRepository,
+} from "./category/infrastructure/repositories/category.repository";
 import { ProductCreateUseCase } from "./product/application/usecases/product-create-usecase";
 import { ProductDeleteUseCase } from "./product/application/usecases/product-delete.usecase";
 import { ProductFindAllUseCase } from "./product/application/usecases/product-find-all.usecase";
@@ -22,11 +25,16 @@ import { ProductFindAllController } from "./product/infrastructure/controllers/p
 import { ProductFindByIdController } from "./product/infrastructure/controllers/product-find-by-id.controller";
 import { ProductUpdateController } from "./product/infrastructure/controllers/product-update.controller";
 import { ProductRepository } from "./product/infrastructure/repositories/product.repository";
+import { EventBus } from "./shared/infrastruture/event-bus/event-bus";
 import { UserLoginUseCase } from "./user/application/usecase/user-login.usecase";
 import { UserRegisterUseCase } from "./user/application/usecase/user-register.usecase";
 import { UserLoginController } from "./user/infrastructure/controller/user-login.controller";
 import { UserRegisterController } from "./user/infrastructure/controller/user-register.controller";
 import { UserRepository } from "./user/infrastructure/repositories/user.repository";
+
+export enum handlersType {
+  EventHandler = "EventHandler",
+}
 
 const container = awilix.createContainer();
 
@@ -70,6 +78,15 @@ container.register({
   productFindAllUseCase: awilix.asClass(ProductFindAllUseCase),
   /* Product repository  */
   productRepository: awilix.asClass(ProductRepository).singleton(),
+});
+
+container.register({
+  eventBus: awilix.asClass(EventBus),
+});
+/* event handler */
+
+container.register({
+  categoryCreatedHandler: awilix.asClass(CategoryCreatedHandler).singleton(),
 });
 
 export { container };

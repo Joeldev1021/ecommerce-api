@@ -14,7 +14,6 @@ export class CategoryCreateController {
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;
-    console.log(req.body);
     console.log("controller :)");
     try {
       const category = await this._categoryCreateUseCase.execute(
