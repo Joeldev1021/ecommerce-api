@@ -9,12 +9,15 @@ export class EventBus implements IEventBus {
     this._event = new EventEmitter();
   }
   async publish(events: DomainEvent[]): Promise<void> {
-    events.map((event) => this._event.emit(event.eventName, event));
+    events.map((event) => {
+      this._event.emit(event.eventName, event);
+    });
   }
 
   addSubscribers(subscribers: DomainEventSubscribers): void {
     subscribers.items.forEach((subscriber) => {
       subscriber.subscribedTo().forEach((event) => {
+        console.log("", subscriber);
         this._event.on(event.EVENT_NAME, subscriber.on.bind(subscriber));
       });
     });

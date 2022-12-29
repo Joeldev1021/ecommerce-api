@@ -16,5 +16,5 @@ export abstract class AggregateRoot {
     this.domainEvents.push(event);
   }
 
-  abstract toPrimitives(): any;
+  //abstract toPrimitives(): any;
 }

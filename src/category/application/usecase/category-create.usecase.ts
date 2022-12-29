@@ -7,11 +7,17 @@ import { CategoryRepository } from "../../infrastructure/repositories/category.r
 import { ICategoryRepository } from "../../domain/repositories/category.repository";
 import { CategoryIdAlreadyInUseException } from "../error/category-id-already-in-use.exception";
 import { CategoryNameAlreadyInUseException } from "../error/category-name-already-exists.exception";
+import { EventBus } from "../../../shared/infrastruture/event-bus/event-bus";
 
 export class CategoryCreateUseCase {
   private _categoryRepository: ICategoryRepository;
-  constructor(dependencies: { categoryRepository: CategoryRepository }) {
+  private _eventBus: EventBus;
+  constructor(dependencies: {
+    categoryRepository: CategoryRepository;
+    eventBus: EventBus;
+  }) {
     this._categoryRepository = dependencies.categoryRepository;
+    this._eventBus = dependencies.eventBus;
   }
 
   async execute(
@@ -20,13 +26,14 @@ export class CategoryCreateUseCase {
     description: DescriptionVO,
     state: StateVO
   ) {
-    const categoryExists = await this._categoryRepository.findById(id);
-    if (categoryExists) throw new CategoryIdAlreadyInUseException();
-    const categoryName = await this._categoryRepository.findByName(name);
-    if (categoryName) throw new CategoryNameAlreadyInUseException();
+    //const categoryExists = await this._categoryRepository.findById(id);
+    //if (categoryExists) throw new CategoryIdAlreadyInUseException();
+    //const categoryName = await this._categoryRepository.findByName(name);
+    //if (categoryName) throw new CategoryNameAlreadyInUseException();
 
-    return this._categoryRepository.create(
-      new CategoryModel(id, name, description, state)
-    );
+    const categoryModel = CategoryModel.create(id, name, description, state);
+    //await this._categoryRepository.create(categoryModel);
+
+    this._eventBus.publish(categoryModel.pullDomainEvents());
   }
 }

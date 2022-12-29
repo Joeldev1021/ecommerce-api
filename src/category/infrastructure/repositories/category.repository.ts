@@ -35,7 +35,6 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async findById(id: UuidVO): Promise<CategoryModel | null> {
-    console.log("repository");
     const category = await Category.findByPk(id.value);
     if (!category) return null;
     return this.toDomain(category);

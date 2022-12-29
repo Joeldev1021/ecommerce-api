@@ -6,7 +6,7 @@ import { IDomainEventSubscriber } from "../../../shared/domain/domain-event-subs
 import { CategoryCreatedEvent } from "./category-created.event";
 
 export class CategoryCreatedHandler
-  implements IDomainEventSubscriber<DomainEvent>
+  implements IDomainEventSubscriber<CategoryCreatedEvent>
 {
   subscribedTo(): IDomainEventClass[] {
     return [CategoryCreatedEvent];
@@ -14,6 +14,6 @@ export class CategoryCreatedHandler
 
   async on(event: CategoryCreatedEvent): Promise<void> {
     const { eventId, occurredOn } = event;
-    console.log("categoryCreatedEVent", eventId);
+    console.log("categoryCreatedEVent============", eventId);
   }
 }
