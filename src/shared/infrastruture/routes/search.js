@@ -1,9 +1,0 @@
-const { Router, response, request } = require('express')
-
-const { search } = require('../controllers/searchController')
-
-const router = Router()
-
-router.get('/:collection/:term', search)
-
-module.exports = router

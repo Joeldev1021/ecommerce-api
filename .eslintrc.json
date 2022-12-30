@@ -17,6 +17,9 @@
 		"no-sequences": "off",
 		"no-unused-vars": "off",
 		"@typescript-eslint/no-unused-vars": "warn",
-		"spaced-comment": "off"
+		"spaced-comment": "off",
+		"@typescript-eslint/strict-boolean-expressions": "off",
+		"@typescript-eslint/no-misused-promises": "off",
+		"@typescript-eslint/no-throw-literal": "off"
 	}
 }
