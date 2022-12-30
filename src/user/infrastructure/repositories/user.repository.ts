@@ -7,8 +7,9 @@ import { IUserRepository } from "../../domain/repositories/user.repository";
 import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { PasswordVO } from "../../domain/value-objects/password.vo";
 import { StateVO } from "../../../shared/domain/value-objects/state.vo";
-import { IUser } from "../../../shared/infrastruture/types/models/user.model";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class UserRepository implements IUserRepository {
   /**
    * It takes a UserModel object and returns a UserInterface object

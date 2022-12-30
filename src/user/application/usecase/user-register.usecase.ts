@@ -8,12 +8,15 @@ import { UserIdAlreadyInUseException } from "../errors/user-id-already-in-use.ex
 import { UserEmailAlreadyInUseException } from "../errors/user-email-already-in-use.exception";
 import { EmailVO } from "../../domain/value-objects/email.vo";
 import { IUserRepository } from "../../domain/repositories/user.repository";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
+@injectable()
 export class UserRegisterUseCase {
-  private _userRepository: IUserRepository;
-  constructor(dependencies: { userRepository: UserRepository }) {
-    this._userRepository = dependencies.userRepository;
-  }
+  constructor(
+    @inject(containerTypes.userRepository)
+    private _userRepository: IUserRepository
+  ) {}
   async execute(
     id: UuidVO,
     name: NameVO,
@@ -26,7 +29,6 @@ export class UserRegisterUseCase {
     const userEmail = await this._userRepository.findByEmail(email);
     if (userEmail) throw new UserEmailAlreadyInUseException();
 
-    /* hash password */
     const passwordHash = await PasswordVO.create(password.value);
 
     return this._userRepository.create(

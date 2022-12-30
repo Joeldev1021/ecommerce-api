@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from "express";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { CategoryFindByIdUseCase } from "../../application/usecase/category-find-by-id.usecase";
 
+@injectable()
 export class CategoryFindByIdController {
-  private _categoryFindByIdUseCase;
-  constructor(dependencies: {
-    categoryFindByIdUseCase: CategoryFindByIdUseCase;
-  }) {
-    this._categoryFindByIdUseCase = dependencies.categoryFindByIdUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productFindByIdUseCase)
+    private _categoryFindByIdUseCase: CategoryFindByIdUseCase
+  ) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const categoryId = req.params.id;

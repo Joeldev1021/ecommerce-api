@@ -7,7 +7,9 @@ import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../shared/infrastruture/models/category";
 import { CategoryInterface } from "../types/category.interface";
 import { ICategory } from "../../../shared/infrastruture/types/models/category.models";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class CategoryRepository implements ICategoryRepository {
   toPersistance(categoryDomain: CategoryModel): CategoryInterface {
     const { id, name, description, state } = categoryDomain;
@@ -47,7 +49,6 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: CategoryModel): Promise<CategoryModel | null> {
-    console.log("repository");
     const categoryCreated = await Category.create(this.toPersistance(category));
     if (!categoryCreated) return null;
     return this.toDomain(categoryCreated);

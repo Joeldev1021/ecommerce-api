@@ -8,12 +8,12 @@ export class UserRegisterDTO {
   @IsString()
   @IsNotEmpty()
   public name: string;
-
+  /* 
   @IsEmail()
   @IsNotEmpty()
   public email: string;
 
   @IsString()
   @IsNotEmpty()
-  public password: string;
+  public password: string; */
 }

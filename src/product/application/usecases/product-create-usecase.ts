@@ -9,13 +9,14 @@ import { CreatedAtVO } from "../../../shared/domain/value-objects/created-at.vo"
 import { QuantityVO } from "../../domain/value-objects/quantity.vo";
 import { ProductNameAlreadyInUseException } from "../errors/product-name-already-in-use.exception";
 import { IProductRepository } from "../../domain/repositories/product.repository";
-import { ProductRepository } from "../../infrastructure/repositories/product.repository";
+import { inject } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
 export class ProductCreateUseCase {
-  private _productRepository: IProductRepository;
-  constructor(dependencies: { productRepository: ProductRepository }) {
-    this._productRepository = dependencies.productRepository;
-  }
+  constructor(
+    @inject(containerTypes.productRepository)
+    private _productRepository: IProductRepository
+  ) {}
 
   async execute(
     id: UuidVO,

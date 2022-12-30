@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { ProductFindByIdUseCase } from "../../application/usecases/product-find-by-id.usecase";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
+@injectable()
 export class ProductFindByIdController {
-  private _productFindByIdUseCase;
-  constructor(dependencies: {
-    productFindByIdUseCase: ProductFindByIdUseCase;
-  }) {
-    this._productFindByIdUseCase = dependencies.productFindByIdUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productFindByIdController)
+    private _productFindByIdUseCase: ProductFindByIdUseCase
+  ) {}
+
   async execute(req: Request, res: Response, next: NextFunction) {
     const productId = req.params.id;
     try {

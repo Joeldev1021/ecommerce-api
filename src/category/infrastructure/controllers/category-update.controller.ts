@@ -4,12 +4,15 @@ import { DescriptionVO } from "../../../shared/domain/value-objects/description.
 import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
+import { containerTypes } from "../../../container.types";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class CategoryUpdateController {
-  private _categoryUpdateUseCase;
-  constructor(dependencies: { categoryUpdateUseCase: CategoryUpdateUseCase }) {
-    this._categoryUpdateUseCase = dependencies.categoryUpdateUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productUpdateUseCase)
+    private _categoryUpdateUseCase: CategoryUpdateUseCase
+  ) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;

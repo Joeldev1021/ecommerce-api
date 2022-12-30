@@ -5,12 +5,15 @@ import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { CategoryCreateUseCase } from "../../application/usecase/category-create.usecase";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
+@injectable()
 export class CategoryCreateController {
-  private _categoryCreateUseCase;
-  constructor(dependencies: { categoryCreateUseCase: CategoryCreateUseCase }) {
-    this._categoryCreateUseCase = dependencies.categoryCreateUseCase;
-  }
+  constructor(
+    @inject(containerTypes.categoryCreateUseCase)
+    private _categoryCreateUseCase: CategoryCreateUseCase
+  ) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;

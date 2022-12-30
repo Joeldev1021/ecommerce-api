@@ -6,28 +6,24 @@ import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { PasswordVO } from "../../domain/value-objects/password.vo";
 import { UserRegisterDTO } from "../dtos/user-register.dto";
 import { AuthRequest } from "../interface";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
+@injectable()
 export class UserRegisterController {
-  private _userRegisterUseCase;
+  constructor(
+    @inject(containerTypes.userRegisterUseCase)
+    private _userRegisterUseCase: UserRegisterUseCase
+  ) {}
 
-  constructor(dependencies: { userRegisterUseCase: UserRegisterUseCase }) {
-    this._userRegisterUseCase = dependencies.userRegisterUseCase;
-  }
-
-  async execute(
-    req: AuthRequest<UserRegisterDTO>,
-    res: Response,
-    next: NextFunction
-  ) {
-    const { id, name, email, password } = req.body;
+  async execute(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await this._userRegisterUseCase.execute(
-        new UuidVO(id),
-        new NameVO(name),
-        new EmailVO(email),
-        new PasswordVO(password)
+        new UuidVO(req.body.id),
+        new NameVO(req.body.name),
+        new EmailVO(req.body.email),
+        new PasswordVO(req.body.password)
       );
-
       res.status(200).send(user);
     } catch (error) {
       next(error);

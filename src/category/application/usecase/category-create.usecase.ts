@@ -8,17 +8,16 @@ import { ICategoryRepository } from "../../domain/repositories/category.reposito
 import { CategoryIdAlreadyInUseException } from "../error/category-id-already-in-use.exception";
 import { CategoryNameAlreadyInUseException } from "../error/category-name-already-exists.exception";
 import { EventBus } from "../../../shared/infrastruture/event-bus/event-bus";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 
+@injectable()
 export class CategoryCreateUseCase {
-  private _categoryRepository: ICategoryRepository;
-  private _eventBus: EventBus;
-  constructor(dependencies: {
-    categoryRepository: CategoryRepository;
-    eventBus: EventBus;
-  }) {
-    this._categoryRepository = dependencies.categoryRepository;
-    this._eventBus = dependencies.eventBus;
-  }
+  constructor(
+    @inject(containerTypes.categoryRepository)
+    private _categoryRepository: CategoryRepository,
+    private _eventBus: EventBus
+  ) {}
 
   async execute(
     id: UuidVO,

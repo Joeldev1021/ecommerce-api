@@ -1,21 +1,28 @@
 import { NextFunction, Request, Response } from "express";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 import { DescriptionVO } from "../../../shared/domain/value-objects/description.vo";
 import { NameVO } from "../../../shared/domain/value-objects/name.vo";
 import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { ProductFindByIdUseCase } from "../../application/usecases/product-find-by-id.usecase";
+import { ProductUpdateUseCase } from "../../application/usecases/product-update.usecase";
 
+@injectable()
 export class ProductUpdateController {
-  private _productFindByIdUseCase;
-  constructor(dependencies: {
-    productFindByIdUseCase: ProductFindByIdUseCase;
-  }) {
-    this._productFindByIdUseCase = dependencies.productFindByIdUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productUpdateUseCase)
+    private _productUpdateUseCase: ProductUpdateUseCase
+  ) {}
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, state } = req.body;
     try {
-      const product = this._productFindByIdUseCase.execute(new UuidVO(id));
+      const product = this._productUpdateUseCase.execute(
+        new UuidVO(id),
+        new NameVO(name),
+        new DescriptionVO(description),
+        new StateVO(state)
+      );
       res.status(200).send(product);
     } catch (error) {
       next(error);

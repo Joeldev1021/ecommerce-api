@@ -6,12 +6,15 @@ import { StateVO } from "../../../shared/domain/value-objects/state.vo";
 import { UuidVO } from "../../../shared/domain/value-objects/uuid.vo";
 import { QuantityVO } from "../../domain/value-objects/quantity.vo";
 import { ProductCreateUseCase } from "../../application/usecases/product-create-usecase";
+import { containerTypes } from "../../../container.types";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class ProductCreateController {
-  private _productCreateUseCase;
-  constructor(dependencies: { productCreateUseCase: ProductCreateUseCase }) {
-    this._productCreateUseCase = dependencies.productCreateUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productCreateUseCase)
+    private _productCreateUseCase: ProductCreateUseCase
+  ) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const { id, name, description, categoryId, price, quantity, state } =

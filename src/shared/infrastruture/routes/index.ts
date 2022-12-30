@@ -6,7 +6,7 @@ import { productRoutes } from "../../../product/infrastructure/routes/product.ro
 const router = Router();
 router.use("/auth", authRoutes);
 
-router.use("/category", categoryRoutes);
-router.use("/product", productRoutes);
+//router.use("/category", categoryRoutes);
+//router.use("/product", productRoutes);
 
 export default router;

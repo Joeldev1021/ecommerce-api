@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from "express";
+import { inject, injectable } from "tsyringe";
+import { containerTypes } from "../../../container.types";
 import { ProductFindAllUseCase } from "../../application/usecases/product-find-all.usecase";
 
+@injectable()
 export class ProductFindAllController {
-  private _productFindAllUseCase;
-  constructor(dependencies: { productFindAllUseCase: ProductFindAllUseCase }) {
-    this._productFindAllUseCase = dependencies.productFindAllUseCase;
-  }
+  constructor(
+    @inject(containerTypes.productFindAllUseCase)
+    private _productFindAllUseCase: ProductFindAllUseCase
+  ) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     try {

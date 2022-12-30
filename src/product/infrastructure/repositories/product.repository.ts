@@ -10,7 +10,9 @@ import { Product } from "../../../shared/infrastruture/models/product";
 import { IProduct } from "../../../shared/infrastruture/types/models/product.model";
 import { ProductInterface } from "../types/product.interface";
 import { QuantityVO } from "../../domain/value-objects/quantity.vo";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class ProductRepository implements IProductRepository {
   toPersistance(productDomain: ProductModel): ProductInterface {
     return {

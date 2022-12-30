@@ -1,0 +1,35 @@
+export enum containerTypes {
+  userRegisterController = "userRegisterController",
+  userLoginController = "userLoginController",
+  userRegisterUseCase = "userRegisterUseCase",
+  userLoginUseCase = "userLoginUseCase",
+  userRepository = "userRepository",
+  /* ===================== category ======================== */
+  categoryCreateController = "categoryCreateController",
+  categoryFindByIdController = "categoryFindByIdController",
+  categoryDeleteController = "categoryDeleteController",
+  categoryUpdateController = "categoryUpdateController",
+  categoryFindAllController = "categoryFindAllController",
+  categoryCreateUseCase = "categoryCreateUseCase",
+  categoryFindByIdUseCase = "categoryFindByIdUseCase",
+  categoryDeleteUseCase = "categoryDeleteUseCase",
+  categoryUpdateUseCase = "categoryUpdateUseCase",
+  categoryFindAllUseCase = "categoryFindAllUseCase",
+  categoryRepository = "categoryRepository",
+  /* ===================== category ======================== */
+  productCreateController = "productCreateController",
+  productFindByIdController = "productFindByIdController",
+  productDeleteController = "productDeleteController",
+  productUpdateController = "productUpdateController",
+  productFindAllController = "productFindAllController",
+  /*==================== Product usecase==================== */
+  productCreateUseCase = "productCreateUseCase",
+  productFindByIdUseCase = "productFindByIdUseCase",
+  productDeleteUseCase = "productDeleteUseCase",
+  productUpdateUseCase = "productUpdateUseCase",
+  productFindAllUseCase = "productFindAllUseCase",
+  productRepository = "productRepository",
+  /* ===================== product ========================*/
+  eventBus = "eventBus",
+  categoryCreatedHandler = "categoryCreatedHandler",
+}
