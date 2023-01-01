@@ -7,8 +7,8 @@ import { containerTypes } from '../../dependency-injection/container.types';
 @injectable()
 export class ProductFindByIdController {
 	constructor(
-		@inject(containerTypes.productFindByIdController)
-		private readonly _productFindByIdUseCase: ProductFindByIdUseCase
+		@inject(containerTypes.productFindByIdUseCase)
+		private _productFindByIdUseCase: ProductFindByIdUseCase
 	) {}
 
 	async execute(

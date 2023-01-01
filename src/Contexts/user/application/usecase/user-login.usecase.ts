@@ -2,8 +2,8 @@ import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
 import { UserNotFoundException } from '../errors/user-not-found.exception';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class UserLoginUseCase {

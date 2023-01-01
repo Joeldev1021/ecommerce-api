@@ -36,14 +36,12 @@ export class CategoryRepository implements ICategoryRepository {
 		return null;
 	}
 
-	async delete(categoryId: UuidVO): Promise<number | null> {
-		const deleteCategory = await Category.destroy({
+	async delete(categoryId: UuidVO): Promise<void> {
+		await Category.destroy({
 			where: {
 				category_id: categoryId.value,
 			},
 		});
-		if (!deleteCategory) return null;
-		return deleteCategory;
 	}
 }
 

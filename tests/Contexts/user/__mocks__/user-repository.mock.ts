@@ -25,6 +25,8 @@ export class UserRepositoryMock implements IUserRepository {
 	async login(user: UserModel): Promise<void> {}
 
 	assertRegisterHaveBeenCalledWith(expected: UserModel): void {
+		console.log('mock', this.saveMock);
+		console.log('expected', expected);
 		expect(this.saveMock).toHaveBeenCalledWith(expected);
 	}
 }

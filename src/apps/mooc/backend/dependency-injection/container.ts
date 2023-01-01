@@ -85,7 +85,7 @@ container.register(
 );
 container.register(containerTypes.categoryRepository, CategoryRepository);
 
-/* product */
+/* product  controller*/
 container.register(
 	containerTypes.productCreateController,
 	ProductCreateController
@@ -102,21 +102,22 @@ container.register(
 	containerTypes.productUpdateController,
 	ProductUpdateController
 );
+
 container.register(
 	containerTypes.productFindAllController,
 	ProductFindAllController
 );
+/* product usecase */
+
 container.register(containerTypes.productCreateUseCase, ProductCreateUseCase);
-container.register(
-	containerTypes.productFindByIdUseCase,
-	ProductFindAllUseCase
-);
 container.register(
 	containerTypes.productFindByIdUseCase,
 	ProductFindByIdUseCase
 );
 container.register(containerTypes.productDeleteUseCase, ProductDeleteUseCase);
 container.register(containerTypes.productUpdateUseCase, ProductUpdateUseCase);
+container.register(containerTypes.productFindAllUseCase, ProductFindAllUseCase);
+
 container.register(containerTypes.productRepository, ProductRepository);
 container.register(containerTypes.eventBus, EventBus);
 /* event handler */

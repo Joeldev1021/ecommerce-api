@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { IEventBus } from '../../../Contexts/shared/domain/event-bus';
 import { container } from './dependency-injection/container';
 import { containerTypes } from './dependency-injection/container.types';

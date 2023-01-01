@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { IProductRepository } from '../../domain/repositories/product.repository';
 import { ProductRepository } from '../../infrastructure/repositories/product.repository';
 

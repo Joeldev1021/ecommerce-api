@@ -1,7 +1,7 @@
 import { DomainEvent } from '../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../domain/domain-event-subscriber';
 import { DependencyContainer } from 'tsyringe';
-import { TagEventHandler } from '@apps/mooc/backend/dependency-injection/container';
+import { TagEventHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
 
 export class DomainEventSubscribers {
 	private constructor(

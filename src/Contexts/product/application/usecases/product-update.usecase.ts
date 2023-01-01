@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
@@ -18,7 +18,7 @@ export class ProductUpdateUseCase {
 		name: NameVO,
 		description: DescriptionVO,
 		state: StateVO
-	) {
+	): Promise<void> {
 		/* return productRepository.update(
       new productModel(id, name, description, state)
     ); */

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
-import { CategoryFindAllUseCase } from '@category/application/usecase/category-find-all.usecase';
+import { CategoryFindAllUseCase } from '../../../../../Contexts/category/application/usecase/category-find-all.usecase';
+import { containerTypes } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindAllController {

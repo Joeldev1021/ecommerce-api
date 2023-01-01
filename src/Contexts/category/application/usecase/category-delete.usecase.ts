@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import categoryRepository, {
@@ -13,7 +13,7 @@ export class CategoryDeleteUseCase {
 		private readonly categoryRepository: CategoryRepository
 	) {}
 
-	async execute(id: UuidVO) {
+	async execute(id: UuidVO): Promise<void> {
 		return await categoryRepository.delete(id);
 	}
 }

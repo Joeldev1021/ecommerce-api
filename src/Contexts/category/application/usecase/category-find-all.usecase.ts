@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CategoryModel } from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import categoryRepository, {
 	CategoryRepository,
@@ -12,7 +13,7 @@ export class CategoryFindAllUseCase {
 		private readonly _categoryRepository: CategoryRepository
 	) {}
 
-	async execute() {
+	async execute(): Promise<CategoryModel[] | null> {
 		return await categoryRepository.findAll();
 	}
 }

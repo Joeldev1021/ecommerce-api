@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import { containerTypes } from '../../dependency-injection/container.types';

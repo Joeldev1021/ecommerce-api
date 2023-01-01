@@ -2,6 +2,7 @@ import { UserIdAlreadyInUseException } from '../errors/user-id-already-in-use.ex
 import { UserEmailAlreadyInUseException } from '../errors/user-email-already-in-use.exception';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
+import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { UserModel } from '../../..//user/domain/models/user.model';
 import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
@@ -24,15 +25,14 @@ export class UserRegisterUseCase {
 		password: PasswordVO,
 		state: StateVO
 	): Promise<void> {
-		console.log(id, name);
 		const userFound = await this._userRepository.findById(id);
-		/* 		if (userFound != null) throw new UserIdAlreadyInUseException();
+		if (userFound != null) throw new UserIdAlreadyInUseException();
 
 		const userEmail = await this._userRepository.findByEmail(email);
 		if (userEmail != null) throw new UserEmailAlreadyInUseException();
+		//todo implements test with password hast
+		//const passwordHash = await PasswordVO.create(password.value);
 
-		const passwordHash = await PasswordVO.create(password.value);
- */
 		await this._userRepository.register(
 			new UserModel(id, name, email, password, state)
 		);

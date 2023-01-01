@@ -6,9 +6,9 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryRepository } from '../../infrastructure/repositories/category.repository';
 import { EventBus } from '../../../shared/infrastruture/event-bus/event-bus';
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
 import { CategoryIdAlreadyInUseException } from '../error/category-id-already-in-use.exception';
 import { CategoryNameAlreadyInUseException } from '../error/category-name-already-exists.exception';
+import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class CategoryCreateUseCase {

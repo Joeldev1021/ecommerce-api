@@ -1,9 +1,10 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ProductModel } from '../../domain/models/product.model';
 import { IProductRepository } from '../../domain/repositories/product.repository';
 
+@injectable()
 export class ProductFindByIdUseCase {
 	constructor(
 		@inject(containerTypes.productRepository)

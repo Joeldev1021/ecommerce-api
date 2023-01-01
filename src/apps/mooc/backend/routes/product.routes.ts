@@ -12,7 +12,9 @@ const router = Router();
 const productFindAllController = container.resolve<ProductFindAllController>(
 	containerTypes.productFindAllController
 );
-const productFindByIdController = container.resolve(ProductFindByIdController);
+const productFindByIdController = container.resolve<ProductFindByIdController>(
+	ProductFindByIdController
+);
 const productCreateController = container.resolve<ProductCreateController>(
 	containerTypes.productCreateController
 );
