@@ -1,5 +1,4 @@
-import { IEventBus } from '@shared/domain/event-bus';
-import { DomainEventSubscribers } from '@shared/infrastruture/event-bus/domain-event-subscribers';
+import { IEventBus } from '../../../Contexts/shared/domain/event-bus';
 import { container } from './dependency-injection/container';
 import { containerTypes } from './dependency-injection/container.types';
 import { Server } from './server';

@@ -1,0 +1,12 @@
+"use strict";
+exports.__esModule = true;
+exports.authRoutes = void 0;
+var tsyringe_1 = require("tsyringe");
+var express_1 = require("express");
+var container_types_1 = require("../dependency-injection/container.types");
+var router = (0, express_1.Router)();
+var userRegisterController = tsyringe_1.container.resolve(container_types_1.containerTypes.userRegisterController);
+router.post('/register', userRegisterController.execute.bind(userRegisterController));
+var userLoginController = tsyringe_1.container.resolve(container_types_1.containerTypes.userLoginController);
+router.post('/login', userLoginController.execute.bind(userLoginController));
+exports.authRoutes = router;

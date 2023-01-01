@@ -16,7 +16,10 @@ const categoryFindAllController = container.resolve<CategoryFindAllController>(
 	containerTypes.categoryFindAllController
 );
 const categoryFindByIdController =
-	container.resolve<CategoryFindByIdController>('categoryFindByIdController');
+	container.resolve<CategoryFindByIdController>(
+		containerTypes.categoryFindByIdController
+	);
+
 const categoryUpdateController = container.resolve<CategoryUpdateController>(
 	containerTypes.categoryUpdateController
 );

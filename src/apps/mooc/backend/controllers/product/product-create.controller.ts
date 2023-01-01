@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { DescriptionVO } from '@shared/domain/value-objects/description.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { PriceVO } from '@product/domain/value-objects/price.vo';
-import { StateVO } from '@shared/domain/value-objects/state.vo';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { QuantityVO } from '@product/domain/value-objects/quantity.vo';
 import { inject, injectable } from 'tsyringe';
-import { ProductCreateUseCase } from '@product/application/usecases/product-create-usecase';
+import { ProductCreateUseCase } from '../../../../../Contexts/product/application/usecases/product-create-usecase';
+import { PriceVO } from '../../../../../Contexts/product/domain/value-objects/price.vo';
+import { QuantityVO } from '../../../../../Contexts/product/domain/value-objects/quantity.vo';
+import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
+import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { containerTypes } from '../../dependency-injection/container.types';
 
 @injectable()

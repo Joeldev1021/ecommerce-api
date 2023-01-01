@@ -1,12 +1,13 @@
 import { NextFunction, Response } from 'express';
-import { UserRegisterUseCase } from '@user/application/usecase/user-register.usecase';
-import { PasswordVO } from '@user/domain/value-objects/password.vo';
-import { UserRegisterDTO } from '@user/infrastructure/dtos/user-register.dto';
-import { AuthRequest } from '@user/infrastructure/interface';
 import { inject, injectable } from 'tsyringe';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { EmailVO } from '@user/domain/value-objects/email.vo';
+import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
+import { UserRegisterUseCase } from '../../../../../Contexts/user/application/usecase/user-register.usecase';
+import { EmailVO } from '../../../../../Contexts/user/domain/value-objects/email.vo';
+import { PasswordVO } from '../../../../../Contexts/user/domain/value-objects/password.vo';
+import { UserRegisterDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-register.dto';
+import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
 import { containerTypes } from '../../dependency-injection/container.types';
 
 @injectable()
@@ -27,7 +28,8 @@ export class UserRegisterController {
 				new UuidVO(id),
 				new NameVO(name),
 				new EmailVO(email),
-				new PasswordVO(password)
+				new PasswordVO(password),
+				new StateVO(true)
 			);
 			res.status(200).send(user);
 		} catch (error) {

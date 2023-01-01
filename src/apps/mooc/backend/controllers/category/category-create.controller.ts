@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { NextFunction, Request, Response } from 'express';
-import { DescriptionVO } from '@shared/domain/value-objects/description.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { StateVO } from '@shared/domain/value-objects/state.vo';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { CategoryCreateUseCase } from '@category/application/usecase/category-create.usecase';
 import { inject, injectable } from 'tsyringe';
 import { containerTypes } from '../../dependency-injection/container.types';
+import { CategoryCreateUseCase } from '../../../../../Contexts/category/application/usecase/category-create.usecase';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
+import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
+import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 
 @injectable()
 export class CategoryCreateController {

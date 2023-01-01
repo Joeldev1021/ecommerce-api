@@ -30,18 +30,18 @@ export abstract class DomainEvent {
   abstract toPrimitives(): DomainEventAttributes;
 }
 
-export type DomainEventClass = {
+export interface DomainEventClass {
   EVENT_NAME: string;
-  fromPrimitives(params: {
+  fromPrimitives: (params: {
     aggregateId: string;
     eventId: string;
     occurredOn: Date;
     attributes: DomainEventAttributes;
-  }): DomainEvent;
-};
+  }) => DomainEvent;
+}
 
 type DomainEventAttributes = any;
 
-export type IDomainEventClass = {
+export interface IDomainEventClass {
   EVENT_NAME: string;
-};
+}

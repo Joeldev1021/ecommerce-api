@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
+import { ProductUpdateUseCase } from '../../../../../Contexts/product/application/usecases/product-update.usecase';
+import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
+import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 
 import { containerTypes } from '../../dependency-injection/container.types';
-import { DescriptionVO } from '@shared/domain/value-objects/description.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { StateVO } from '@shared/domain/value-objects/state.vo';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { ProductUpdateUseCase } from '@product/application/usecases/product-update.usecase';
 
 @injectable()
 export class ProductUpdateController {

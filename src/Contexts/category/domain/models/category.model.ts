@@ -1,11 +1,11 @@
-import { CategoryInterface } from '@category/infrastructure/types/category.interface';
 import { CategoryCreatedEvent } from '../events/category-created.event';
 import { AggregateRoot } from '../../../shared/domain/aggregate-root';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ICategory } from '@shared/infrastruture/types/models/category.models';
+import { ICategory } from '../../../shared/infrastruture/types/models/category.models';
+import { CategoryInterface } from '../../infrastructure/types/category.interface';
 
 export class CategoryModel extends AggregateRoot {
 	constructor(

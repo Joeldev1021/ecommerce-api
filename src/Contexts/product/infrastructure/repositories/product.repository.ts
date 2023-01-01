@@ -1,14 +1,14 @@
-import { ProductModel } from '@product/domain/models/product.model';
-import { IProductRepository } from '@product/domain/repositories/product.repository';
-import { PriceVO } from '@product/domain/value-objects/price.vo';
-import { QuantityVO } from '@product/domain/value-objects/quantity.vo';
-import { CreatedAtVO } from '@shared/domain/value-objects/created-at.vo';
-import { DescriptionVO } from '@shared/domain/value-objects/description.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { StateVO } from '@shared/domain/value-objects/state.vo';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { Product } from '@shared/infrastruture/models/product';
 import { injectable } from 'tsyringe';
+import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
+import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { StateVO } from '../../../shared/domain/value-objects/state.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { Product } from '../../../shared/infrastruture/models/product';
+import { ProductModel } from '../../domain/models/product.model';
+import { IProductRepository } from '../../domain/repositories/product.repository';
+import { PriceVO } from '../../domain/value-objects/price.vo';
+import { QuantityVO } from '../../domain/value-objects/quantity.vo';
 import { ProductInterface } from '../types/product.interface';
 
 @injectable()

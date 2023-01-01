@@ -1,22 +1,3 @@
-import 'reflect-metadata';
-import { CategoryCreateUseCase } from '@category/application/usecase/category-create.usecase';
-import { CategoryDeleteUseCase } from '@category/application/usecase/category-delete.usecase';
-import { CategoryFindAllUseCase } from '@category/application/usecase/category-find-all.usecase';
-import { CategoryFindByIdUseCase } from '@category/application/usecase/category-find-by-id.usecase';
-import { CategoryUpdateUseCase } from '@category/application/usecase/category-update.usecase';
-import { CategoryRepository } from '@category/infrastructure/repositories/category.repository';
-import { ProductCreateUseCase } from '@product/application/usecases/product-create-usecase';
-import { ProductDeleteUseCase } from '@product/application/usecases/product-delete.usecase';
-import { ProductFindAllUseCase } from '@product/application/usecases/product-find-all.usecase';
-import { ProductFindByIdUseCase } from '@product/application/usecases/product-find-by-id.usecase';
-import { ProductUpdateUseCase } from '@product/application/usecases/product-update.usecase';
-import { ProductRepository } from '@product/infrastructure/repositories/product.repository';
-import { EventBus } from '@shared/infrastruture/event-bus/event-bus';
-import { UserLoginUseCase } from '@user/application/usecase/user-login.usecase';
-import { UserRegisterUseCase } from '@user/application/usecase/user-register.usecase';
-import { UserLoginController } from '@apps/mooc/backend/controllers/user/user-login.controller';
-import { UserRegisterController } from '@apps/mooc/backend/controllers/user/user-register.controller';
-import { UserRepository } from '@user/infrastructure/repositories/user.repository';
 import { container } from 'tsyringe';
 import { containerTypes } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
@@ -29,6 +10,24 @@ import { ProductFindByIdController } from '../controllers/product/product-find-b
 import { ProductDeleteController } from '../controllers/product/product-delete.controller';
 import { ProductUpdateController } from '../controllers/product/product-update.controller';
 import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
+import { UserRegisterController } from '../controllers/user/user-register.controller';
+import { UserLoginController } from '../controllers/user/user-login.controller';
+import { UserLoginUseCase } from '../../../../Contexts/user/application/usecase/user-login.usecase';
+import { UserRegisterUseCase } from '../../../../Contexts/user/application/usecase/user-register.usecase';
+import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
+import { CategoryCreateUseCase } from '../../../../Contexts/category/application/usecase/category-create.usecase';
+import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/usecase/category-find-by-id.usecase';
+import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/usecase/category-delete.usecase';
+import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/usecase/category-update.usecase';
+import { CategoryFindAllUseCase } from '../../../../Contexts/category/application/usecase/category-find-all.usecase';
+import { CategoryRepository } from '../../../../Contexts/category/infrastructure/repositories/category.repository';
+import { ProductCreateUseCase } from '../../../../Contexts/product/application/usecases/product-create-usecase';
+import { ProductFindAllUseCase } from '../../../../Contexts/product/application/usecases/product-find-all.usecase';
+import { ProductFindByIdUseCase } from '../../../../Contexts/product/application/usecases/product-find-by-id.usecase';
+import { ProductDeleteUseCase } from '../../../../Contexts/product/application/usecases/product-delete.usecase';
+import { ProductUpdateUseCase } from '../../../../Contexts/product/application/usecases/product-update.usecase';
+import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
+import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -56,6 +55,10 @@ container.register(
 );
 
 /* category controller */
+container.register(
+	containerTypes.categoryFindByIdController,
+	CategoryFindByIdController
+);
 container.register(
 	containerTypes.categoryDeleteController,
 	CategoryDeleteController
@@ -106,11 +109,14 @@ container.register(
 container.register(containerTypes.productCreateUseCase, ProductCreateUseCase);
 container.register(
 	containerTypes.productFindByIdUseCase,
+	ProductFindAllUseCase
+);
+container.register(
+	containerTypes.productFindByIdUseCase,
 	ProductFindByIdUseCase
 );
 container.register(containerTypes.productDeleteUseCase, ProductDeleteUseCase);
 container.register(containerTypes.productUpdateUseCase, ProductUpdateUseCase);
-container.register(containerTypes.productFindAllUseCase, ProductFindAllUseCase);
 container.register(containerTypes.productRepository, ProductRepository);
 container.register(containerTypes.eventBus, EventBus);
 /* event handler */

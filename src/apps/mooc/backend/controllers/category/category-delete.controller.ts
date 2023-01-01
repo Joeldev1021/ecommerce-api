@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { CategoryDeleteUseCase } from '@category/application/usecase/category-delete.usecase';
+import { CategoryDeleteUseCase } from '../../../../../Contexts/category/application/usecase/category-delete.usecase';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { containerTypes } from '../../dependency-injection/container.types';
 
 @injectable()

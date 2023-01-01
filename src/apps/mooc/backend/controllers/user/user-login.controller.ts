@@ -1,11 +1,11 @@
-import { AuthRequest } from '@user/infrastructure/interface';
-import { UserLoginDTO } from '@user/infrastructure/dtos/user-login.dto';
 import { inject, injectable } from 'tsyringe';
 import { NextFunction, Response } from 'express';
-import { UserLoginUseCase } from '@user/application/usecase/user-login.usecase';
-import { EmailVO } from '@user/domain/value-objects/email.vo';
-import { PasswordVO } from '@user/domain/value-objects/password.vo';
 import { containerTypes } from '../../dependency-injection/container.types';
+import { UserLoginUseCase } from '../../../../../Contexts/user/application/usecase/user-login.usecase';
+import { UserLoginDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-login.dto';
+import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
+import { EmailVO } from '../../../../../Contexts/user/domain/value-objects/email.vo';
+import { PasswordVO } from '../../../../../Contexts/user/domain/value-objects/password.vo';
 
 @injectable()
 export class UserLoginController {

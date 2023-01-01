@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
-import { ProductFindAllUseCase } from '@product/application/usecases/product-find-all.usecase';
+import { ProductFindAllUseCase } from '../../../../../Contexts/product/application/usecases/product-find-all.usecase';
 import { containerTypes } from '../../dependency-injection/container.types';
 
 @injectable()
