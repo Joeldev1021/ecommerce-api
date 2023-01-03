@@ -28,6 +28,9 @@ import { ProductDeleteUseCase } from '../../../../Contexts/product/application/u
 import { ProductUpdateUseCase } from '../../../../Contexts/product/application/usecases/product-update.usecase';
 import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
+import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
+import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
+import { RabbitMqConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -117,9 +120,13 @@ container.register(
 container.register(containerTypes.productDeleteUseCase, ProductDeleteUseCase);
 container.register(containerTypes.productUpdateUseCase, ProductUpdateUseCase);
 container.register(containerTypes.productFindAllUseCase, ProductFindAllUseCase);
-
 container.register(containerTypes.productRepository, ProductRepository);
+
+/* event bus */
 container.register(containerTypes.eventBus, EventBus);
+container.register(containerTypes.rabbitMqEventBus, RabbitMqEventBus);
+container.register(containerTypes.rabbitMqConnection, RabbitMqConnection);
+
 /* event handler */
 
 export { container };

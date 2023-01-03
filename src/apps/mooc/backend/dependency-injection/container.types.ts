@@ -32,4 +32,6 @@ export enum containerTypes {
 	/* ===================== product ========================*/
 	eventBus = 'eventBus',
 	categoryCreatedHandler = 'categoryCreatedHandler',
+	rabbitMqEventBus = 'rabbitMqEventBus',
+	rabbitMqConnection = 'rabbitMqConnection',
 }

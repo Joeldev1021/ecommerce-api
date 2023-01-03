@@ -26,6 +26,9 @@
 		"@typescript-eslint/no-throw-literal": "off",
 		"@typescript-eslint/prefer-nullish-coalescing": "off",
 		"@typescript-eslint/method-signature-style": "off",
-		"@typescript-eslint/prefer-readonly": "off"
+		"@typescript-eslint/prefer-readonly": "off",
+		"@typescript-eslint/no-floating-promises": "off",
+		"@typescript-eslint/return-await": "off",
+		"@typescript-eslint/no-extraneous-class": "off"
 	}
 }
