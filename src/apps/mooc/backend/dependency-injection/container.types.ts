@@ -34,4 +34,5 @@ export enum containerTypes {
 	categoryCreatedHandler = 'categoryCreatedHandler',
 	rabbitMqEventBus = 'rabbitMqEventBus',
 	rabbitMqConnection = 'rabbitMqConnection',
+	rabbitMQqueueFormatter = 'rabbitMQqueueFormatter',
 }

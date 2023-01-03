@@ -1,6 +1,7 @@
 import amqplib, { ConsumeMessage } from 'amqplib';
 import { injectable } from 'tsyringe';
 import { RabbitMQExchangeNameFormatter } from './rabbit-qm-exchange-name-formatter';
+import { configSettings } from './config/index';
 
 interface RabbitMqPublicationParams {
 	exchange: string;
@@ -15,22 +16,11 @@ interface RabbitMqPublicationParams {
 	};
 }
 
-interface IConnectionSettings {
-	username: string;
-	password: string;
-	vhost: string;
-	connection: {
-		hostname: string;
-		port: number;
-		secure: boolean;
-	};
-}
-
 @injectable()
 export class RabbitMqConnection {
 	private connection?: amqplib.Connection;
 	private channel?: amqplib.ConfirmChannel;
-	private connectionSettings: IConnectionSettings;
+	private connectionSettings = configSettings;
 
 	async connect(): Promise<void> {
 		this.connection = await this.amqpConnect();
@@ -100,7 +90,6 @@ export class RabbitMqConnection {
 	private async amqpConnect(): Promise<amqplib.Connection> {
 		const { hostname, port, secure } = this.connectionSettings.connection;
 		const { username, password, vhost } = this.connectionSettings;
-
 		const connection = await amqplib.connect({
 			vhost,
 			username,
@@ -121,7 +110,6 @@ export class RabbitMqConnection {
 	private async amqpChannel(): Promise<amqplib.ConfirmChannel | undefined> {
 		const channel = await this.connection?.createConfirmChannel();
 		await channel?.prefetch(1);
-
 		return channel;
 	}
 

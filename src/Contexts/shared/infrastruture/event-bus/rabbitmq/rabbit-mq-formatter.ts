@@ -1,8 +1,13 @@
+import { injectable } from 'tsyringe';
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 
+@injectable()
 export class RabbitMQqueueFormatter {
-	constructor(private moduleName: string) {}
+	private moduleName: string;
+	constructor() {
+		this.moduleName = 'mooc';
+	}
 
 	format(subscriber: IDomainEventSubscriber<DomainEvent>): string {
 		const value = subscriber.constructor.name;

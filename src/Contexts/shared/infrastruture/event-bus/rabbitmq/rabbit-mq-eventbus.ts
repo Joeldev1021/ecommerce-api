@@ -12,18 +12,18 @@ import { RabbitMQqueueFormatter } from './rabbit-mq-formatter';
 @injectable()
 export class RabbitMqEventBus implements IEventBus {
 	private failoverPublisher: DomainEventFailoverPublisher;
-	private connection: RabbitMqConnection;
 	private exchange: string;
-	private queueNameFormatter: RabbitMQqueueFormatter;
 	private maxRetries: Number;
 
 	constructor(
 		@inject(containerTypes.rabbitMqConnection)
-		connection: RabbitMqConnection
+		private connection: RabbitMqConnection,
+		@inject(containerTypes.rabbitMQqueueFormatter)
+		private queueNameFormatter: RabbitMQqueueFormatter
 	) {}
 
 	async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
-		await this.connectToRabbitMq();
+		//await this.connectToRabbitMq();
 
 		const deserializer = DomainEventDeserializer.configure(subscribers);
 		const consumerFactory = new RabbitMqConsumerFactory(
@@ -31,7 +31,6 @@ export class RabbitMqEventBus implements IEventBus {
 			deserializer,
 			this.maxRetries
 		);
-
 		for (const subscriber of subscribers.items) {
 			const queueName = this.queueNameFormatter.format(subscriber);
 			const rabbitMqConsumer = consumerFactory.build(

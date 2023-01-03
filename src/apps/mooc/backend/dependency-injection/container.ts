@@ -31,6 +31,7 @@ import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/ev
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
 import { RabbitMqConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
+import { RabbitMQqueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-formatter';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -126,6 +127,10 @@ container.register(containerTypes.productRepository, ProductRepository);
 container.register(containerTypes.eventBus, EventBus);
 container.register(containerTypes.rabbitMqEventBus, RabbitMqEventBus);
 container.register(containerTypes.rabbitMqConnection, RabbitMqConnection);
+container.register(
+	containerTypes.rabbitMQqueueFormatter,
+	RabbitMQqueueFormatter
+);
 
 /* event handler */
 
