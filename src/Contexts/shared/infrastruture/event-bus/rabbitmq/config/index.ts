@@ -10,9 +10,9 @@ export interface IConnectionSettings {
 		port: number;
 		secure: boolean;
 	};
-	exchangeName: string;
+	exchangeSettings: { name: string };
 	maxRetries: number;
-	moduleName: string;
+	retryTtl: number;
 }
 
 export const configSettings: IConnectionSettings = {
@@ -20,11 +20,11 @@ export const configSettings: IConnectionSettings = {
 	password: 'guest',
 	vhost: '/',
 	connection: {
+		secure: false,
 		hostname: 'localhost',
 		port: 5672,
-		secure: false,
 	},
-	exchangeName: 'domain_events',
+	exchangeSettings: { name: 'domain_events' },
 	maxRetries: 3,
-	moduleName: 'mooc',
+	retryTtl: 1000,
 };

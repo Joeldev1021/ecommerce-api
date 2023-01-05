@@ -5,21 +5,22 @@ import { IEventBus } from '../../../domain/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
 import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
 import { DomainEventSubscribers } from '../domain-event-subscribers';
-import { RabbitMqConnection } from './rabbit-mq-connection';
+import { configSettings } from './config';
+import { RabbitMQConnection } from './rabbit-mq-connection';
 import { RabbitMqConsumerFactory } from './rabbit-mq-consumer-factory';
-import { RabbitMQqueueFormatter } from './rabbit-mq-formatter';
+import { RabbitMQQueueFormatter } from './rabbit-mq-queue-formatter';
 
 @injectable()
 export class RabbitMqEventBus implements IEventBus {
 	private failoverPublisher: DomainEventFailoverPublisher;
-	private exchange: string;
+	private exchange = configSettings.exchangeSettings.name;
 	private maxRetries: Number;
 
 	constructor(
-		@inject(containerTypes.rabbitMqConnection)
-		private connection: RabbitMqConnection,
-		@inject(containerTypes.rabbitMQqueueFormatter)
-		private queueNameFormatter: RabbitMQqueueFormatter
+		@inject(containerTypes.rabbitMQConnection)
+		private connection: RabbitMQConnection,
+		@inject(containerTypes.rabbitMQQueueFormatter)
+		private queueNameFormatter: RabbitMQQueueFormatter
 	) {}
 
 	async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
@@ -38,7 +39,7 @@ export class RabbitMqEventBus implements IEventBus {
 				this.exchange,
 				queueName
 			);
-
+			console.log(rabbitMqConsumer);
 			await this.connection.consume(
 				queueName,
 				rabbitMqConsumer.onMessage.bind(rabbitMqConsumer)
@@ -54,7 +55,9 @@ export class RabbitMqEventBus implements IEventBus {
 				const routingKey = event.eventName;
 				const content = this.toBuffer(event);
 				const options = this.options(event);
-
+				console.log('eventName', routingKey);
+				console.log('exchange', this.exchange);
+				console.log('option', options);
 				await this.connection.publish({
 					exchange: this.exchange,
 					routingKey,

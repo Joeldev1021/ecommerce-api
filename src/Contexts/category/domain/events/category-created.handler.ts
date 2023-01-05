@@ -13,7 +13,7 @@ export class CategoryCreatedHandler
 
 	async on(event: CategoryCreatedEvent): Promise<void> {
 		const { eventId, occurredOn } = event;
-		console.log(occurredOn);
 		console.log('categoryCreatedEVent============', eventId);
+		console.log(occurredOn);
 	}
 }

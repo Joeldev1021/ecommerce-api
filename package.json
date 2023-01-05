@@ -7,7 +7,8 @@
 		"dev": "ts-node-dev src/apps/mooc/backend/bootstrap.ts",
 		"test": "NODE_ENV=test && jest --watchAll  --verbose  --runInBand",
 		"docker:up": "docker-compose -p ecommerce up -d",
-		"docker:down": "docker-compose -p ecommerce down"
+		"docker:down": "docker-compose -p ecommerce down",
+		"command:rabbitmq": "ts-node-dev  src/apps/mooc/backend/command/run-configure-rabbitmq-command.ts"
 	},
 	"keywords": [],
 	"author": "",

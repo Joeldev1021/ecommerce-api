@@ -1,8 +1,11 @@
 import { DomainEvent } from '../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../domain/domain-event-subscriber';
-import { DependencyContainer } from 'tsyringe';
+import { DependencyContainer, registry } from 'tsyringe';
 import { TagEventHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
-
+import { CategoryCreatedHandler } from '../../../category/domain/events/category-created.handler';
+@registry([
+	{ token: TagEventHandler.EventHandler, useToken: CategoryCreatedHandler },
+])
 export class DomainEventSubscribers {
 	private constructor(
 		public items: Array<IDomainEventSubscriber<DomainEvent>>

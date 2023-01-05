@@ -3,7 +3,7 @@ import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 
 @injectable()
-export class RabbitMQqueueFormatter {
+export class RabbitMQQueueFormatter {
 	private moduleName: string;
 	constructor() {
 		this.moduleName = 'mooc';

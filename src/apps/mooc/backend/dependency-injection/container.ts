@@ -29,9 +29,10 @@ import { ProductUpdateUseCase } from '../../../../Contexts/product/application/u
 import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
-import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
-import { RabbitMqConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
-import { RabbitMQqueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-formatter';
+import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
+import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-queue-formatter';
+import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-confg-factory';
+import { RabbitMQConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -126,11 +127,15 @@ container.register(containerTypes.productRepository, ProductRepository);
 /* event bus */
 container.register(containerTypes.eventBus, EventBus);
 container.register(containerTypes.rabbitMqEventBus, RabbitMqEventBus);
-container.register(containerTypes.rabbitMqConnection, RabbitMqConnection);
+
+/* rabbit mq */
+container.register(containerTypes.rabbitMQConnection, RabbitMQConnection);
 container.register(
-	containerTypes.rabbitMQqueueFormatter,
-	RabbitMQqueueFormatter
+	containerTypes.rabbitMQQueueFormatter,
+	RabbitMQQueueFormatter
 );
+container.register(containerTypes.rabbitMQConfigFactory, RabbitMQConfigFactory);
+container.register(containerTypes.rabbitMQConfigurer, RabbitMQConfigurer);
 
 /* event handler */
 

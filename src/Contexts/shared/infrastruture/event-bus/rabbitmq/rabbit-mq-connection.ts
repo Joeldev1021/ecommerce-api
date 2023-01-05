@@ -17,7 +17,7 @@ interface RabbitMqPublicationParams {
 }
 
 @injectable()
-export class RabbitMqConnection {
+export class RabbitMQConnection {
 	private connection?: amqplib.Connection;
 	private channel?: amqplib.ConfirmChannel;
 	private connectionSettings = configSettings;
@@ -27,8 +27,10 @@ export class RabbitMqConnection {
 		this.channel = await this.amqpChannel();
 	}
 
-	async exchange(exchangeName: string): Promise<any> {
-		return this.channel?.assertExchange(exchangeName, 'topic', {
+	async exchange(
+		exchangeName: string
+	): Promise<amqplib.Replies.AssertExchange | undefined> {
+		return await this.channel?.assertExchange(exchangeName, 'topic', {
 			durable: true,
 		});
 	}
@@ -38,34 +40,32 @@ export class RabbitMqConnection {
 		name: string;
 		routingKeys: string[];
 		deadLetterExchange?: string;
-		deadletterQueue?: string;
+		deadLetterQueue?: string;
 		messageTtl?: Number;
 	}): Promise<void> {
 		const durable = true;
 		const exclusive = false;
 		const autoDelete = false;
 		const args = this.getQueueArguments(params);
-
 		await this.channel?.assertQueue(params.name, {
 			exclusive,
 			durable,
 			autoDelete,
 			arguments: args,
 		});
-
 		for (const routingKey of params.routingKeys) {
 			await this.channel?.bindQueue(params.name, params.exchange, routingKey);
 		}
 	}
 
-	private async getQueueArguments(params: {
+	private getQueueArguments(params: {
 		exchange: string;
 		name: string;
 		routingKeys: string[];
 		deadLetterExchange?: string;
 		deadLetterQueue?: string;
 		messageTtl?: Number;
-	}): Promise<void> {
+	}): any {
 		let args: any = {};
 		if (params.deadLetterExchange) {
 			args = { ...args, 'x-dead-letter-exchange': params.deadLetterExchange };
@@ -91,12 +91,12 @@ export class RabbitMqConnection {
 		const { hostname, port, secure } = this.connectionSettings.connection;
 		const { username, password, vhost } = this.connectionSettings;
 		const connection = await amqplib.connect({
-			vhost,
-			username,
-			password,
 			protocol: secure ? 'amqps' : 'amqp',
 			hostname,
 			port,
+			username,
+			password,
+			vhost,
 		});
 
 		connection.on('error', (err: any) => {
@@ -138,7 +138,6 @@ export class RabbitMqConnection {
 	): Promise<void> {
 		await this.channel?.consume(queue, (message: ConsumeMessage | null) => {
 			if (!message) return;
-
 			onMessage(message);
 		});
 	}

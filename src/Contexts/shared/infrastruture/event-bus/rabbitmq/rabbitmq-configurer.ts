@@ -1,18 +1,36 @@
+import { inject, injectable } from 'tsyringe';
+import { containerTypes } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
+import { RabbitMQConnection } from './rabbit-mq-connection';
+import { RabbitMQQueueFormatter } from './rabbit-mq-queue-formatter';
+import { RabbitMQExchangeNameFormatter } from './rabbit-qm-exchange-name-formatter';
 
-export class RabbitMqConfigurer {
-	constructor(private connection: RabbitMqConnection) {}
+@injectable()
+export class RabbitMQConfigurer {
+	private moduleName: string;
+	private messageRetryTtl: number;
+	constructor(
+		@inject(containerTypes.rabbitMQConnection)
+		private connection: RabbitMQConnection,
+		@inject(containerTypes.rabbitMQQueueFormatter)
+		private queueNameFormatter: RabbitMQQueueFormatter
+	) {
+		this.moduleName = 'mooc';
+	}
 
 	async configure(params: {
 		exchange: string;
 		subscribers: Array<IDomainEventSubscriber<DomainEvent>>;
 	}): Promise<void> {
-		const deadLetterExchange = `dead_letter-${params.exchange}`;
+		const retryExchange = RabbitMQExchangeNameFormatter.retry(params.exchange);
+		const deadLetterExchange = RabbitMQExchangeNameFormatter.deadLetter(
+			params.exchange
+		);
 
 		await this.connection.exchange(params.exchange);
+		await this.connection.exchange(retryExchange);
 		await this.connection.exchange(deadLetterExchange);
-
 		for (const subscriber of params.subscribers) {
 			await this.addQueue(subscriber, params.exchange);
 		}
@@ -22,17 +40,36 @@ export class RabbitMqConfigurer {
 		subscriber: IDomainEventSubscriber<DomainEvent>,
 		exchange: string
 	): Promise<void> {
-		const deadLetterExchange = `dead_letter-${exchange}`;
+		const retryExchange = RabbitMQExchangeNameFormatter.retry(exchange);
+		const deadLetterExchange =
+			RabbitMQExchangeNameFormatter.deadLetter(exchange);
 
 		const routingKeys = this.getRoutingKeys(subscriber);
+		const queue = this.queueNameFormatter.format(subscriber);
+		const deadLetterQueue =
+			this.queueNameFormatter.formatDeadLetter(subscriber);
+		const retryQueue = this.queueNameFormatter.formatRetry(subscriber);
 
-		const queue = this.formatQueueName(subscriber);
-		const deadLetterQueue = this.formatDeadLetterQueueName(subscriber);
+		console.log('retryExchange', retryExchange);
+		console.log('deadLetterExchange', deadLetterExchange);
+		console.log('routingKeys', routingKeys);
+		console.log('queue', queue);
+		console.log('retryQueue', retryQueue);
+		console.log('delettherQue', deadLetterQueue);
 
 		await this.connection.queue({
 			routingKeys,
 			name: queue,
 			exchange,
+		});
+
+		await this.connection.queue({
+			routingKeys: [queue],
+			name: retryQueue,
+			exchange: retryExchange,
+			messageTtl: this.messageRetryTtl,
+			deadLetterExchange: exchange,
+			deadLetterQueue: queue,
 		});
 
 		await this.connection.queue({
@@ -49,26 +86,9 @@ export class RabbitMqConfigurer {
 			.subscribedTo()
 			.map(event => event.EVENT_NAME);
 
-		const queue = this.formatQueueName(subscriber);
+		const queue = this.queueNameFormatter.format(subscriber);
 		routingKeys.push(queue);
+
 		return routingKeys;
-	}
-
-	private formatQueueName(
-		subscriber: IDomainEventSubscriber<DomainEvent>
-	): string {
-		const value = subscriber.constructor.name;
-		const name = value
-			.split(/(?=[A-Z])/)
-			.join('_')
-			.toLowerCase();
-		return `ecommerce.${name}`;
-	}
-
-	private formatDeadLetterQueueName(
-		subscriber: IDomainEventSubscriber<DomainEvent>
-	): string {
-		const queue = this.formatQueueName(subscriber);
-		return `dead_letter.${queue}`;
 	}
 }

@@ -2,12 +2,12 @@ import { ConsumeMessage } from 'amqplib';
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
-import { RabbitMqConnection } from './rabbit-mq-connection';
+import { RabbitMQConnection } from './rabbit-mq-connection';
 
 interface RabbitMqConsumerParams {
 	subscriber: IDomainEventSubscriber<DomainEvent>;
 	deserializer: DomainEventDeserializer;
-	connection: RabbitMqConnection;
+	connection: RabbitMQConnection;
 	maxRetries: Number;
 	queueName: string;
 	exchange: string;
@@ -18,7 +18,7 @@ export class RabbitMqConsumer {
 	private queueName: string;
 	private subscriber: IDomainEventSubscriber<DomainEvent>;
 	private deserializer: DomainEventDeserializer;
-	private connection: RabbitMqConnection;
+	private connection: RabbitMQConnection;
 	private maxRetries: Number;
 
 	constructor(params: RabbitMqConsumerParams) {

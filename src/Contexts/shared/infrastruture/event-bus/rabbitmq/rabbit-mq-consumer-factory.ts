@@ -1,12 +1,12 @@
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
-import { RabbitMqConnection } from './rabbit-mq-connection';
+import { RabbitMQConnection } from './rabbit-mq-connection';
 import { RabbitMqConsumer } from './rabbit-mq-consumer';
 
 export class RabbitMqConsumerFactory {
 	constructor(
-		private connection: RabbitMqConnection,
+		private connection: RabbitMQConnection,
 		private deserializer: DomainEventDeserializer,
 		private maxRetries: Number
 	) {}

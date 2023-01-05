@@ -1,4 +1,4 @@
-import { ConfigureRabbitMQCommand } from './ConfigureRabbitMQCommand';
+import { ConfigureRabbitMQCommand } from './configure-rabbitmq-command';
 
 ConfigureRabbitMQCommand.run()
 	.then(() => {

@@ -33,6 +33,8 @@ export enum containerTypes {
 	eventBus = 'eventBus',
 	categoryCreatedHandler = 'categoryCreatedHandler',
 	rabbitMqEventBus = 'rabbitMqEventBus',
-	rabbitMqConnection = 'rabbitMqConnection',
-	rabbitMQqueueFormatter = 'rabbitMQqueueFormatter',
+	rabbitMQConnection = 'rabbitMQConnection',
+	rabbitMQQueueFormatter = 'rabbitMQQueueFormatter',
+	rabbitMQConfigFactory = 'rabbitMQConfigFactory',
+	rabbitMQConfigurer = 'rabbitMQConfigurer',
 }
