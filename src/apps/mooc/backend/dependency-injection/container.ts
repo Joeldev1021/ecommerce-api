@@ -30,9 +30,11 @@ import { ProductRepository } from '../../../../Contexts/product/infrastructure/r
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
-import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-queue-formatter';
+import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/file-ex/rabbit-mq-queue-formatter';
 import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-confg-factory';
-import { RabbitMQConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
+import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
+import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
+import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -135,7 +137,16 @@ container.register(
 	RabbitMQQueueFormatter
 );
 container.register(containerTypes.rabbitMQConfigFactory, RabbitMQConfigFactory);
-container.register(containerTypes.rabbitMQConfigurer, RabbitMQConfigurer);
+container.register(containerTypes.rabbitMQConfigurer, RabbitMqConfigurer);
+container.register(
+	containerTypes.domainEventFailoverPublisher,
+	DomainEventFailoverPublisher
+);
+
+container.register(
+	containerTypes.domainEventDeserializer,
+	DomainEventDeserializer
+);
 
 /* event handler */
 

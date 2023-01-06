@@ -1,9 +1,7 @@
 import amqplib, { ConsumeMessage } from 'amqplib';
 import { injectable } from 'tsyringe';
-import { RabbitMQExchangeNameFormatter } from './rabbit-qm-exchange-name-formatter';
 import { configSettings } from './config/index';
-
-interface RabbitMqPublicationParams {
+interface IRabbitMqPublicationParams {
 	exchange: string;
 	routingKey: string;
 	content: Buffer;
@@ -20,83 +18,24 @@ interface RabbitMqPublicationParams {
 export class RabbitMQConnection {
 	private connection?: amqplib.Connection;
 	private channel?: amqplib.ConfirmChannel;
-	private connectionSettings = configSettings;
 
 	async connect(): Promise<void> {
-		this.connection = await this.amqpConnect();
-		this.channel = await this.amqpChannel();
+		this.connection = await this.createConnection();
+		this.channel = await this.createChannel();
+		console.log('RabbitMq conected');
 	}
 
-	async exchange(
-		exchangeName: string
-	): Promise<amqplib.Replies.AssertExchange | undefined> {
-		return await this.channel?.assertExchange(exchangeName, 'topic', {
-			durable: true,
-		});
-	}
+	private async createConnection(): Promise<amqplib.Connection> {
+		const { vhost, username, password } = configSettings;
+		const { hostname, port, secure } = configSettings.connection;
 
-	async queue(params: {
-		exchange: string;
-		name: string;
-		routingKeys: string[];
-		deadLetterExchange?: string;
-		deadLetterQueue?: string;
-		messageTtl?: Number;
-	}): Promise<void> {
-		const durable = true;
-		const exclusive = false;
-		const autoDelete = false;
-		const args = this.getQueueArguments(params);
-		await this.channel?.assertQueue(params.name, {
-			exclusive,
-			durable,
-			autoDelete,
-			arguments: args,
-		});
-		for (const routingKey of params.routingKeys) {
-			await this.channel?.bindQueue(params.name, params.exchange, routingKey);
-		}
-	}
-
-	private getQueueArguments(params: {
-		exchange: string;
-		name: string;
-		routingKeys: string[];
-		deadLetterExchange?: string;
-		deadLetterQueue?: string;
-		messageTtl?: Number;
-	}): any {
-		let args: any = {};
-		if (params.deadLetterExchange) {
-			args = { ...args, 'x-dead-letter-exchange': params.deadLetterExchange };
-		}
-		if (params.deadLetterQueue) {
-			args = { ...args, 'x-dead-letter-routing-key': params.deadLetterQueue };
-		}
-		if (params.messageTtl) {
-			args = { ...args, 'x-message-ttl': params.messageTtl };
-		}
-
-		return args;
-	}
-
-	async deleteQueue(
-		queue: string
-	): Promise<amqplib.Replies.DeleteQueue | undefined> {
-		return await this.channel?.deleteQueue(queue);
-	}
-
-	/* create connection */
-	private async amqpConnect(): Promise<amqplib.Connection> {
-		const { hostname, port, secure } = this.connectionSettings.connection;
-		const { username, password, vhost } = this.connectionSettings;
 		const connection = await amqplib.connect({
+			vhost,
+			username,
+			password,
 			protocol: secure ? 'amqps' : 'amqp',
 			hostname,
 			port,
-			username,
-			password,
-			vhost,
 		});
 
 		connection.on('error', (err: any) => {
@@ -106,17 +45,17 @@ export class RabbitMQConnection {
 		return connection;
 	}
 
-	/* createChanel */
-	private async amqpChannel(): Promise<amqplib.ConfirmChannel | undefined> {
+	private async createChannel(): Promise<amqplib.ConfirmChannel | undefined> {
 		const channel = await this.connection?.createConfirmChannel();
 		await channel?.prefetch(1);
+
 		return channel;
 	}
 
-	async publish(params: RabbitMqPublicationParams): Promise<void> {
+	async publish(params: IRabbitMqPublicationParams): Promise<void> {
 		const { routingKey, content, options, exchange } = params;
 
-		return await new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			this.channel?.publish(
 				exchange,
 				routingKey,
@@ -127,34 +66,14 @@ export class RabbitMQConnection {
 		});
 	}
 
-	async close(): Promise<void> {
-		await this.channel?.close();
-		return await this.connection?.close();
-	}
-
 	async consume(
 		queue: string,
 		onMessage: (message: ConsumeMessage) => {}
 	): Promise<void> {
 		await this.channel?.consume(queue, (message: ConsumeMessage | null) => {
 			if (!message) return;
+
 			onMessage(message);
-		});
-	}
-
-	async retry(
-		message: ConsumeMessage,
-		queue: string,
-		exchange: string
-	): Promise<any> {
-		const retryExchange = RabbitMQExchangeNameFormatter.retry(exchange);
-		const options = this.getMessageOptions(message);
-
-		return await this.publish({
-			exchange: retryExchange,
-			routingKey: queue,
-			content: message.content,
-			options,
 		});
 	}
 
@@ -183,34 +102,64 @@ export class RabbitMQConnection {
 		});
 	}
 
-	private getMessageOptions(message: ConsumeMessage): any {
-		const { messageId, contentType, contentEncoding, priority } =
-			message.properties;
-		const options = {
-			messageId,
-			headers: this.incrementRedeliveryCount(message),
-			contentType,
-			contentEncoding,
-			priority,
-		};
-		return options;
+	async close(): Promise<void> {
+		await this.channel?.close();
+		return await this.connection?.close();
 	}
 
-	private async incrementRedeliveryCount(
-		message: ConsumeMessage
-	): Promise<amqplib.MessagePropertyHeaders> {
-		if (this.hasBeenRedelivered(message)) {
-			const count = parseInt(message.properties.headers.redelivery_count);
-			message.properties.headers.redelivery_count = count + 1;
-		} else {
-			message.properties.headers.redelivery_count = 1;
+	async exchange(
+		exchangeName: string
+	): Promise<amqplib.Replies.AssertExchange | undefined> {
+		return this.channel?.assertExchange(exchangeName, 'topic', {
+			durable: true,
+		});
+	}
+
+	async queue(params: {
+		exchange: string;
+		name: string;
+		routingKeys: string[];
+		deadLetterExchange?: string;
+		deadletterQueue?: string;
+		messageTtl?: Number;
+	}): Promise<void> {
+		const durable = true;
+		const exclusive = false;
+		const autoDelete = false;
+		const args = this.getQueueArguments(params);
+
+		await this.channel?.assertQueue(params.name, {
+			exclusive,
+			durable,
+			autoDelete,
+			arguments: args,
+		});
+
+		for (const routingKey of params.routingKeys) {
+			await this.channel?.bindQueue(params.name, params.exchange, routingKey);
+		}
+	}
+
+	private getQueueArguments(params: {
+		exchange: string;
+		name: string;
+		routingKeys: string[];
+		deadLetterExchange?: string;
+		deadLetterQueue?: string;
+		messageTtl?: Number;
+	}): any {
+		let args: any = {};
+		if (params.deadLetterExchange) {
+			args = { ...args, 'x-dead-letter-exchange': params.deadLetterExchange };
+		}
+		if (params.deadLetterQueue) {
+			args = { ...args, 'x-dead-letter-routing-key': params.deadLetterQueue };
+		}
+		if (params.messageTtl) {
+			args = { ...args, 'x-message-ttl': params.messageTtl };
 		}
 
-		return message.properties.headers;
-	}
-
-	private hasBeenRedelivered(message: ConsumeMessage): any {
-		return message.properties.headers.redelivery_count !== undefined;
+		return args;
 	}
 
 	public connectionExists(): boolean {

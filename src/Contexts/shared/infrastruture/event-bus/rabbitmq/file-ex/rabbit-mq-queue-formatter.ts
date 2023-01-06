@@ -1,6 +1,6 @@
 import { injectable } from 'tsyringe';
-import { DomainEvent } from '../../../domain/domain-event';
-import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
+import { DomainEvent } from '../../../../domain/domain-event';
+import { IDomainEventSubscriber } from '../../../../domain/domain-event-subscriber';
 
 @injectable()
 export class RabbitMQQueueFormatter {
