@@ -32,4 +32,11 @@ export enum containerTypes {
 	/* ===================== product ========================*/
 	eventBus = 'eventBus',
 	categoryCreatedHandler = 'categoryCreatedHandler',
+	rabbitMqEventBus = 'rabbitMqEventBus',
+	rabbitMQConnection = 'rabbitMQConnection',
+	rabbitMQQueueFormatter = 'rabbitMQQueueFormatter',
+	rabbitMQConfigFactory = 'rabbitMQConfigFactory',
+	rabbitMQConfigurer = 'rabbitMQConfigurer',
+	domainEventFailoverPublisher = 'domainEventFailoverPublisher',
+	domainEventDeserializer = 'domainEventDeserializer',
 }

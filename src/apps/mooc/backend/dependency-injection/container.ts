@@ -28,6 +28,13 @@ import { ProductDeleteUseCase } from '../../../../Contexts/product/application/u
 import { ProductUpdateUseCase } from '../../../../Contexts/product/application/usecases/product-update.usecase';
 import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
+import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
+import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
+import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/file-ex/rabbit-mq-queue-formatter';
+import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-confg-factory';
+import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
+import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
+import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -117,9 +124,30 @@ container.register(
 container.register(containerTypes.productDeleteUseCase, ProductDeleteUseCase);
 container.register(containerTypes.productUpdateUseCase, ProductUpdateUseCase);
 container.register(containerTypes.productFindAllUseCase, ProductFindAllUseCase);
-
 container.register(containerTypes.productRepository, ProductRepository);
+
+/* event bus */
 container.register(containerTypes.eventBus, EventBus);
+container.register(containerTypes.rabbitMqEventBus, RabbitMqEventBus);
+
+/* rabbit mq */
+container.register(containerTypes.rabbitMQConnection, RabbitMQConnection);
+container.register(
+	containerTypes.rabbitMQQueueFormatter,
+	RabbitMQQueueFormatter
+);
+container.register(containerTypes.rabbitMQConfigFactory, RabbitMQConfigFactory);
+container.register(containerTypes.rabbitMQConfigurer, RabbitMqConfigurer);
+container.register(
+	containerTypes.domainEventFailoverPublisher,
+	DomainEventFailoverPublisher
+);
+
+container.register(
+	containerTypes.domainEventDeserializer,
+	DomainEventDeserializer
+);
+
 /* event handler */
 
 export { container };
