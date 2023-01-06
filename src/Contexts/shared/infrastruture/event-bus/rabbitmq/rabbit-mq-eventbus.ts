@@ -1,45 +1,45 @@
 import { inject, injectable } from 'tsyringe';
 import { containerTypes } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../../domain/domain-event';
+import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 import { IEventBus } from '../../../domain/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
 import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
+//import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
 import { DomainEventSubscribers } from '../domain-event-subscribers';
 import { configSettings } from './config';
 import { RabbitMQConnection } from './rabbit-mq-connection';
 import { RabbitMqConsumerFactory } from './rabbit-mq-consumer-factory';
-import { RabbitMQQueueFormatter } from './rabbit-mq-queue-formatter';
 
 @injectable()
 export class RabbitMqEventBus implements IEventBus {
-	private failoverPublisher: DomainEventFailoverPublisher;
-	private exchange = configSettings.exchangeSettings.name;
-	private maxRetries: Number;
+	private exchange: string = configSettings.exchangeName;
+	private moduleName: string = configSettings.moduleName;
 
 	constructor(
 		@inject(containerTypes.rabbitMQConnection)
+		@inject(containerTypes.domainEventFailoverPublisher)
 		private connection: RabbitMQConnection,
-		@inject(containerTypes.rabbitMQQueueFormatter)
-		private queueNameFormatter: RabbitMQQueueFormatter
+		private domainEventFailoverPublisher: DomainEventFailoverPublisher
 	) {}
 
 	async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
-		//await this.connectToRabbitMq();
+		await this.connectToRabbitMq();
 
 		const deserializer = DomainEventDeserializer.configure(subscribers);
 		const consumerFactory = new RabbitMqConsumerFactory(
 			this.connection,
-			deserializer,
-			this.maxRetries
+			deserializer
 		);
+
 		for (const subscriber of subscribers.items) {
-			const queueName = this.queueNameFormatter.format(subscriber);
+			const queueName = this.formatQueueName(subscriber);
 			const rabbitMqConsumer = consumerFactory.build(
 				subscriber,
 				this.exchange,
 				queueName
 			);
-			console.log(rabbitMqConsumer);
+
 			await this.connection.consume(
 				queueName,
 				rabbitMqConsumer.onMessage.bind(rabbitMqConsumer)
@@ -54,10 +54,8 @@ export class RabbitMqEventBus implements IEventBus {
 			try {
 				const routingKey = event.eventName;
 				const content = this.toBuffer(event);
-				const options = this.options(event);
-				console.log('eventName', routingKey);
-				console.log('exchange', this.exchange);
-				console.log('option', options);
+				const options = this.getOptions(event);
+
 				await this.connection.publish({
 					exchange: this.exchange,
 					routingKey,
@@ -65,7 +63,7 @@ export class RabbitMqEventBus implements IEventBus {
 					options,
 				});
 			} catch (error: any) {
-				await this.failoverPublisher.publish(event);
+				await this.domainEventFailoverPublisher.publish(event);
 			}
 		}
 	}
@@ -84,7 +82,7 @@ export class RabbitMqEventBus implements IEventBus {
 		return Buffer.from(eventPrimitives);
 	}
 
-	private options(event: DomainEvent): {
+	private getOptions(event: DomainEvent): {
 		messageId: string;
 		contentType: string;
 		contentEncoding: string;
@@ -94,6 +92,17 @@ export class RabbitMqEventBus implements IEventBus {
 			contentType: 'application/json',
 			contentEncoding: 'utf-8',
 		};
+	}
+
+	private formatQueueName(
+		subscriber: IDomainEventSubscriber<DomainEvent>
+	): string {
+		const value = subscriber.constructor.name;
+		const name = value
+			.split(/(?=[A-Z])/)
+			.join('_')
+			.toLowerCase();
+		return `${this.moduleName}.${name}`;
 	}
 
 	private async connectToRabbitMq(): Promise<void> {

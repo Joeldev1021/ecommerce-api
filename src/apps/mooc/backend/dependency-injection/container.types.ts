@@ -37,4 +37,6 @@ export enum containerTypes {
 	rabbitMQQueueFormatter = 'rabbitMQQueueFormatter',
 	rabbitMQConfigFactory = 'rabbitMQConfigFactory',
 	rabbitMQConfigurer = 'rabbitMQConfigurer',
+	domainEventFailoverPublisher = 'domainEventFailoverPublisher',
+	domainEventDeserializer = 'domainEventDeserializer',
 }

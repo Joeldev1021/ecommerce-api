@@ -7,22 +7,20 @@ import { RabbitMqConsumer } from './rabbit-mq-consumer';
 export class RabbitMqConsumerFactory {
 	constructor(
 		private connection: RabbitMQConnection,
-		private deserializer: DomainEventDeserializer,
-		private maxRetries: Number
+		private deserializer: DomainEventDeserializer
 	) {}
 
 	build(
 		subscriber: IDomainEventSubscriber<DomainEvent>,
 		exchange: string,
-		queueName: string
+		queue: string
 	): RabbitMqConsumer {
 		return new RabbitMqConsumer({
-			subscriber,
-			deserializer: this.deserializer,
 			connection: this.connection,
-			queueName,
+			deserializer: this.deserializer,
+			queue,
+			subscriber,
 			exchange,
-			maxRetries: this.maxRetries,
 		});
 	}
 }

@@ -29,7 +29,6 @@ export class CategoryCreateUseCase {
 		//if (categoryExists != null) throw new CategoryIdAlreadyInUseException();
 		//const categoryName = await this._categoryRepository.findByName(name);
 		//if (categoryName != null) throw new CategoryNameAlreadyInUseException();
-
 		const categoryModel = CategoryModel.create(id, name, description, state);
 		//await this._categoryRepository.create(categoryModel);
 		await this._eventBus.publish(categoryModel.pullDomainEvents());
