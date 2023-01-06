@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import categoryRepository, {
@@ -9,7 +9,7 @@ import categoryRepository, {
 @injectable()
 export class CategoryDeleteUseCase {
 	constructor(
-		@inject(containerTypes.categoryRepository)
+		@inject(CONTAINER_TYPE.categoryRepository)
 		private readonly categoryRepository: CategoryRepository
 	) {}
 

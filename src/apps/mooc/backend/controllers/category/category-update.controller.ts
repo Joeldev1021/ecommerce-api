@@ -5,12 +5,12 @@ import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objec
 import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryUpdateController {
 	constructor(
-		@inject(containerTypes.productUpdateUseCase)
+		@inject(CONTAINER_TYPE.productUpdateUseCase)
 		private readonly _categoryUpdateUseCase: CategoryUpdateUseCase
 	) {}
 

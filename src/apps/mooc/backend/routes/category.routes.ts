@@ -5,23 +5,23 @@ import { CategoryFindAllController } from '../controllers/category/category-find
 import { CategoryFindByIdController } from '../controllers/category/category-find-by-id-controller';
 import { CategoryUpdateController } from '../controllers/category/category-update.controller';
 import { container } from '../dependency-injection/container';
-import { containerTypes } from '../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../dependency-injection/container.types';
 
 const router = Router();
 
 const categoryCreateController = container.resolve<CategoryCreateController>(
-	containerTypes.categoryCreateController
+	CONTAINER_TYPE.categoryCreateController
 );
 const categoryFindAllController = container.resolve<CategoryFindAllController>(
-	containerTypes.categoryFindAllController
+	CONTAINER_TYPE.categoryFindAllController
 );
 const categoryFindByIdController =
 	container.resolve<CategoryFindByIdController>(
-		containerTypes.categoryFindByIdController
+		CONTAINER_TYPE.categoryFindByIdController
 	);
 
 const categoryUpdateController = container.resolve<CategoryUpdateController>(
-	containerTypes.categoryUpdateController
+	CONTAINER_TYPE.categoryUpdateController
 );
 const categoryDeleteController = container.resolve<CategoryDeleteController>(
 	CategoryDeleteController

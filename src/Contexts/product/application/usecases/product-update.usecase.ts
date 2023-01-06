@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
@@ -9,7 +9,7 @@ import { IProductRepository } from '../../domain/repositories/product.repository
 @injectable()
 export class ProductUpdateUseCase {
 	constructor(
-		@inject(containerTypes.productRepository)
+		@inject(CONTAINER_TYPE.productRepository)
 		private readonly _productRepository: IProductRepository
 	) {}
 

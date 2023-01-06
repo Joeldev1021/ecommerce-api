@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import { ProductDeleteUseCase } from '../../../../../Contexts/product/application/usecases/product-delete.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
 
 @injectable()
 export class ProductDeleteController {
 	constructor(
-		@inject(containerTypes.productDeleteUseCase)
+		@inject(CONTAINER_TYPE.productDeleteUseCase)
 		private readonly _productDeleteUseCase: ProductDeleteUseCase
 	) {}
 

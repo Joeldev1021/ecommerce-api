@@ -1,5 +1,5 @@
 import { container } from 'tsyringe';
-import { containerTypes } from './container.types';
+import { CONTAINER_TYPE } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryFindByIdController } from '../controllers/category/category-find-by-id-controller';
 import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
@@ -40,111 +40,111 @@ export enum TagEventHandler {
 	EventHandler = 'EventHandler',
 }
 container.register(
-	containerTypes.userRegisterController,
+	CONTAINER_TYPE.userRegisterController,
 	UserRegisterController
 );
-container.register(containerTypes.userLoginController, UserLoginController);
+container.register(CONTAINER_TYPE.userLoginController, UserLoginController);
 
-container.register(containerTypes.userLoginUseCase, UserLoginUseCase);
+container.register(CONTAINER_TYPE.userLoginUseCase, UserLoginUseCase);
 
-container.register(containerTypes.userRegisterUseCase, {
+container.register(CONTAINER_TYPE.userRegisterUseCase, {
 	useClass: UserRegisterUseCase,
 });
 
-container.register(containerTypes.userRepository, UserRepository);
+container.register(CONTAINER_TYPE.userRepository, UserRepository);
 container.register(
-	containerTypes.categoryCreateController,
+	CONTAINER_TYPE.categoryCreateController,
 	CategoryCreateController
 );
 container.register(
-	containerTypes.categoryFindAllController,
+	CONTAINER_TYPE.categoryFindAllController,
 	CategoryFindByIdController
 );
 
 /* category controller */
 container.register(
-	containerTypes.categoryFindByIdController,
+	CONTAINER_TYPE.categoryFindByIdController,
 	CategoryFindByIdController
 );
 container.register(
-	containerTypes.categoryDeleteController,
+	CONTAINER_TYPE.categoryDeleteController,
 	CategoryDeleteController
 );
 container.register(
-	containerTypes.categoryUpdateController,
+	CONTAINER_TYPE.categoryUpdateController,
 	CategoryUpdateController
 );
 container.register(
-	containerTypes.categoryFindAllController,
+	CONTAINER_TYPE.categoryFindAllController,
 	CategoryFindAllController
 );
 /* category usecase */
-container.register(containerTypes.categoryCreateUseCase, CategoryCreateUseCase);
+container.register(CONTAINER_TYPE.categoryCreateUseCase, CategoryCreateUseCase);
 container.register(
-	containerTypes.categoryFindByIdUseCase,
+	CONTAINER_TYPE.categoryFindByIdUseCase,
 	CategoryFindByIdUseCase
 );
-container.register(containerTypes.categoryDeleteUseCase, CategoryDeleteUseCase);
-container.register(containerTypes.categoryUpdateUseCase, CategoryUpdateUseCase);
+container.register(CONTAINER_TYPE.categoryDeleteUseCase, CategoryDeleteUseCase);
+container.register(CONTAINER_TYPE.categoryUpdateUseCase, CategoryUpdateUseCase);
 container.register(
-	containerTypes.categoryFindAllUseCase,
+	CONTAINER_TYPE.categoryFindAllUseCase,
 	CategoryFindAllUseCase
 );
-container.register(containerTypes.categoryRepository, CategoryRepository);
+container.register(CONTAINER_TYPE.categoryRepository, CategoryRepository);
 
 /* product  controller*/
 container.register(
-	containerTypes.productCreateController,
+	CONTAINER_TYPE.productCreateController,
 	ProductCreateController
 );
 container.register(
-	containerTypes.productFindByIdController,
+	CONTAINER_TYPE.productFindByIdController,
 	ProductFindByIdController
 );
 container.register(
-	containerTypes.productDeleteController,
+	CONTAINER_TYPE.productDeleteController,
 	ProductDeleteController
 );
 container.register(
-	containerTypes.productUpdateController,
+	CONTAINER_TYPE.productUpdateController,
 	ProductUpdateController
 );
 
 container.register(
-	containerTypes.productFindAllController,
+	CONTAINER_TYPE.productFindAllController,
 	ProductFindAllController
 );
 /* product usecase */
 
-container.register(containerTypes.productCreateUseCase, ProductCreateUseCase);
+container.register(CONTAINER_TYPE.productCreateUseCase, ProductCreateUseCase);
 container.register(
-	containerTypes.productFindByIdUseCase,
+	CONTAINER_TYPE.productFindByIdUseCase,
 	ProductFindByIdUseCase
 );
-container.register(containerTypes.productDeleteUseCase, ProductDeleteUseCase);
-container.register(containerTypes.productUpdateUseCase, ProductUpdateUseCase);
-container.register(containerTypes.productFindAllUseCase, ProductFindAllUseCase);
-container.register(containerTypes.productRepository, ProductRepository);
+container.register(CONTAINER_TYPE.productDeleteUseCase, ProductDeleteUseCase);
+container.register(CONTAINER_TYPE.productUpdateUseCase, ProductUpdateUseCase);
+container.register(CONTAINER_TYPE.productFindAllUseCase, ProductFindAllUseCase);
+container.register(CONTAINER_TYPE.productRepository, ProductRepository);
 
 /* event bus */
-container.register(containerTypes.eventBus, EventBus);
-container.register(containerTypes.rabbitMqEventBus, RabbitMqEventBus);
+container.register(CONTAINER_TYPE.eventBus, EventBus);
+container.register(CONTAINER_TYPE.rabbitMqEventBus, RabbitMqEventBus);
 
 /* rabbit mq */
-container.register(containerTypes.rabbitMQConnection, RabbitMQConnection);
+container.register(CONTAINER_TYPE.rabbitMQConnection, RabbitMQConnection);
 container.register(
-	containerTypes.rabbitMQQueueFormatter,
+	CONTAINER_TYPE.rabbitMQQueueFormatter,
 	RabbitMQQueueFormatter
 );
-container.register(containerTypes.rabbitMQConfigFactory, RabbitMQConfigFactory);
-container.register(containerTypes.rabbitMQConfigurer, RabbitMqConfigurer);
+container.register(CONTAINER_TYPE.rabbitMQConfigFactory, RabbitMQConfigFactory);
+container.register(CONTAINER_TYPE.rabbitMQConfigurer, RabbitMqConfigurer);
 container.register(
-	containerTypes.domainEventFailoverPublisher,
+	CONTAINER_TYPE.domainEventFailoverPublisher,
 	DomainEventFailoverPublisher
 );
 
 container.register(
-	containerTypes.domainEventDeserializer,
+	CONTAINER_TYPE.domainEventDeserializer,
 	DomainEventDeserializer
 );
 

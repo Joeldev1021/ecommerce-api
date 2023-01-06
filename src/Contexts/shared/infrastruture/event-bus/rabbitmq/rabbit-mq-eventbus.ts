@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 import { IEventBus } from '../../../domain/event-bus';
@@ -17,8 +17,8 @@ export class RabbitMqEventBus implements IEventBus {
 	private moduleName: string = configSettings.moduleName;
 
 	constructor(
-		@inject(containerTypes.rabbitMQConnection)
-		@inject(containerTypes.domainEventFailoverPublisher)
+		@inject(CONTAINER_TYPE.rabbitMQConnection)
+		@inject(CONTAINER_TYPE.domainEventFailoverPublisher)
 		private connection: RabbitMQConnection,
 		private domainEventFailoverPublisher: DomainEventFailoverPublisher
 	) {}

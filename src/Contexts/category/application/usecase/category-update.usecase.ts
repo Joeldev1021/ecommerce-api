@@ -6,12 +6,12 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryRepository } from '../../infrastructure/repositories/category.repository';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class CategoryUpdateUseCase {
 	constructor(
-		@inject(containerTypes.categoryRepository)
+		@inject(CONTAINER_TYPE.categoryRepository)
 		private readonly _categoryRepository: CategoryRepository
 	) {}
 

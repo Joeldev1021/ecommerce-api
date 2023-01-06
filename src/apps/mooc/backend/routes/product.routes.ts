@@ -5,24 +5,24 @@ import { ProductDeleteController } from '../controllers/product/product-delete.c
 import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
 import { ProductFindByIdController } from '../controllers/product/product-find-by-id.controller';
 import { ProductUpdateController } from '../controllers/product/product-update.controller';
-import { containerTypes } from '../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../dependency-injection/container.types';
 
 const router = Router();
 
 const productFindAllController = container.resolve<ProductFindAllController>(
-	containerTypes.productFindAllController
+	CONTAINER_TYPE.productFindAllController
 );
 const productFindByIdController = container.resolve<ProductFindByIdController>(
 	ProductFindByIdController
 );
 const productCreateController = container.resolve<ProductCreateController>(
-	containerTypes.productCreateController
+	CONTAINER_TYPE.productCreateController
 );
 const productDeleteController = container.resolve<ProductDeleteController>(
-	containerTypes.productDeleteController
+	CONTAINER_TYPE.productDeleteController
 );
 const productUpdateController = container.resolve<ProductUpdateController>(
-	containerTypes.productUpdateController
+	CONTAINER_TYPE.productUpdateController
 );
 
 router.post('/', productCreateController.execute.bind(productCreateController));

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
 import { CategoryCreateUseCase } from '../../../../../Contexts/category/application/usecase/category-create.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
@@ -10,7 +10,7 @@ import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/sta
 @injectable()
 export class CategoryCreateController {
 	constructor(
-		@inject(containerTypes.categoryCreateUseCase)
+		@inject(CONTAINER_TYPE.categoryCreateUseCase)
 		private readonly _categoryCreateUseCase: CategoryCreateUseCase
 	) {}
 

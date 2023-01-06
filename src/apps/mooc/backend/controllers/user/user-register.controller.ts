@@ -8,12 +8,12 @@ import { EmailVO } from '../../../../../Contexts/user/domain/value-objects/email
 import { PasswordVO } from '../../../../../Contexts/user/domain/value-objects/password.vo';
 import { UserRegisterDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-register.dto';
 import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
 
 @injectable()
 export class UserRegisterController {
 	constructor(
-		@inject(containerTypes.userRegisterUseCase)
+		@inject(CONTAINER_TYPE.userRegisterUseCase)
 		private readonly _userRegisterUseCase: UserRegisterUseCase
 	) {}
 

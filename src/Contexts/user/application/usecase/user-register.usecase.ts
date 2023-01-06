@@ -5,7 +5,7 @@ import { IUserRepository } from '../../domain/repositories/user.repository';
 import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { UserModel } from '../../..//user/domain/models/user.model';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
@@ -14,7 +14,7 @@ import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 @injectable()
 export class UserRegisterUseCase {
 	constructor(
-		@inject(containerTypes.userRepository)
+		@inject(CONTAINER_TYPE.userRepository)
 		private readonly _userRepository: IUserRepository
 	) {}
 

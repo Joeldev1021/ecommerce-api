@@ -1,4 +1,4 @@
-export enum containerTypes {
+export enum CONTAINER_TYPE {
 	userRegisterController = 'userRegisterController',
 	userLoginController = 'userLoginController',
 	userRegisterUseCase = 'userRegisterUseCase',

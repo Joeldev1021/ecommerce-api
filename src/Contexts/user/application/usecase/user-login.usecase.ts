@@ -3,12 +3,12 @@ import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { inject, injectable } from 'tsyringe';
 import { UserNotFoundException } from '../errors/user-not-found.exception';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class UserLoginUseCase {
 	constructor(
-		@inject(containerTypes.userRepository)
+		@inject(CONTAINER_TYPE.userRepository)
 		private readonly _userRepository: IUserRepository
 	) {}
 

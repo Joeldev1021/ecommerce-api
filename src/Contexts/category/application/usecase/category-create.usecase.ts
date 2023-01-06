@@ -7,15 +7,15 @@ import { CategoryRepository } from '../../infrastructure/repositories/category.r
 import { inject, injectable } from 'tsyringe';
 import { CategoryIdAlreadyInUseException } from '../error/category-id-already-in-use.exception';
 import { CategoryNameAlreadyInUseException } from '../error/category-name-already-exists.exception';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { RabbitMqEventBus } from '../../../shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 
 @injectable()
 export class CategoryCreateUseCase {
 	constructor(
-		@inject(containerTypes.categoryRepository)
+		@inject(CONTAINER_TYPE.categoryRepository)
 		private readonly _categoryRepository: CategoryRepository,
-		@inject(containerTypes.rabbitMqEventBus)
+		@inject(CONTAINER_TYPE.rabbitMqEventBus)
 		private readonly _eventBus: RabbitMqEventBus
 	) {}
 

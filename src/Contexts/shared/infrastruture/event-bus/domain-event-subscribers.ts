@@ -15,7 +15,6 @@ export class DomainEventSubscribers {
 		const subscribers = container.resolveAll<
 			IDomainEventSubscriber<DomainEvent>
 		>(TagEventHandler.EventHandler);
-		console.log(subscribers);
 		return new DomainEventSubscribers(subscribers);
 	}
 }
