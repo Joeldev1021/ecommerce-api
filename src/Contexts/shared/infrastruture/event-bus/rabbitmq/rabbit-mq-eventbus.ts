@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import { CONTAINER_TYPE } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../../domain/domain-event';
-import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
-import { IEventBus } from '../../../domain/event-bus';
+import { IDomainEventSubscriber } from '../../../domain/interface/domain-event-subscriber';
+import { IEventBus } from '../../../domain/interface/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
 import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
 //import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';

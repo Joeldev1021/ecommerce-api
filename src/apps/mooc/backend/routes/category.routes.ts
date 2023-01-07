@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
 import { CategoryFindAllController } from '../controllers/category/category-find-all.controller';
-import { CategoryFindByIdController } from '../controllers/category/category-find-by-id-controller';
+import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
+import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
 import { CategoryUpdateController } from '../controllers/category/category-update.controller';
 import { container } from '../dependency-injection/container';
 import { CONTAINER_TYPE } from '../dependency-injection/container.types';
@@ -24,7 +25,17 @@ const categoryUpdateController = container.resolve<CategoryUpdateController>(
 	CONTAINER_TYPE.categoryUpdateController
 );
 const categoryDeleteController = container.resolve<CategoryDeleteController>(
-	CategoryDeleteController
+	CONTAINER_TYPE.categoryDeleteController
+);
+
+const categoryFindCounterController =
+	container.resolve<CategoryFindCounterController>(
+		CONTAINER_TYPE.categoryFindCounterController
+	);
+
+router.get(
+	'/counter',
+	categoryFindCounterController.execute.bind(categoryFindCounterController)
 );
 
 router.post(

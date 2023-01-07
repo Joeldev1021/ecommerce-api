@@ -10,6 +10,7 @@ export enum CONTAINER_TYPE {
 	categoryDeleteController = 'categoryDeleteController',
 	categoryUpdateController = 'categoryUpdateController',
 	categoryFindAllController = 'categoryFindAllController',
+	categoryFindCounterController = 'categoryFindCounterController',
 	categoryCreateUseCase = 'categoryCreateUseCase',
 	categoryFindByIdUseCase = 'categoryFindByIdUseCase',
 	categoryDeleteUseCase = 'categoryDeleteUseCase',
@@ -39,4 +40,10 @@ export enum CONTAINER_TYPE {
 	rabbitMQConfigurer = 'rabbitMQConfigurer',
 	domainEventFailoverPublisher = 'domainEventFailoverPublisher',
 	domainEventDeserializer = 'domainEventDeserializer',
+	/* ===================== CQRS =========================*/
+	commandHandlers = 'commandHandlers',
+	commandBus = 'commandBus',
+	queryHandlers = 'queryHandlers',
+	queryBus = 'queryBus',
+	categoryFindCounter = 'categoryFindCounter',
 }

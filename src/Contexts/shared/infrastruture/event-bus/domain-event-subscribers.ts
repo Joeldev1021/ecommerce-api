@@ -1,5 +1,5 @@
 import { DomainEvent } from '../../domain/domain-event';
-import { IDomainEventSubscriber } from '../../domain/domain-event-subscriber';
+import { IDomainEventSubscriber } from '../../domain/interface/domain-event-subscriber';
 import { DependencyContainer, registry } from 'tsyringe';
 import { TagEventHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
 import { CategoryCreatedHandler } from '../../../category/domain/events/category-created.handler';

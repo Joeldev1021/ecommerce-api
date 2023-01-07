@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 import { CONTAINER_TYPE } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
-import { CategoryFindByIdController } from '../controllers/category/category-find-by-id-controller';
+import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
 import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
 import { CategoryUpdateController } from '../controllers/category/category-update.controller';
 import { CategoryFindAllController } from '../controllers/category/category-find-all.controller';
@@ -35,6 +35,12 @@ import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture
 import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
 import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
 import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
+import { CommandHandlers } from '../../../../Contexts/shared/infrastruture/command-bus/command-handlers';
+import { QueryHandlers } from '../../../../Contexts/shared/infrastruture/query-bus/query-handlers';
+import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/command-bus/in-memory-command-bus';
+import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
+import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
+import { CategoryFindCounter } from '../../../../Contexts/category/application/usecase/find/category-find-counter';
 
 export enum TagEventHandler {
 	EventHandler = 'EventHandler',
@@ -77,6 +83,10 @@ container.register(
 container.register(
 	CONTAINER_TYPE.categoryFindAllController,
 	CategoryFindAllController
+);
+container.register(
+	CONTAINER_TYPE.categoryFindCounterController,
+	CategoryFindCounterController
 );
 /* category usecase */
 container.register(CONTAINER_TYPE.categoryCreateUseCase, CategoryCreateUseCase);
@@ -147,7 +157,13 @@ container.register(
 	CONTAINER_TYPE.domainEventDeserializer,
 	DomainEventDeserializer
 );
-
-/* event handler */
+/* ============ CQRS ===================== */
+/* command */
+container.register(CONTAINER_TYPE.commandHandlers, CommandHandlers);
+container.register(CONTAINER_TYPE.commandBus, InMemoryCommandBus);
+/* query  */
+//container.register(CONTAINER_TYPE.queryHandlers, QueryHandlers);
+container.register(CONTAINER_TYPE.queryBus, InMemoryQueryBus);
+container.register(CONTAINER_TYPE.categoryFindCounter, CategoryFindCounter);
 
 export { container };
