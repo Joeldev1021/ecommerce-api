@@ -3,7 +3,7 @@ import { ICategoryRepository } from '../../domain/repositories/category.reposito
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { Category } from '../../../shared/infrastruture/models/category';
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { ProductCreateUseCase } from '../../../../../Contexts/product/application/usecases/product-create-usecase';
 import { PriceVO } from '../../../../../Contexts/product/domain/value-objects/price.vo';
 import { QuantityVO } from '../../../../../Contexts/product/domain/value-objects/quantity.vo';
@@ -7,12 +7,12 @@ import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objec
 import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class ProductCreateController {
 	constructor(
-		@inject(CONTAINER_TYPE.productCreateUseCase)
+		@inject(CONTAINER_TYPES.productCreateUseCase)
 		private readonly _productCreateUseCase: ProductCreateUseCase
 	) {}
 

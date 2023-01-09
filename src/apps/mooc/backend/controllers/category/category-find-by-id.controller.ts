@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { CategoryFindByIdUseCase } from '../../../../../Contexts/category/application/usecase/category-find-by-id.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindByIdController {
 	constructor(
-		@inject(CONTAINER_TYPE.categoryFindByIdUseCase)
+		@inject(CONTAINER_TYPES.categoryFindByIdUseCase)
 		private readonly _categoryFindByIdUseCase: CategoryFindByIdUseCase
 	) {}
 

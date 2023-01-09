@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { DomainEvent } from '../../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../../domain/interface/domain-event-subscriber';
 

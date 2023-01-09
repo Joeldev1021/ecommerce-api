@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { ProductFindByIdUseCase } from '../../../../../Contexts/product/application/usecases/product-find-by-id.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class ProductFindByIdController {
 	constructor(
-		@inject(CONTAINER_TYPE.productFindByIdUseCase)
+		@inject(CONTAINER_TYPES.productFindByIdUseCase)
 		private _productFindByIdUseCase: ProductFindByIdUseCase
 	) {}
 

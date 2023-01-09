@@ -1,5 +1,5 @@
-import { container, delay } from 'tsyringe';
-import { CONTAINER_TYPE } from './container.types';
+import { Container } from 'inversify';
+import { CONTAINER_TYPES, TagHandler } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
 import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
@@ -36,7 +36,6 @@ import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/ev
 import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
 import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
 import { CommandHandlers } from '../../../../Contexts/shared/infrastruture/command-bus/command-handlers';
-import { QueryHandlers } from '../../../../Contexts/shared/infrastruture/query-bus/query-handlers';
 import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/command-bus/in-memory-command-bus';
 import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
@@ -44,134 +43,167 @@ import { CategoryFindCounter } from '../../../../Contexts/category/application/u
 import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/usecase/find/category-find-counter.queryHandler';
 import { IQueryHandler } from '../../../../Contexts/shared/domain/interface/query-handler';
 import { IResponse } from '../../../../Contexts/shared/domain/interface/response';
-import Query from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
+import { IEventBus } from '../../../../Contexts/shared/domain/interface/event-bus';
+import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/events/category-created.handler';
+import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bus';
+import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
+import { CategoryCreateCommand } from '../../../../Contexts/category/domain/command/category-created.command';
+import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/usecase/command/category-create-command.handler';
 
-export enum TagHandler {
-	EventHandler = 'EventHandler',
-	queryHandler = 'QueryHandler',
-}
-container.register(
-	CONTAINER_TYPE.userRegisterController,
-	UserRegisterController
-);
-container.register(CONTAINER_TYPE.userLoginController, UserLoginController);
+const container = new Container();
 
-container.register(CONTAINER_TYPE.userLoginUseCase, UserLoginUseCase);
+container
+	.bind<UserRegisterController>(CONTAINER_TYPES.userRegisterController)
+	.to(UserRegisterController);
 
-container.register(CONTAINER_TYPE.userRegisterUseCase, {
-	useClass: UserRegisterUseCase,
-});
+container
+	.bind<UserLoginController>(CONTAINER_TYPES.userLoginController)
+	.to(UserLoginController);
 
-container.register(CONTAINER_TYPE.userRepository, UserRepository);
-container.register(
-	CONTAINER_TYPE.categoryCreateController,
-	CategoryCreateController
-);
-container.register(
-	CONTAINER_TYPE.categoryFindAllController,
-	CategoryFindByIdController
-);
+container
+	.bind<UserLoginUseCase>(CONTAINER_TYPES.userLoginUseCase)
+	.to(UserLoginUseCase);
 
+container
+	.bind<UserRegisterUseCase>(CONTAINER_TYPES.userRegisterUseCase)
+	.to(UserRegisterUseCase);
+
+container
+	.bind<UserRepository>(CONTAINER_TYPES.userRepository)
+	.to(UserRepository);
 /* category controller */
-container.register(
-	CONTAINER_TYPE.categoryFindByIdController,
-	CategoryFindByIdController
-);
-container.register(
-	CONTAINER_TYPE.categoryDeleteController,
-	CategoryDeleteController
-);
-container.register(
-	CONTAINER_TYPE.categoryUpdateController,
-	CategoryUpdateController
-);
-container.register(
-	CONTAINER_TYPE.categoryFindAllController,
-	CategoryFindAllController
-);
-container.register(
-	CONTAINER_TYPE.categoryFindCounterController,
-	CategoryFindCounterController
-);
+container
+	.bind<CategoryCreateController>(CONTAINER_TYPES.categoryCreateController)
+	.to(CategoryCreateController);
+
+container
+	.bind<CategoryFindByIdController>(CONTAINER_TYPES.categoryFindByIdController)
+	.to(CategoryFindByIdController);
+container
+	.bind<CategoryFindAllController>(CONTAINER_TYPES.categoryFindAllController)
+	.to(CategoryFindAllController);
+
+container
+	.bind<CategoryDeleteController>(CONTAINER_TYPES.categoryDeleteController)
+	.to(CategoryDeleteController);
+
+container
+	.bind<CategoryUpdateController>(CONTAINER_TYPES.categoryUpdateController)
+	.to(CategoryUpdateController);
+
+container
+	.bind<CategoryFindCounterController>(
+		CONTAINER_TYPES.categoryFindCounterController
+	)
+	.to(CategoryFindCounterController);
 /* category usecase */
-container.register(CONTAINER_TYPE.categoryCreateUseCase, CategoryCreateUseCase);
-container.register(
-	CONTAINER_TYPE.categoryFindByIdUseCase,
-	CategoryFindByIdUseCase
-);
-container.register(CONTAINER_TYPE.categoryDeleteUseCase, CategoryDeleteUseCase);
-container.register(CONTAINER_TYPE.categoryUpdateUseCase, CategoryUpdateUseCase);
-container.register(
-	CONTAINER_TYPE.categoryFindAllUseCase,
-	CategoryFindAllUseCase
-);
-container.register(CONTAINER_TYPE.categoryRepository, CategoryRepository);
+container
+	.bind<CategoryCreateUseCase>(CONTAINER_TYPES.categoryCreateUseCase)
+	.to(CategoryCreateUseCase);
+
+container
+	.bind<CategoryFindByIdUseCase>(CONTAINER_TYPES.categoryFindByIdUseCase)
+	.to(CategoryFindByIdUseCase);
+container
+	.bind<CategoryDeleteUseCase>(CONTAINER_TYPES.categoryDeleteUseCase)
+	.to(CategoryDeleteUseCase);
+container
+	.bind<CategoryUpdateUseCase>(CONTAINER_TYPES.categoryUpdateUseCase)
+	.to(CategoryUpdateUseCase);
+
+container
+	.bind<CategoryFindAllUseCase>(CONTAINER_TYPES.categoryFindAllUseCase)
+	.to(CategoryFindAllUseCase);
+container
+	.bind<CategoryRepository>(CONTAINER_TYPES.categoryRepository)
+	.to(CategoryRepository);
 
 /* product  controller*/
-container.register(
-	CONTAINER_TYPE.productCreateController,
-	ProductCreateController
-);
-container.register(
-	CONTAINER_TYPE.productFindByIdController,
-	ProductFindByIdController
-);
-container.register(
-	CONTAINER_TYPE.productDeleteController,
-	ProductDeleteController
-);
-container.register(
-	CONTAINER_TYPE.productUpdateController,
-	ProductUpdateController
-);
+container
+	.bind<ProductCreateController>(CONTAINER_TYPES.productCreateController)
+	.to(ProductCreateController);
 
-container.register(
-	CONTAINER_TYPE.productFindAllController,
-	ProductFindAllController
-);
+container
+	.bind<ProductFindByIdController>(CONTAINER_TYPES.productFindByIdController)
+	.to(ProductFindByIdController);
+container
+	.bind<ProductDeleteController>(CONTAINER_TYPES.productDeleteController)
+	.to(ProductDeleteController);
+container
+	.bind<ProductUpdateController>(CONTAINER_TYPES.productUpdateController)
+	.to(ProductUpdateController);
+
+container
+	.bind<ProductFindAllController>(CONTAINER_TYPES.productFindAllController)
+	.to(ProductFindAllController);
 /* product usecase */
 
-container.register(CONTAINER_TYPE.productCreateUseCase, ProductCreateUseCase);
-container.register(
-	CONTAINER_TYPE.productFindByIdUseCase,
-	ProductFindByIdUseCase
-);
-container.register(CONTAINER_TYPE.productDeleteUseCase, ProductDeleteUseCase);
-container.register(CONTAINER_TYPE.productUpdateUseCase, ProductUpdateUseCase);
-container.register(CONTAINER_TYPE.productFindAllUseCase, ProductFindAllUseCase);
-container.register(CONTAINER_TYPE.productRepository, ProductRepository);
+container
+	.bind<ProductCreateUseCase>(CONTAINER_TYPES.productCreateUseCase)
+	.to(ProductCreateUseCase);
+container
+	.bind<ProductFindByIdUseCase>(CONTAINER_TYPES.productFindByIdUseCase)
+	.to(ProductFindByIdUseCase);
+container
+	.bind<ProductDeleteUseCase>(CONTAINER_TYPES.productDeleteUseCase)
+	.to(ProductDeleteUseCase);
+container
+	.bind<ProductUpdateUseCase>(CONTAINER_TYPES.productUpdateUseCase)
+	.to(ProductUpdateUseCase);
+container
+	.bind<ProductFindAllUseCase>(CONTAINER_TYPES.productFindAllUseCase)
+	.to(ProductFindAllUseCase);
+container
+	.bind<ProductRepository>(CONTAINER_TYPES.productRepository)
+	.to(ProductRepository);
 
 /* event bus */
-container.register(CONTAINER_TYPE.eventBus, EventBus);
-container.register(CONTAINER_TYPE.rabbitMqEventBus, RabbitMqEventBus);
+
+container.bind<IEventBus>(CONTAINER_TYPES.eventBus).to(EventBus);
+container
+	.bind<IEventBus>(CONTAINER_TYPES.rabbitMqEventBus)
+	.to(RabbitMqEventBus);
 
 /* rabbit mq */
-container.register(CONTAINER_TYPE.rabbitMQConnection, RabbitMQConnection);
-container.register(
-	CONTAINER_TYPE.rabbitMQQueueFormatter,
-	RabbitMQQueueFormatter
-);
-container.register(CONTAINER_TYPE.rabbitMQConfigFactory, RabbitMQConfigFactory);
-container.register(CONTAINER_TYPE.rabbitMQConfigurer, RabbitMqConfigurer);
-container.register(
-	CONTAINER_TYPE.domainEventFailoverPublisher,
-	DomainEventFailoverPublisher
-);
+container
+	.bind<RabbitMQConnection>(CONTAINER_TYPES.rabbitMQConnection)
+	.to(RabbitMQConnection);
+container
+	.bind<RabbitMQQueueFormatter>(CONTAINER_TYPES.rabbitMQQueueFormatter)
+	.to(RabbitMQQueueFormatter);
+/* container
+	.bind<RabbitMQConfigFactory>(CONTAINER_TYPES.rabbitMQConfigFactory)
+	.to(RabbitMQConfigFactory); */
+/* container
+	.bind<RabbitMqConfigurer>(CONTAINER_TYPES.rabbitMQConfigurer)
+	.to(RabbitMqConfigurer); */
+container
+	.bind<DomainEventFailoverPublisher>(
+		CONTAINER_TYPES.domainEventFailoverPublisher
+	)
+	.to(DomainEventFailoverPublisher);
 
-container.register(
-	CONTAINER_TYPE.domainEventDeserializer,
-	DomainEventDeserializer
-);
+container
+	.bind<DomainEventDeserializer>(CONTAINER_TYPES.domainEventDeserializer)
+	.to(DomainEventDeserializer);
 /* ============ CQRS ===================== */
 /* command */
-container.register(CONTAINER_TYPE.commandHandlers, CommandHandlers);
-container.register(CONTAINER_TYPE.commandBus, InMemoryCommandBus);
+container
+	.bind<CommandHandlers>(CONTAINER_TYPES.commandHandlers)
+	.to(CommandHandlers);
+
+container.bind<ICommandBus>(CONTAINER_TYPES.commandBus).to(InMemoryCommandBus);
 /* query  */
-container.register(CONTAINER_TYPE.queryBus, InMemoryQueryBus);
-container.register(CONTAINER_TYPE.categoryFindCounter, CategoryFindCounter);
-container.registerSingleton<IQueryHandler<Query, IResponse>>(
-	'QueryHandler',
-	delay(() => CategoryFindCounterQueryHandler)
-);
+container.bind<IQueryBus>(CONTAINER_TYPES.queryBus).to(InMemoryQueryBus);
+container
+	.bind<CategoryFindCounter>(CONTAINER_TYPES.categoryFindCounter)
+	.to(CategoryFindCounter);
+
+/* tag */
+container.bind(TagHandler.QueryHandlers).to(CategoryFindCounterQueryHandler);
+
+container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
+
+container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
 
 export { container };

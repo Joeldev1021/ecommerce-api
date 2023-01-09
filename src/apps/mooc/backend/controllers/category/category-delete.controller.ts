@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { CategoryDeleteUseCase } from '../../../../../Contexts/category/application/usecase/category-delete.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryDeleteController {
 	constructor(
-		@inject(CONTAINER_TYPE.categoryDeleteUseCase)
+		@inject(CONTAINER_TYPES.categoryDeleteUseCase)
 		private readonly _categoryDeleteUseCase: CategoryDeleteUseCase
 	) {}
 

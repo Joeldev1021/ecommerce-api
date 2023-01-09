@@ -1,28 +1,28 @@
 import { Router } from 'express';
-import { container } from 'tsyringe';
 import { ProductCreateController } from '../controllers/product/product-create.controller';
 import { ProductDeleteController } from '../controllers/product/product-delete.controller';
 import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
 import { ProductFindByIdController } from '../controllers/product/product-find-by-id.controller';
 import { ProductUpdateController } from '../controllers/product/product-update.controller';
-import { CONTAINER_TYPE } from '../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../dependency-injection/container.types';
+import { container } from '../dependency-injection/container';
 
 const router = Router();
 
-const productFindAllController = container.resolve<ProductFindAllController>(
-	CONTAINER_TYPE.productFindAllController
+const productFindAllController = container.get<ProductFindAllController>(
+	CONTAINER_TYPES.productFindAllController
 );
-const productFindByIdController = container.resolve<ProductFindByIdController>(
-	ProductFindByIdController
+const productFindByIdController = container.get<ProductFindByIdController>(
+	CONTAINER_TYPES.productFindByIdController
 );
-const productCreateController = container.resolve<ProductCreateController>(
-	CONTAINER_TYPE.productCreateController
+const productCreateController = container.get<ProductCreateController>(
+	CONTAINER_TYPES.productCreateController
 );
-const productDeleteController = container.resolve<ProductDeleteController>(
-	CONTAINER_TYPE.productDeleteController
+const productDeleteController = container.get<ProductDeleteController>(
+	CONTAINER_TYPES.productDeleteController
 );
-const productUpdateController = container.resolve<ProductUpdateController>(
-	CONTAINER_TYPE.productUpdateController
+const productUpdateController = container.get<ProductUpdateController>(
+	CONTAINER_TYPES.productUpdateController
 );
 
 router.post('/', productCreateController.execute.bind(productCreateController));

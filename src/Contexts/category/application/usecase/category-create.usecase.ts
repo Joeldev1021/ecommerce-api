@@ -4,18 +4,18 @@ import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryRepository } from '../../infrastructure/repositories/category.repository';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { CategoryIdAlreadyInUseException } from '../error/category-id-already-in-use.exception';
 import { CategoryNameAlreadyInUseException } from '../error/category-name-already-exists.exception';
-import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { RabbitMqEventBus } from '../../../shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 
 @injectable()
 export class CategoryCreateUseCase {
 	constructor(
-		@inject(CONTAINER_TYPE.categoryRepository)
+		@inject(CONTAINER_TYPES.categoryRepository)
 		private readonly _categoryRepository: CategoryRepository,
-		@inject(CONTAINER_TYPE.rabbitMqEventBus)
+		@inject(CONTAINER_TYPES.rabbitMqEventBus)
 		private readonly _eventBus: RabbitMqEventBus
 	) {}
 

@@ -1,5 +1,5 @@
 import amqplib, { ConsumeMessage } from 'amqplib';
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { configSettings } from './config/index';
 interface IRabbitMqPublicationParams {
 	exchange: string;

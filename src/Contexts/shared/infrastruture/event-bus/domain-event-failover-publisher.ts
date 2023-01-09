@@ -1,6 +1,6 @@
 import { Collection, MongoClient } from 'mongodb';
-import { inject, injectable } from 'tsyringe';
-import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../domain/domain-event';
 import { DomainEventDeserializer } from './domain-event-deserializer';
 import { DomainEventJsonSerializer } from './domain-event-json-serializer';
@@ -11,7 +11,7 @@ export class DomainEventFailoverPublisher {
 
 	private client: Promise<MongoClient>;
 	constructor(
-		@inject(CONTAINER_TYPE.domainEventDeserializer)
+		@inject(CONTAINER_TYPES.domainEventDeserializer)
 		private deserializer?: DomainEventDeserializer
 	) {}
 

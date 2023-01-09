@@ -1,20 +1,17 @@
 import { DomainEvent } from '../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../domain/interface/domain-event-subscriber';
-import { DependencyContainer, registry } from 'tsyringe';
-import { TagHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
-import { CategoryCreatedHandler } from '../../../category/domain/events/category-created.handler';
-@registry([
-	{ token: TagHandler.EventHandler, useClass: CategoryCreatedHandler },
-])
+import { Container } from 'inversify';
+import { TagHandler } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+
 export class DomainEventSubscribers {
 	private constructor(
 		public items: Array<IDomainEventSubscriber<DomainEvent>>
 	) {}
 
-	static from(container: DependencyContainer): DomainEventSubscribers {
-		const subscribers = container.resolveAll<
-			IDomainEventSubscriber<DomainEvent>
-		>(TagHandler.EventHandler);
+	static from(container: Container): DomainEventSubscribers {
+		const subscribers = container.getAll<IDomainEventSubscriber<DomainEvent>>(
+			TagHandler.EventHandlers
+		);
 		return new DomainEventSubscribers(subscribers);
 	}
 }

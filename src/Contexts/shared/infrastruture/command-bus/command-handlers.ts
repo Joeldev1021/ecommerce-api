@@ -1,9 +1,8 @@
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { Command } from '../../domain/command';
 import { ICommandHandler } from '../../domain/interface/command-handler';
 import { CommandNotRegisteredError } from '../../domain/errors/command-not-registered.error';
 
-@injectable()
 export class CommandHandlers extends Map<Command, ICommandHandler<Command>> {
 	constructor(commandHandlers: Array<ICommandHandler<Command>>) {
 		super();

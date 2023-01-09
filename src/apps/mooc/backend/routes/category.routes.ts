@@ -6,31 +6,31 @@ import { CategoryFindByIdController } from '../controllers/category/category-fin
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
 import { CategoryUpdateController } from '../controllers/category/category-update.controller';
 import { container } from '../dependency-injection/container';
-import { CONTAINER_TYPE } from '../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../dependency-injection/container.types';
 
 const router = Router();
 
-const categoryCreateController = container.resolve<CategoryCreateController>(
-	CONTAINER_TYPE.categoryCreateController
+const categoryCreateController = container.get<CategoryCreateController>(
+	CONTAINER_TYPES.categoryCreateController
 );
-const categoryFindAllController = container.resolve<CategoryFindAllController>(
-	CONTAINER_TYPE.categoryFindAllController
-);
-const categoryFindByIdController =
-	container.resolve<CategoryFindByIdController>(
-		CONTAINER_TYPE.categoryFindByIdController
-	);
 
-const categoryUpdateController = container.resolve<CategoryUpdateController>(
-	CONTAINER_TYPE.categoryUpdateController
+const categoryFindAllController = container.get<CategoryFindAllController>(
+	CONTAINER_TYPES.categoryFindAllController
 );
-const categoryDeleteController = container.resolve<CategoryDeleteController>(
-	CONTAINER_TYPE.categoryDeleteController
+const categoryFindByIdController = container.get<CategoryFindByIdController>(
+	CONTAINER_TYPES.categoryFindByIdController
+);
+
+const categoryUpdateController = container.get<CategoryUpdateController>(
+	CONTAINER_TYPES.categoryUpdateController
+);
+const categoryDeleteController = container.get<CategoryDeleteController>(
+	CONTAINER_TYPES.categoryDeleteController
 );
 
 const categoryFindCounterController =
-	container.resolve<CategoryFindCounterController>(
-		CONTAINER_TYPE.categoryFindCounterController
+	container.get<CategoryFindCounterController>(
+		CONTAINER_TYPES.categoryFindCounterController
 	);
 
 router.get(
@@ -42,11 +42,11 @@ router.post(
 	'/',
 	categoryCreateController.execute.bind(categoryCreateController)
 );
-
 router.get(
 	'/all',
 	categoryFindAllController.execute.bind(categoryFindAllController)
 );
+
 router.get(
 	'/:id',
 	categoryFindByIdController.execute.bind(categoryFindByIdController)

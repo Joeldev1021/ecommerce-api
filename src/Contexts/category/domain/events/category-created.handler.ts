@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { IDomainEventClass } from '../../../shared/domain/domain-event';
 import { IDomainEventSubscriber } from '../../../shared/domain/interface/domain-event-subscriber';
 import { CategoryCreatedEvent } from './category-created.event';

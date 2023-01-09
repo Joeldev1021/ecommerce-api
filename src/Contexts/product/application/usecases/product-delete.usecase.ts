@@ -1,12 +1,12 @@
-import { inject, injectable } from 'tsyringe';
-import { CONTAINER_TYPE } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { IProductRepository } from '../../domain/repositories/product.repository';
 
 @injectable()
 export class ProductDeleteUseCase {
 	constructor(
-		@inject(CONTAINER_TYPE.productRepository)
+		@inject(CONTAINER_TYPES.productRepository)
 		private readonly _productRepository: IProductRepository
 	) {}
 

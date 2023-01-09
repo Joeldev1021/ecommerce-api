@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import { DomainEvent, IDomainEventClass } from '../../domain/domain-event';
 import { DomainEventSubscribers } from './domain-event-subscribers';
 
@@ -9,6 +10,7 @@ interface IDomainEventJSON {
 	occurredOn: string;
 }
 
+@injectable()
 export class DomainEventDeserializer extends Map<string, IDomainEventClass> {
 	static configure(
 		subscribers: DomainEventSubscribers

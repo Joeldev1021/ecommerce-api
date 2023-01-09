@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { CategoryFindCounterQuery } from '../../../../../Contexts/category/application/usecase/find/category-find-counter.query';
 import { CategoryFindCounterResponse } from '../../../../../Contexts/category/application/usecase/find/category-find-counter.response';
 import { IQueryBus } from '../../../../../Contexts/shared/domain/interface/query-bus';
 import { InMemoryQueryBus } from '../../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
-import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindCounterController {
 	constructor(
-		@inject(CONTAINER_TYPE.queryBus)
+		@inject(CONTAINER_TYPES.queryBus)
 		private readonly _queryBus: IQueryBus
 	) {}
 

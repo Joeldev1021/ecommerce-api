@@ -1,11 +1,11 @@
-import { inject, injectable } from 'tsyringe';
-import { CONTAINER_TYPE } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { ICategoryRepository } from '../../../domain/repositories/category.repository';
 
 @injectable()
 export class CategoryFindCounter {
 	constructor(
-		@inject(CONTAINER_TYPE.categoryRepository)
+		@inject(CONTAINER_TYPES.categoryRepository)
 		private _categoryRepository: ICategoryRepository
 	) {}
 

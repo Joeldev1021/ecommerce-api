@@ -1,7 +1,7 @@
 import { UserModel } from '../../domain/models/user.model';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { User } from '../../../shared/infrastruture/models/user';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 

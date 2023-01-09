@@ -1,4 +1,3 @@
-import { inject, injectable } from 'tsyringe';
 import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/interface/domain-event-subscriber';
 import { RabbitMQConnection } from './rabbit-mq-connection';
