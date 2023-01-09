@@ -1,10 +1,10 @@
 import { DomainEvent } from '../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../domain/interface/domain-event-subscriber';
 import { DependencyContainer, registry } from 'tsyringe';
-import { TagEventHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
+import { TagHandler } from '../../../../apps/mooc/backend/dependency-injection/container';
 import { CategoryCreatedHandler } from '../../../category/domain/events/category-created.handler';
 @registry([
-	{ token: TagEventHandler.EventHandler, useClass: CategoryCreatedHandler },
+	{ token: TagHandler.EventHandler, useClass: CategoryCreatedHandler },
 ])
 export class DomainEventSubscribers {
 	private constructor(
@@ -14,7 +14,7 @@ export class DomainEventSubscribers {
 	static from(container: DependencyContainer): DomainEventSubscribers {
 		const subscribers = container.resolveAll<
 			IDomainEventSubscriber<DomainEvent>
-		>(TagEventHandler.EventHandler);
+		>(TagHandler.EventHandler);
 		return new DomainEventSubscribers(subscribers);
 	}
 }

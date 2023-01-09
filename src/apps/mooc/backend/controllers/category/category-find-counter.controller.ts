@@ -10,7 +10,7 @@ import { CONTAINER_TYPE } from '../../dependency-injection/container.types';
 export class CategoryFindCounterController {
 	constructor(
 		@inject(CONTAINER_TYPE.queryBus)
-		private readonly _queryBus: InMemoryQueryBus
+		private readonly _queryBus: IQueryBus
 	) {}
 
 	async execute(

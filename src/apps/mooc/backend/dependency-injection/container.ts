@@ -1,4 +1,4 @@
-import { container } from 'tsyringe';
+import { container, delay } from 'tsyringe';
 import { CONTAINER_TYPE } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
@@ -41,9 +41,14 @@ import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/co
 import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
 import { CategoryFindCounter } from '../../../../Contexts/category/application/usecase/find/category-find-counter';
+import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/usecase/find/category-find-counter.queryHandler';
+import { IQueryHandler } from '../../../../Contexts/shared/domain/interface/query-handler';
+import { IResponse } from '../../../../Contexts/shared/domain/interface/response';
+import Query from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
 
-export enum TagEventHandler {
+export enum TagHandler {
 	EventHandler = 'EventHandler',
+	queryHandler = 'QueryHandler',
 }
 container.register(
 	CONTAINER_TYPE.userRegisterController,
@@ -162,8 +167,11 @@ container.register(
 container.register(CONTAINER_TYPE.commandHandlers, CommandHandlers);
 container.register(CONTAINER_TYPE.commandBus, InMemoryCommandBus);
 /* query  */
-//container.register(CONTAINER_TYPE.queryHandlers, QueryHandlers);
 container.register(CONTAINER_TYPE.queryBus, InMemoryQueryBus);
 container.register(CONTAINER_TYPE.categoryFindCounter, CategoryFindCounter);
+container.registerSingleton<IQueryHandler<Query, IResponse>>(
+	'QueryHandler',
+	delay(() => CategoryFindCounterQueryHandler)
+);
 
 export { container };
