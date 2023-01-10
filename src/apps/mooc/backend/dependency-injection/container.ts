@@ -48,7 +48,7 @@ import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/eve
 import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bus';
 import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
 import { CategoryCreateCommand } from '../../../../Contexts/category/domain/command/category-created.command';
-import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/usecase/command/category-create-command.handler';
+import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/command/category-create-command.handler';
 
 const container = new Container();
 
