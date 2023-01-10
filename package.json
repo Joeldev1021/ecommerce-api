@@ -14,7 +14,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@ngneat/falso": "^6.1.0",
+		"@faker-js/faker": "^7.6.0",
 		"@types/amqplib": "^0.10.1",
 		"@types/bcrypt": "^5.0.0",
 		"@types/cors": "^2.8.12",

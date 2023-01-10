@@ -25,11 +25,11 @@ export class UserRegisterController {
 		const { id, name, email, password } = req.body;
 		try {
 			const user = await this._userRegisterUseCase.execute(
-				new UuidVO(id),
-				new NameVO(name),
-				new EmailVO(email),
-				new PasswordVO(password),
-				new StateVO(true)
+				id,
+				name,
+				email,
+				password,
+				true
 			);
 			res.status(200).send(user);
 		} catch (error) {

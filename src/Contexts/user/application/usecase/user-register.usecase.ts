@@ -19,22 +19,29 @@ export class UserRegisterUseCase {
 	) {}
 
 	async execute(
-		id: UuidVO,
-		name: NameVO,
-		email: EmailVO,
-		password: PasswordVO,
-		state: StateVO
+		id: string,
+		name: string,
+		email: string,
+		password: string,
+		state: boolean
 	): Promise<void> {
-		const userFound = await this._userRepository.findById(id);
+		const userId = new UuidVO(id);
+		const userFound = await this._userRepository.findById(userId);
 		if (userFound != null) throw new UserIdAlreadyInUseException();
 
-		const userEmail = await this._userRepository.findByEmail(email);
-		if (userEmail != null) throw new UserEmailAlreadyInUseException();
-		//todo implements test with password hast
+		const userEmail = new EmailVO(email);
+		const userFoundEmail = await this._userRepository.findByEmail(userEmail);
+		if (userFoundEmail != null) throw new UserEmailAlreadyInUseException();
 		//const passwordHash = await PasswordVO.create(password.value);
 
 		await this._userRepository.register(
-			new UserModel(id, name, email, password, state)
+			new UserModel(
+				userId,
+				new NameVO(name),
+				userEmail,
+				new PasswordVO(password),
+				new StateVO(state)
+			)
 		);
 	}
 }
