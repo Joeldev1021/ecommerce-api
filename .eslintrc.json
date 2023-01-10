@@ -29,6 +29,8 @@
 		"@typescript-eslint/prefer-readonly": "off",
 		"@typescript-eslint/no-floating-promises": "off",
 		"@typescript-eslint/return-await": "off",
-		"@typescript-eslint/no-extraneous-class": "off"
+		"@typescript-eslint/no-extraneous-class": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-empty-interface": "off"
 	}
 }

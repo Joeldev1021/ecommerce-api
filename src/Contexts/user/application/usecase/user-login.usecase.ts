@@ -1,14 +1,15 @@
+import 'reflect-metadata';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { UserNotFoundException } from '../errors/user-not-found.exception';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class UserLoginUseCase {
 	constructor(
-		@inject(containerTypes.userRepository)
+		@inject(CONTAINER_TYPES.userRepository)
 		private readonly _userRepository: IUserRepository
 	) {}
 

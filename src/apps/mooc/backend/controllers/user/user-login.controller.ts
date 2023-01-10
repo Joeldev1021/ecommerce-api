@@ -1,6 +1,6 @@
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { NextFunction, Response } from 'express';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 import { UserLoginUseCase } from '../../../../../Contexts/user/application/usecase/user-login.usecase';
 import { UserLoginDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-login.dto';
 import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
@@ -10,7 +10,7 @@ import { PasswordVO } from '../../../../../Contexts/user/domain/value-objects/pa
 @injectable()
 export class UserLoginController {
 	constructor(
-		@inject(containerTypes.userLoginUseCase)
+		@inject(CONTAINER_TYPES.userLoginUseCase)
 		private readonly _userLoginUseCase: UserLoginUseCase
 	) {}
 

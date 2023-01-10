@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { Product } from '../../../shared/infrastruture/models/product';

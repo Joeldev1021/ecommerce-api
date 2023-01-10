@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { CategoryFindAllUseCase } from '../../../../../Contexts/category/application/usecase/category-find-all.usecase';
-import { containerTypes } from '../../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindAllController {
 	constructor(
-		@inject(containerTypes.categoryFindAllUseCase)
+		@inject(CONTAINER_TYPES.categoryFindAllUseCase)
 		private readonly _categoryFindAllUseCase: CategoryFindAllUseCase
 	) {}
 

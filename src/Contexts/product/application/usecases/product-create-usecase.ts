@@ -9,13 +9,13 @@ import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo'
 import { QuantityVO } from '../../domain/value-objects/quantity.vo';
 import { ProductNameAlreadyInUseException } from '../errors/product-name-already-in-use.exception';
 import { IProductRepository } from '../../domain/repositories/product.repository';
-import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class ProductCreateUseCase {
 	constructor(
-		@inject(containerTypes.productRepository)
+		@inject(CONTAINER_TYPES.productRepository)
 		private readonly _productRepository: IProductRepository
 	) {}
 

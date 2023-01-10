@@ -1,11 +1,10 @@
-import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../../apps/mooc/backend/dependency-injection/container.types';
 import { DomainEvent } from '../../../domain/domain-event';
-import { IDomainEventSubscriber } from '../../../domain/domain-event-subscriber';
-import { IEventBus } from '../../../domain/event-bus';
+import { IDomainEventSubscriber } from '../../../domain/interface/domain-event-subscriber';
+import { IEventBus } from '../../../domain/interface/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
 import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
-//import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
 import { DomainEventSubscribers } from '../domain-event-subscribers';
 import { configSettings } from './config';
 import { RabbitMQConnection } from './rabbit-mq-connection';
@@ -17,10 +16,8 @@ export class RabbitMqEventBus implements IEventBus {
 	private moduleName: string = configSettings.moduleName;
 
 	constructor(
-		@inject(containerTypes.rabbitMQConnection)
-		@inject(containerTypes.domainEventFailoverPublisher)
-		private connection: RabbitMQConnection,
-		private domainEventFailoverPublisher: DomainEventFailoverPublisher
+		@inject(CONTAINER_TYPES.rabbitMQConnection)
+		private connection: RabbitMQConnection //	@inject(CONTAINER_TYPES.domainEventFailoverPublisher) //private domainEventFailoverPublisher: DomainEventFailoverPublisher
 	) {}
 
 	async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
@@ -63,7 +60,7 @@ export class RabbitMqEventBus implements IEventBus {
 					options,
 				});
 			} catch (error: any) {
-				await this.domainEventFailoverPublisher.publish(event);
+				//await this.domainEventFailoverPublisher.publish(event);
 			}
 		}
 	}

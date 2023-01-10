@@ -3,16 +3,15 @@ import { DescriptionVO } from '../../../shared/domain/value-objects/description.
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { CategoryRepository } from '../../infrastructure/repositories/category.repository';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
-import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 @injectable()
 export class CategoryUpdateUseCase {
 	constructor(
-		@inject(containerTypes.categoryRepository)
-		private readonly _categoryRepository: CategoryRepository
+		@inject(CONTAINER_TYPES.categoryRepository)
+		private readonly _categoryRepository: ICategoryRepository
 	) {}
 
 	async execute(
@@ -20,8 +19,8 @@ export class CategoryUpdateUseCase {
 		name: NameVO,
 		description: DescriptionVO,
 		state: StateVO
-	) {
-		return await this._categoryRepository.update(
+	): Promise<void> {
+		await this._categoryRepository.update(
 			new CategoryModel(id, name, description, state)
 		);
 	}

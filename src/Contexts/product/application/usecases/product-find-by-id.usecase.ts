@@ -1,5 +1,6 @@
-import { inject, injectable } from 'tsyringe';
-import { containerTypes } from '../../../../apps/mooc/backend/dependency-injection/container.types';
+import 'reflect-metadata';
+import { inject, injectable } from 'inversify';
+import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ProductModel } from '../../domain/models/product.model';
 import { IProductRepository } from '../../domain/repositories/product.repository';
@@ -7,7 +8,7 @@ import { IProductRepository } from '../../domain/repositories/product.repository
 @injectable()
 export class ProductFindByIdUseCase {
 	constructor(
-		@inject(containerTypes.productRepository)
+		@inject(CONTAINER_TYPES.productRepository)
 		private readonly _productRepository: IProductRepository
 	) {}
 

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import { DomainEvent } from '../../domain/domain-event';
-import { IEventBus } from '../../domain/event-bus';
+import { IEventBus } from '../../domain/interface/event-bus';
 import { DomainEventSubscribers } from './domain-event-subscribers';
 
 export class EventBus implements IEventBus {

@@ -17,16 +17,16 @@ export interface IConnectionSettings {
 }
 
 export const configSettings: IConnectionSettings = {
-	username: 'guest',
-	password: 'guest',
-	vhost: '/',
+	username: process.env.RABBIT_USERNAME || 'guest',
+	password: process.env.RABBIT_PASSWORD || 'guest',
+	vhost: process.env.RABBIT_VHOST || '/',
 	connection: {
 		secure: false,
-		hostname: 'localhost',
-		port: 5672,
+		hostname: process.env.RABBIT_HOSTNAME || 'localhost',
+		port: parseInt(process.env.RABBIT_PORT!) || 5672,
 	},
-	exchangeName: 'domain_events',
+	exchangeName: process.env.EXCHANGE_NAME || 'domain_events',
 	maxRetries: 3,
 	retryTtl: 1000,
-	moduleName: 'mooc',
+	moduleName: process.env.MODULE_NAME || 'mooc',
 };
