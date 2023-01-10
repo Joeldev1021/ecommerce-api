@@ -1,29 +1,74 @@
+import { VOFormatException } from '../../../../src/Contexts/shared/domain/errors/vo-format.exception';
 import { UserRegisterUseCase } from '../../../../src/Contexts/user/application/usecase/user-register.usecase';
-import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
-import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
-import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
-import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
-import { UserModel } from '../../../../src/Contexts/user/domain/models/user.model';
-import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
+import { UserModelMother } from '../domain/user-model.mother';
 import { UserRepositoryMock } from '../__mocks__/user-repository.mock';
+import { UserRequestMother } from './user-request.mother';
 
-describe('UserRegister', () => {
-	let userRepository: UserRepositoryMock;
+let repository: UserRepositoryMock;
+let userRegisterUseCase: UserRegisterUseCase;
 
-	beforeEach(() => {
-		userRepository = new UserRepositoryMock();
+beforeEach(() => {
+	repository = new UserRepositoryMock();
+	userRegisterUseCase = new UserRegisterUseCase(repository);
+});
+
+describe('User-Register', () => {
+	it('should register a valid user', async () => {
+		const userRequest = UserRequestMother.random();
+		const userModel = UserModelMother.fromRequest(userRequest);
+		await userRegisterUseCase.execute(
+			userRequest.user_id,
+			userRequest.name,
+			userRequest.email,
+			userRequest.password,
+			userRequest.state
+		);
+		repository.assertRegisterHaveBeenCalledWith(userModel);
+	});
+	it('should throw error if course name length is < 1', async () => {
+		expect(() => {
+			const request = UserRequestMother.random();
+			const user = {
+				...request,
+				name: 'a',
+			};
+
+			UserModelMother.fromRequest(user);
+		}).toThrow(VOFormatException);
+	});
+	it('should throw error if password length is < 4', async () => {
+		expect(() => {
+			const request = UserRequestMother.random();
+			const user = {
+				...request,
+				password: 'a92',
+			};
+
+			UserModelMother.fromRequest(user);
+		}).toThrow(VOFormatException);
 	});
 
-	it('should register a valid user', async () => {
-		const userRegisterUseCase = new UserRegisterUseCase(userRepository);
-		const id = new UuidVO('e05ae3a3-22e8-4093-9c50-8e08af41f610');
-		const name = new NameVO('example');
-		const email = new EmailVO('example@gmail.com');
-		const password = new PasswordVO('password');
-		const state = new StateVO(true);
-		const userExpected = new UserModel(id, name, email, password, state);
+	it('should throw error if EMAIL is invalid', async () => {
+		expect(() => {
+			const request = UserRequestMother.random();
+			const user = {
+				...request,
+				email: 'error',
+			};
 
-		await userRegisterUseCase.execute(id, name, email, password, state);
-		userRepository.assertRegisterHaveBeenCalledWith(userExpected);
+			UserModelMother.fromRequest(user);
+		}).toThrow(VOFormatException);
+	});
+
+	it('should throw error if ID is invalid', async () => {
+		expect(() => {
+			const request = UserRequestMother.random();
+			const user = {
+				...request,
+				user_id: '130',
+			};
+
+			UserModelMother.fromRequest(user);
+		}).toThrow(VOFormatException);
 	});
 });
