@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { ProductEntity } from './product';
 
-@Entity()
+@Entity({ name: 'category' })
 export class CategoryEntity extends BaseEntity {
 	@PrimaryColumn()
 	category_id: string;

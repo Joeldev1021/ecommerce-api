@@ -44,7 +44,8 @@ import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/eve
 import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bus';
 import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
 import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/command/category-create-command.handler';
-
+import { EnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/arrarger/enviroment-arranger';
+import { TypeOrmEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
 const container = new Container();
 
 container
@@ -198,5 +199,10 @@ container.bind(TagHandler.QueryHandlers).to(CategoryFindCounterQueryHandler);
 container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
 
 container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
+
+/* ==================== test ========================= */
+container
+	.bind<EnvironmentArranger>(CONTAINER_TYPES.envArranger)
+	.to(TypeOrmEnvironmentArranger);
 
 export { container };

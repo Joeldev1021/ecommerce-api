@@ -1,10 +1,12 @@
 import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
-import { UserModel } from '../../../../src/Contexts/user/domain/models/user.model';
+import {
+	IUserPrimitives,
+	UserModel,
+} from '../../../../src/Contexts/user/domain/models/user.model';
 import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
-import { UserInterface } from '../../../../src/Contexts/user/infrastructure/types/user.interface';
 import { UserEmailMother } from './user-email.mother';
 import { UserIdMother } from './user-id.mother';
 import { UserNameMother } from './user-name.mother';
@@ -22,7 +24,7 @@ export class UserModelMother {
 		return new UserModel(id, name, email, password, state);
 	}
 
-	static fromRequest(request: UserInterface): UserModel {
+	static fromRequest(request: IUserPrimitives): UserModel {
 		return this.create(
 			new UuidVO(request.user_id),
 			new NameVO(request.name),

@@ -2,13 +2,16 @@ import { DataSource } from 'typeorm';
 import { CategoryEntity } from '../entity/category';
 import { ProductEntity } from '../entity/product';
 import { UserEntity } from '../entity/user';
+import { config } from 'dotenv';
+config();
 
 export class TypeOrmClientFactory {
 	static connection?: DataSource;
 
 	static async createConnection(): Promise<void> {
 		if (this.connection !== undefined) return;
-
+		console.log(process.env.MYSQL_USER);
+		console.log(process.env.DB_NAME);
 		try {
 			const dataSource = new DataSource({
 				type: 'mysql',
