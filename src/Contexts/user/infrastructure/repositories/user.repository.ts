@@ -1,12 +1,20 @@
-import { UserModel } from '../../domain/models/user.model';
+import { IUserPrimitives, UserModel } from '../../domain/models/user.model';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { injectable } from 'inversify';
-import { User } from '../../../shared/infrastruture/models/user';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UserEntity } from '../../../shared/infrastruture/entity/user';
+import { ObjectType } from 'typeorm';
+import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
 
 @injectable()
-export class UserRepository implements IUserRepository {
+export class UserRepository
+	extends TypeOrmRepository<UserModel, IUserPrimitives>
+	implements IUserRepository
+{
+	entitySchema(): ObjectType<UserModel> {
+		return UserEntity;
+	}
 	/**
 	 * "Find a user by email."
 	 *
@@ -16,9 +24,14 @@ export class UserRepository implements IUserRepository {
 	 */
 
 	async findByEmail(email: EmailVO): Promise<UserModel | null> {
-		const user = await User.findOne({ where: { email: email.value } });
-		if (user == null) return null;
+		const repository = await this.repository();
+		const user = await repository.findOneBy({ email: email.value });
+
+		if (!user) return null;
 		return UserModel.toDomain(user);
+		/* 	const user = await this.repository.findOneBy({ email: email.value });
+		if (user == null) return null;
+		return UserModel.toDomain(user); */
 	}
 
 	/**
@@ -29,9 +42,16 @@ export class UserRepository implements IUserRepository {
 	 * @returns A promise that resolves to a User instance.
 	 */
 	async findById(id: UuidVO): Promise<UserModel | null> {
-		const user = await User.findByPk(id.value);
-		if (user == null) return null;
+		const repository = await this.repository();
+		const user = await repository.findOneBy({ user_id: id.value });
+		if (!user) return null;
+
 		return UserModel.toDomain(user);
+
+		/* const user = await this.repository.findOneBy({ user_id: id.value });
+
+		if (user == null) return null;
+		return UserModel.toDomain(user); */
 	}
 
 	/**
@@ -42,7 +62,15 @@ export class UserRepository implements IUserRepository {
 	 * @returns The userPersistance object is being returned.
 	 */
 	async register(user: UserModel): Promise<void> {
-		await User.create(user.toPrimitives());
+		const repository = await this.repository();
+		const userCreate = new UserEntity();
+		userCreate.user_id = user.id.value;
+		userCreate.name = user.name.value;
+		userCreate.email = user.email.value;
+		userCreate.password = user.password.value;
+		userCreate.state = user.state.value;
+		const save = await repository.save(userCreate);
+		console.log(save);
 	}
 
 	async login(user: UserModel): Promise<void> {}

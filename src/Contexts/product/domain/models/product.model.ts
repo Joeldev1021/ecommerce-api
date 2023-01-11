@@ -5,10 +5,23 @@ import { PriceVO } from '../value-objects/price.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { QuantityVO } from '../value-objects/quantity.vo';
-import { IProduct } from '../../../shared/infrastruture/types/models/product.model';
-import { ProductInterface } from '../../infrastructure/types/product.interface';
+import {
+	AggregateRoot,
+	AggregateRootPrimitives,
+} from '../../../shared/domain/aggregate-root';
+export interface IProductPrimitives extends AggregateRootPrimitives {
+	product_id: string;
+	name: string;
+	description: string;
+	imageUrl?: string;
+	price: number;
+	quantity: number;
+	createdAt: Date;
+	state: boolean;
+	category_id: string;
+}
 
-export class ProductModel {
+export class ProductModel extends AggregateRoot {
 	constructor(
 		public readonly id: UuidVO,
 		public name: NameVO,
@@ -19,15 +32,17 @@ export class ProductModel {
 		public quantity: QuantityVO,
 		public state: StateVO,
 		public createdAt: CreatedAtVO
-	) {}
+	) {
+		super();
+	}
 
-	static toDomain(product: IProduct): ProductModel {
+	static toDomain(product: IProductPrimitives): ProductModel {
 		return new ProductModel(
 			new UuidVO(product.product_id),
 			new NameVO(product.name),
 			new DescriptionVO(product.description),
 			null,
-			new UuidVO(product.categoryId),
+			new UuidVO(product.category_id),
 			new PriceVO(product.price),
 			new QuantityVO(product.quantity),
 			new StateVO(product.state),
@@ -35,13 +50,13 @@ export class ProductModel {
 		);
 	}
 
-	toPrimitives(): ProductInterface {
+	toPrimitives(): IProductPrimitives {
 		return {
 			product_id: this.id.value,
 			name: this.name.value,
 			description: this.description.value,
 			imageUrl: '',
-			categoryId: this.categoryId.value,
+			category_id: this.categoryId.value,
 			price: this.price.value,
 			quantity: this.quantity.value,
 			state: this.state.value,

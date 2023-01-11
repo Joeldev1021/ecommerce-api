@@ -3,7 +3,6 @@ import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-inject
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryModel } from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
-import categoryRepository from '../../infrastructure/repositories/category.repository';
 
 @injectable()
 export class CategoryFindByIdUseCase {
@@ -13,6 +12,6 @@ export class CategoryFindByIdUseCase {
 	) {}
 
 	async execute(id: UuidVO): Promise<CategoryModel | null> {
-		return await categoryRepository.findById(id);
+		return await this._categoryRepository.findById(id);
 	}
 }

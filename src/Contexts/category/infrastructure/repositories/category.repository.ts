@@ -1,34 +1,59 @@
-import { CategoryModel } from '../../domain/models/category.model';
+import {
+	CategoryModel,
+	ICategoryPrimitives,
+} from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../shared/infrastruture/models/category';
+import { CategoryEntity } from '../../../shared/infrastruture/entity/category';
 import { injectable } from 'inversify';
+import { ObjectType } from 'typeorm';
+import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
 
 @injectable()
-export class CategoryRepository implements ICategoryRepository {
+export class CategoryRepository
+	extends TypeOrmRepository<CategoryModel, ICategoryPrimitives>
+	implements ICategoryRepository
+{
+	entitySchema(): ObjectType<CategoryModel> {
+		return CategoryEntity;
+	}
+
 	async findAll(): Promise<CategoryModel[] | null> {
-		const category = await Category.findAll();
+		const repository = await this.repository();
+		const category = await repository.find();
 		if (!category) return null;
 		return category.map(ctg => CategoryModel.toDomain(ctg));
 	}
 
 	async findById(id: UuidVO): Promise<CategoryModel | null> {
-		const category = await Category.findByPk(id.value);
+		const repository = await this.repository();
+		const category = await repository.findOneBy({
+			category_id: id.value,
+		});
 		if (category == null) return null;
 		return CategoryModel.toDomain(category);
 	}
 
 	async findByName(name: NameVO): Promise<CategoryModel | null> {
-		const category = await Category.findByPk(name.value);
+		const repository = await this.repository();
+		const category = await repository.findOneBy({ name: name.value });
 		if (category == null) return null;
 
 		return CategoryModel.toDomain(category);
 	}
 
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
-		const categoryCreated = await Category.create(category.toPrimitives());
-		if (!categoryCreated) return null;
+		const categoryCreated = new CategoryEntity();
+
+		categoryCreated.category_id = category.id.value;
+		categoryCreated.name = category.name.value;
+		categoryCreated.description = category.description.value;
+		categoryCreated.state = category.state.value;
+		const repository = await this.repository();
+
+		await repository.save(categoryCreated);
+
 		return CategoryModel.toDomain(categoryCreated);
 	}
 
@@ -37,12 +62,7 @@ export class CategoryRepository implements ICategoryRepository {
 	}
 
 	async delete(categoryId: UuidVO): Promise<void> {
-		await Category.destroy({
-			where: {
-				category_id: categoryId.value,
-			},
-		});
+		const repository = await this.repository();
+		await repository.delete({ category_id: categoryId.value });
 	}
 }
-
-export default new CategoryRepository();

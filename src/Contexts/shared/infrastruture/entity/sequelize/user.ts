@@ -1,6 +1,6 @@
-import { DataTypes } from "sequelize";
-import { IUser } from "../types/models/user.model";
-import sequelize from "../config/mysql";
+/* import { DataTypes } from "sequelize";
+import { IUser } from "../../types/models/user.model";
+import sequelize from "../../config/mysql";
 
 export const User = sequelize.define<IUser>("Users", {
   user_id: {
@@ -31,3 +31,4 @@ export const User = sequelize.define<IUser>("Users", {
     defaultValue: true,
   },
 });
+ */

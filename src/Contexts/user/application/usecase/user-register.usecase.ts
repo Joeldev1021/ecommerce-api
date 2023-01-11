@@ -25,6 +25,7 @@ export class UserRegisterUseCase {
 		password: string,
 		state: boolean
 	): Promise<void> {
+		console.log(id, name, email, password, state);
 		const userId = new UuidVO(id);
 		const userFound = await this._userRepository.findById(userId);
 		if (userFound != null) throw new UserIdAlreadyInUseException();

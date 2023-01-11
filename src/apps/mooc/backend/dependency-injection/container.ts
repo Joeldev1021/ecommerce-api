@@ -31,8 +31,6 @@ import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/ev
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
 import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/file-ex/rabbit-mq-queue-formatter';
-import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-confg-factory';
-import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
 import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
 import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
 import { CommandHandlers } from '../../../../Contexts/shared/infrastruture/command-bus/command-handlers';
@@ -41,14 +39,11 @@ import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/quer
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
 import { CategoryFindCounter } from '../../../../Contexts/category/application/usecase/find/category-find-counter';
 import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/usecase/find/category-find-counter.queryHandler';
-import { IQueryHandler } from '../../../../Contexts/shared/domain/interface/query-handler';
-import { IResponse } from '../../../../Contexts/shared/domain/interface/response';
 import { IEventBus } from '../../../../Contexts/shared/domain/interface/event-bus';
 import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/events/category-created.handler';
 import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bus';
 import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
-import { CategoryCreateCommand } from '../../../../Contexts/category/domain/command/category-created.command';
-import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/usecase/command/category-create-command.handler';
+import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/command/category-create-command.handler';
 
 const container = new Container();
 
@@ -71,7 +66,6 @@ container
 container
 	.bind<UserRepository>(CONTAINER_TYPES.userRepository)
 	.to(UserRepository);
-/* category controller */
 container
 	.bind<CategoryCreateController>(CONTAINER_TYPES.categoryCreateController)
 	.to(CategoryCreateController);
@@ -156,7 +150,6 @@ container
 container
 	.bind<ProductRepository>(CONTAINER_TYPES.productRepository)
 	.to(ProductRepository);
-
 /* event bus */
 
 container.bind<IEventBus>(CONTAINER_TYPES.eventBus).to(EventBus);

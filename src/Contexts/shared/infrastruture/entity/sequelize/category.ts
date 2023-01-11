@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+/* import { DataTypes } from 'sequelize';
 import { ICategory } from '../types/models/category.models';
 import sequelize from '../config/mysql';
 import { Product } from './product';
@@ -47,3 +47,4 @@ Product.belongsTo(Category, {
 	foreignKey: 'category_id',
 	targetKey: 'category_id',
 });
+ */
