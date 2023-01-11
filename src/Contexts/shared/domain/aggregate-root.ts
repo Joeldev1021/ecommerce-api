@@ -1,5 +1,6 @@
 import { DomainEvent } from './domain-event';
 
+export abstract class AggregateRootPrimitives {}
 export abstract class AggregateRoot {
 	private domainEvents: DomainEvent[];
 	constructor() {
@@ -16,5 +17,5 @@ export abstract class AggregateRoot {
 		this.domainEvents.push(event);
 	}
 
-	//abstract toPrimitives(): any;
+	abstract toPrimitives(): any;
 }

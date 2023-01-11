@@ -1,6 +1,6 @@
-import { DataTypes } from 'sequelize';
-import { IProduct } from '../types/models/product.model';
-import sequelize from '../config/mysql';
+/* import { DataTypes } from 'sequelize';
+import { IProduct } from '../../types/models/product.model';
+import sequelize from '../../config/mysql';
 
 export const Product = sequelize.define<IProduct>(
 	'Products',
@@ -50,3 +50,4 @@ export const Product = sequelize.define<IProduct>(
 		timestamps: false,
 	}
 );
+ */
