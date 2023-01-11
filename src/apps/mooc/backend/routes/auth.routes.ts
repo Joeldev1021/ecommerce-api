@@ -1,13 +1,13 @@
 import { UserLoginController } from '../controllers/user/user-login.controller';
 import { UserRegisterController } from '../controllers/user/user-register.controller';
-import { container } from 'tsyringe';
 import { Router } from 'express';
-import { containerTypes } from '../dependency-injection/container.types';
+import { CONTAINER_TYPES } from '../dependency-injection/container.types';
+import { container } from '../dependency-injection/container';
 
 const router = Router();
 
-const userRegisterController = container.resolve<UserRegisterController>(
-	containerTypes.userRegisterController
+const userRegisterController = container.get<UserRegisterController>(
+	CONTAINER_TYPES.userRegisterController
 );
 
 router.post(
@@ -15,8 +15,8 @@ router.post(
 	userRegisterController.execute.bind(userRegisterController)
 );
 
-const userLoginController = container.resolve<UserLoginController>(
-	containerTypes.userLoginController
+const userLoginController = container.get<UserLoginController>(
+	CONTAINER_TYPES.userLoginController
 );
 
 router.post('/login', userLoginController.execute.bind(userLoginController));

@@ -1,11 +1,20 @@
-import { CategoryInterface } from '@category/infrastructure/types/category.interface';
 import { CategoryCreatedEvent } from '../events/category-created.event';
-import { AggregateRoot } from '../../../shared/domain/aggregate-root';
+import {
+	AggregateRoot,
+	AggregateRootPrimitives,
+} from '../../../shared/domain/aggregate-root';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ICategory } from '@shared/infrastruture/types/models/category.models';
+
+export interface ICategoryPrimitives extends AggregateRootPrimitives {
+	category_id: string;
+	name: string;
+	image?: string;
+	description: string;
+	state: boolean;
+}
 
 export class CategoryModel extends AggregateRoot {
 	constructor(
@@ -37,7 +46,7 @@ export class CategoryModel extends AggregateRoot {
 		return category;
 	}
 
-	static toDomain(category: ICategory): CategoryModel {
+	static toDomain(category: ICategoryPrimitives): CategoryModel {
 		return new CategoryModel(
 			new UuidVO(category.category_id),
 			new NameVO(category.name),
@@ -46,7 +55,7 @@ export class CategoryModel extends AggregateRoot {
 		);
 	}
 
-	toPrimitives(): CategoryInterface {
+	toPrimitives(): ICategoryPrimitives {
 		return {
 			category_id: this.id.value,
 			name: this.name.value,

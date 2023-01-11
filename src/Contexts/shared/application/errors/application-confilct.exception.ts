@@ -1,3 +1,1 @@
-export class AplicationConflictException extends Error {
-
-} 
+export class AplicationConflictException extends Error {}

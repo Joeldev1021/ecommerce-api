@@ -1,14 +1,7 @@
 import 'reflect-metadata';
-import 'module-alias/register';
 import express, { Application } from 'express';
-import { TagEventHandler } from './dependency-injection/container';
-import { registry } from 'tsyringe';
-import { CategoryCreatedHandler } from '@category/domain/events/category-created.handler';
-@registry([
-	{ token: TagEventHandler.EventHandler, useToken: CategoryCreatedHandler },
-	{ token: TagEventHandler.EventHandler, useToken: CategoryCreatedHandler },
-	{ token: TagEventHandler.EventHandler, useToken: CategoryCreatedHandler },
-])
+import { indexRoute } from './routes';
+
 export class Server {
 	private readonly app: Application;
 	private readonly port: string;
@@ -17,6 +10,7 @@ export class Server {
 		this.port = '5000';
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
+		this.app.use('/api', indexRoute);
 	}
 
 	getServer(): Application {

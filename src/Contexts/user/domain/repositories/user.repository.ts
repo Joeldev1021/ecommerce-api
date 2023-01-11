@@ -1,16 +1,13 @@
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { UserInterface } from '../../infrastructure/types/user.interface';
+import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserModel } from '../models/user.model';
 import { EmailVO } from '../value-objects/email.vo';
 
 export interface IUserRepository {
-	toPersistance: (userDomain: UserModel) => UserInterface;
+	findByEmail(email: EmailVO): Promise<UserModel | null>;
 
-	toDomain: (userPersistance: UserInterface) => UserModel;
+	findById(id: UuidVO): Promise<UserModel | null>;
 
-	findByEmail: (email: EmailVO) => Promise<UserModel | null>;
+	register(user: UserModel): Promise<void>;
 
-	findById: (id: UuidVO) => Promise<UserModel | null>;
-
-	create: (user: UserModel) => Promise<UserModel | null>;
+	login(user: UserModel): Promise<void>;
 }

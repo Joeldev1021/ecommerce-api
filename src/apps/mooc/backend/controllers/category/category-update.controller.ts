@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
-import { CategoryUpdateUseCase } from '@category/application/usecase/category-update.usecase';
-import { DescriptionVO } from '@shared/domain/value-objects/description.vo';
-import { NameVO } from '@shared/domain/value-objects/name.vo';
-import { StateVO } from '@shared/domain/value-objects/state.vo';
-import { UuidVO } from '@shared/domain/value-objects/uuid.vo';
-import { containerTypes } from '@apps/mooc/backend/dependency-injection/container.types';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
+import { CategoryUpdateUseCase } from '../../../../../Contexts/category/application/usecase/category-update.usecase';
+import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
+import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
+import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
+import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryUpdateController {
 	constructor(
-		@inject(containerTypes.productUpdateUseCase)
+		@inject(CONTAINER_TYPES.productUpdateUseCase)
 		private readonly _categoryUpdateUseCase: CategoryUpdateUseCase
 	) {}
 

@@ -1,7 +1,9 @@
-import { IEventBus } from '@shared/domain/event-bus';
-import { DomainEventSubscribers } from '@shared/infrastruture/event-bus/domain-event-subscribers';
+import 'reflect-metadata';
+import { IEventBus } from '../../../Contexts/shared/domain/interface/event-bus';
+import { DomainEventSubscribers } from '../../../Contexts/shared/infrastruture/event-bus/domain-event-subscribers';
+import { TypeOrmClientFactory } from '../../../Contexts/shared/infrastruture/persistance/typeorm-client-factory';
 import { container } from './dependency-injection/container';
-import { containerTypes } from './dependency-injection/container.types';
+import { CONTAINER_TYPES } from './dependency-injection/container.types';
 import { Server } from './server';
 
 export class Bootstrap {
@@ -10,15 +12,18 @@ export class Bootstrap {
 	start(): void {
 		this.server = new Server();
 		this.server.listen();
+		this.connectDB();
 		this.configureEventBus();
 	}
 
-	configureEventBus(): void {
-		// const eventHandlers = container.resolve(handlersType.EventHandler);
+	private async connectDB(): Promise<void> {
+		await TypeOrmClientFactory.createConnection();
+	}
 
-		const eventBus = container.resolve<IEventBus>(containerTypes.eventBus);
-		//eventBus.addSubscribers(DomainEventSubscribers.from(container));
-		// DomainEventSubscribers.from(container);
+	private async configureEventBus(): Promise<void> {
+		const eventBus = container.get<IEventBus>(CONTAINER_TYPES.rabbitMqEventBus);
+		const subscribers = DomainEventSubscribers.from(container);
+		await eventBus.addSubscribers(subscribers);
 	}
 }
 

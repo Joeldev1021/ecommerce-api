@@ -1,14 +1,7 @@
 {
 	"include": ["src/**/*.ts"],
+
 	"compilerOptions": {
-		"baseUrl": "src/",
-		"paths": {
-			"@apps/*": ["apps/*"],
-			"@shared/*": ["Contexts/shared/*"],
-			"@category/*": ["Contexts/category/*"],
-			"@product/*": ["Contexts/product/*"],
-			"@user/*": ["Contexts/user/*"]
-		},
 		"outDir": "dist",
 		"lib": ["es2021"],
 		"module": "commonjs",

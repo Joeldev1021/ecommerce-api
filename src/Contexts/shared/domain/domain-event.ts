@@ -1,47 +1,41 @@
-import uuid from "uuid-random";
-
-export abstract class DomainEvent {
-  static EVENT_NAME: string;
-  static fromPrimitives: (params: {
-    aggregateId: string;
-    eventId: string;
-    occurredOn: Date;
-    attributes: DomainEventAttributes;
-  }) => DomainEvent;
-
-  readonly aggregateId: string;
-  readonly eventId: string;
-  readonly occurredOn: Date;
-  readonly eventName: string;
-
-  constructor(params: {
-    eventName: string;
-    aggregateId: string;
-    eventId?: string;
-    occurredOn?: Date;
-  }) {
-    const { aggregateId, eventName, eventId, occurredOn } = params;
-    this.aggregateId = aggregateId;
-    this.eventId = eventId || uuid();
-    this.occurredOn = occurredOn || new Date();
-    this.eventName = eventName;
-  }
-
-  abstract toPrimitives(): DomainEventAttributes;
-}
-
-export type DomainEventClass = {
-  EVENT_NAME: string;
-  fromPrimitives(params: {
-    aggregateId: string;
-    eventId: string;
-    occurredOn: Date;
-    attributes: DomainEventAttributes;
-  }): DomainEvent;
-};
+import uuid from 'uuid-random';
 
 type DomainEventAttributes = any;
 
-export type IDomainEventClass = {
-  EVENT_NAME: string;
-};
+interface IDomainEventPrimitives {
+	aggregateId: string;
+	eventId: string;
+	occurredOn: Date;
+	attributes: DomainEventAttributes;
+}
+
+interface IDomainEventParams {
+	aggregateId: string;
+	eventName: string;
+	eventId?: string;
+	occurredOn?: Date;
+}
+
+export abstract class DomainEvent {
+	static EVENT_NAME: string;
+	static fromPrimitives: (primitives: IDomainEventPrimitives) => DomainEvent;
+
+	readonly aggregateId: string;
+	readonly eventName: string;
+	readonly eventId: string;
+	readonly occurredOn: Date;
+
+	constructor(params: IDomainEventParams) {
+		this.aggregateId = params.aggregateId;
+		this.eventName = params.eventName;
+		this.eventId = params.eventId || uuid();
+		this.occurredOn = params.occurredOn || new Date();
+	}
+
+	abstract toPrimitives(): DomainEventAttributes;
+}
+
+export interface IDomainEventClass {
+	EVENT_NAME: string;
+	fromPrimitives(primitives: IDomainEventPrimitives): DomainEvent;
+}
