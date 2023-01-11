@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { CategoryEntity } from './category';
 
-@Entity()
+@Entity({ name: 'products' })
 export class ProductEntity extends BaseEntity {
 	@PrimaryColumn()
 	product_id: string;

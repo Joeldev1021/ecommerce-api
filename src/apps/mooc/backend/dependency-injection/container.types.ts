@@ -47,6 +47,9 @@ export const CONTAINER_TYPES = {
 	queryHandlers: Symbol.for('queryHandlers'),
 	queryBus: Symbol.for('queryBus'),
 	categoryFindCounter: Symbol.for('categoryFindCounter'),
+
+	/*==================== test ================================*/
+	envArranger: Symbol.for('EnvArranger'),
 };
 
 export enum TagHandler {

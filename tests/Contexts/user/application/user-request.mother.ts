@@ -1,9 +1,9 @@
 import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
 import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
+import { IUserPrimitives } from '../../../../src/Contexts/user/domain/models/user.model';
 import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
-import { UserInterface } from '../../../../src/Contexts/user/infrastructure/types/user.interface';
 import { UserEmailMother } from '../domain/user-email.mother';
 import { UserIdMother } from '../domain/user-id.mother';
 import { UserNameMother } from '../domain/user-name.mother';
@@ -17,7 +17,7 @@ export class UserRequestMother {
 		email: EmailVO,
 		password: PasswordVO,
 		state: StateVO
-	): UserInterface {
+	): IUserPrimitives {
 		return {
 			user_id: id.value,
 			name: name.value,
@@ -27,7 +27,7 @@ export class UserRequestMother {
 		};
 	}
 
-	static random(): UserInterface {
+	static random(): IUserPrimitives {
 		return this.create(
 			UserIdMother.random(),
 			UserNameMother.random(),
