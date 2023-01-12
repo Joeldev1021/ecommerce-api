@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
-import { CategoryCreateUseCase } from '../../../../../Contexts/category/application/usecase/category-create.usecase';
-import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
-import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
-import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { ICommandBus } from '../../../../../Contexts/shared/domain/interface/command-bust';
 import { CategoryCreateCommand } from '../../../../../Contexts/category/domain/command/category-created.command';
 

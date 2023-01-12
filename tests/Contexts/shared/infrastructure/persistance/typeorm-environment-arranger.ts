@@ -4,7 +4,7 @@ import { TypeOrmClientFactory } from '../../../../../src/Contexts/shared/infrast
 import { IEnvironmentArranger } from '../arrarger/enviroment-arranger';
 
 @injectable()
-export class TypeOrmIEnvironmentArranger implements IEnvironmentArranger {
+export class TypeOrmEnvironmentArranger implements IEnvironmentArranger {
 	async client(): Promise<DataSource> {
 		await TypeOrmClientFactory.createConnection();
 		return TypeOrmClientFactory.getConnection();
