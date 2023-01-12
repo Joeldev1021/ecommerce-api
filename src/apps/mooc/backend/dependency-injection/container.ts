@@ -45,7 +45,7 @@ import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bu
 import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
 import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/command/category-create-command.handler';
 import { IEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/arrarger/enviroment-arranger';
-import { TypeOrmIEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
+import { TypeOrmEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
 const container = new Container();
 
 container
@@ -203,6 +203,6 @@ container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
 /* ==================== test ========================= */
 container
 	.bind<IEnvironmentArranger>(CONTAINER_TYPES.envArranger)
-	.to(TypeOrmIEnvironmentArranger);
+	.to(TypeOrmEnvironmentArranger);
 
 export { container };
