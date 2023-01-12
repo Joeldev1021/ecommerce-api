@@ -1,27 +1,25 @@
 import { CategoryModel } from '../../domain/models/category.model';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { CategoryRepository } from '../../infrastructure/repositories/category.repository';
 import { inject, injectable } from 'inversify';
-import { CategoryIdAlreadyInUseException } from '../error/category-id-already-in-use.exception';
-import { CategoryNameAlreadyInUseException } from '../error/category-name-already-exists.exception';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { RabbitMqEventBus } from '../../../shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { ICategoryRepository } from '../../domain/repositories/category.repository';
 
 @injectable()
 export class CategoryCreateUseCase {
 	constructor(
 		@inject(CONTAINER_TYPES.categoryRepository)
-		private readonly _categoryRepository: CategoryRepository,
+		private readonly _categoryRepository: ICategoryRepository,
 		@inject(CONTAINER_TYPES.rabbitMqEventBus)
 		private readonly _eventBus: RabbitMqEventBus
 	) {}
 
 	async execute(
 		id: UuidVO,
-		name: UsernameVO,
+		name: NameVO,
 		description: DescriptionVO,
 		state: StateVO
 	): Promise<void> {
