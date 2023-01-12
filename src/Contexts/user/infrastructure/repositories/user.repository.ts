@@ -1,5 +1,5 @@
 import { IUserPrimitives, UserModel } from '../../domain/models/user.model';
-import { EmailVO } from '../../domain/value-objects/email.vo';
+import { EmailVO } from '../../../shared/domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { injectable } from 'inversify';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
@@ -65,7 +65,7 @@ export class UserRepository
 		const repository = await this.repository();
 		const userCreate = new UserEntity();
 		userCreate.user_id = user.id.value;
-		userCreate.name = user.name.value;
+		userCreate.username = user.username.value;
 		userCreate.email = user.email.value;
 		userCreate.password = user.password.value;
 		userCreate.state = user.state.value;

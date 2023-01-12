@@ -1,26 +1,26 @@
-import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
 import { IUserPrimitives } from '../../../../src/Contexts/user/domain/models/user.model';
-import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
-import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
+import { EmailVO } from '../../../../src/Contexts/shared/domain/value-objects/email.vo';
 import { UserEmailMother } from '../domain/user-email.mother';
 import { UserIdMother } from '../domain/user-id.mother';
 import { UserNameMother } from '../domain/user-name.mother';
 import { UserPasswordMother } from '../domain/user-password.mother';
 import { UserStateMother } from '../domain/user-state.mother';
+import { PasswordVO } from '../../../../src/Contexts/shared/domain/value-objects/password.vo';
 
 export class UserRequestMother {
 	static create(
 		id: UuidVO,
-		name: NameVO,
+		username: UsernameVO,
 		email: EmailVO,
 		password: PasswordVO,
 		state: StateVO
 	): IUserPrimitives {
 		return {
 			user_id: id.value,
-			name: name.value,
+			username: username.value,
 			email: email.value,
 			password: password.value,
 			state: state.value,

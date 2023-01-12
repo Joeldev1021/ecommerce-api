@@ -1,12 +1,12 @@
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
-import { PriceVO } from '../../domain/value-objects/price.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
+import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ProductIdAlreadyInUseException } from '../errors/product-id-already.in-use.exception';
 import { ProductModel } from '../../domain/models/product.model';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { QuantityVO } from '../../domain/value-objects/quantity.vo';
+import { QuantityVO } from '../../../shared/domain/value-objects/quantity.vo';
 import { ProductNameAlreadyInUseException } from '../errors/product-name-already-in-use.exception';
 import { IProductRepository } from '../../domain/repositories/product.repository';
 import { inject, injectable } from 'inversify';
@@ -21,7 +21,7 @@ export class ProductCreateUseCase {
 
 	async execute(
 		id: UuidVO,
-		name: NameVO,
+		name: UsernameVO,
 		description: DescriptionVO,
 		// image: string,
 		productId: UuidVO,

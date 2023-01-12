@@ -7,7 +7,7 @@ export class UserRegisterDTO {
 
 	@IsString()
 	@IsNotEmpty()
-	public name: string;
+	public username: string;
 
 	@IsEmail()
 	@IsNotEmpty()

@@ -3,7 +3,7 @@ import {
 	ICategoryPrimitives,
 } from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryEntity } from '../../../shared/infrastruture/entity/category';
 import { injectable } from 'inversify';
@@ -35,7 +35,7 @@ export class CategoryRepository
 		return CategoryModel.toDomain(category);
 	}
 
-	async findByName(name: NameVO): Promise<CategoryModel | null> {
+	async findByName(name: UsernameVO): Promise<CategoryModel | null> {
 		const repository = await this.repository();
 		const category = await repository.findOneBy({ name: name.value });
 		if (category == null) return null;

@@ -1,4 +1,4 @@
-import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
+import { EmailVO } from '../../../../src/Contexts/shared/domain/value-objects/email.vo';
 import { EmailMother } from '../../shared/domain/email.mother';
 
 export class UserEmailMother {

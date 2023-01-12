@@ -4,8 +4,6 @@ import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 import { UserLoginUseCase } from '../../../../../Contexts/user/application/usecase/user-login.usecase';
 import { UserLoginDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-login.dto';
 import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
-import { EmailVO } from '../../../../../Contexts/user/domain/value-objects/email.vo';
-import { PasswordVO } from '../../../../../Contexts/user/domain/value-objects/password.vo';
 
 @injectable()
 export class UserLoginController {
@@ -21,10 +19,7 @@ export class UserLoginController {
 	): Promise<void> {
 		const { email, password } = req.body;
 		try {
-			const user = await this._userLoginUseCase.execute(
-				new EmailVO(email),
-				new PasswordVO(password)
-			);
+			const user = await this._userLoginUseCase.execute(email, password);
 			res.status(200).send(user);
 		} catch (error) {
 			next(error);

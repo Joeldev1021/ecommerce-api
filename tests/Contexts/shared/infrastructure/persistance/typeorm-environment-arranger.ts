@@ -1,10 +1,10 @@
 import { injectable } from 'inversify';
 import { DataSource } from 'typeorm';
 import { TypeOrmClientFactory } from '../../../../../src/Contexts/shared/infrastruture/persistance/typeorm-client-factory';
-import { EnvironmentArranger } from '../arrarger/enviroment-arranger';
+import { IEnvironmentArranger } from '../arrarger/enviroment-arranger';
 
 @injectable()
-export class TypeOrmEnvironmentArranger implements EnvironmentArranger {
+export class TypeOrmIEnvironmentArranger implements IEnvironmentArranger {
 	async client(): Promise<DataSource> {
 		await TypeOrmClientFactory.createConnection();
 		return TypeOrmClientFactory.getConnection();

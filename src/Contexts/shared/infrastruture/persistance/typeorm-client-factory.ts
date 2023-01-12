@@ -10,8 +10,6 @@ export class TypeOrmClientFactory {
 
 	static async createConnection(): Promise<void> {
 		if (this.connection !== undefined) return;
-		console.log(process.env.MYSQL_USER);
-		console.log(process.env.DB_NAME);
 		try {
 			const dataSource = new DataSource({
 				type: 'mysql',
