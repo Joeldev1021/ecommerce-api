@@ -1,7 +1,7 @@
 import { MotherCreator } from './mother-creator';
 
-export class NameMother {
+export class UsernameMother {
 	static random(): string {
-		return MotherCreator.random().commerce.department();
+		return MotherCreator.random().internet.userName();
 	}
 }

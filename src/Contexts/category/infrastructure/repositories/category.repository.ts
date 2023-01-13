@@ -9,6 +9,7 @@ import { CategoryEntity } from '../../../shared/infrastruture/entity/category';
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 
 @injectable()
 export class CategoryRepository
@@ -35,7 +36,7 @@ export class CategoryRepository
 		return CategoryModel.toDomain(category);
 	}
 
-	async findByName(name: UsernameVO): Promise<CategoryModel | null> {
+	async findByName(name: NameVO): Promise<CategoryModel | null> {
 		const repository = await this.repository();
 		const category = await repository.findOneBy({ name: name.value });
 		if (category == null) return null;

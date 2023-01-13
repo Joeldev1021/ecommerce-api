@@ -1,5 +1,5 @@
 import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
-import { NameMother } from '../../shared/domain/name.mother';
+import { UsernameMother } from '../../shared/domain/username.mother';
 
 export class UserNameMother {
 	static create(value: string): UsernameVO {
@@ -7,6 +7,6 @@ export class UserNameMother {
 	}
 
 	static random(): UsernameVO {
-		return this.create(NameMother.random());
+		return this.create(UsernameMother.random());
 	}
 }

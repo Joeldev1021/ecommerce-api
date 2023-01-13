@@ -7,6 +7,7 @@ import { DescriptionVO } from '../../../shared/domain/value-objects/description.
 import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 
 export interface ICategoryPrimitives extends AggregateRootPrimitives {
 	category_id: string;
@@ -19,7 +20,7 @@ export interface ICategoryPrimitives extends AggregateRootPrimitives {
 export class CategoryModel extends AggregateRoot {
 	constructor(
 		public readonly id: UuidVO,
-		public name: UsernameVO,
+		public name: NameVO,
 		public description: DescriptionVO,
 		//public image: string,
 		public state: StateVO
@@ -29,7 +30,7 @@ export class CategoryModel extends AggregateRoot {
 
 	static create(
 		id: UuidVO,
-		name: UsernameVO,
+		name: NameVO,
 		description: DescriptionVO,
 		//public image: string,
 		state: StateVO
@@ -49,7 +50,7 @@ export class CategoryModel extends AggregateRoot {
 	static toDomain(category: ICategoryPrimitives): CategoryModel {
 		return new CategoryModel(
 			new UuidVO(category.category_id),
-			new UsernameVO(category.name),
+			new NameVO(category.name),
 			new DescriptionVO(category.description),
 			new StateVO(category.state)
 		);
