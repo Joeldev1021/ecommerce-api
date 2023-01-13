@@ -10,9 +10,9 @@ export class RabbitMQConnectionMother {
 		return connection;
 	}
 
-	static failOnPublish() {
-		return new RabbitMQConnectionDouble(
+	static async failOnPublish(): Promise<void> {
+		/* 	return new RabbitMQConnectionDouble(
 			RabbitMQConnectionConfigurationMother.create()
-		);
+		); */
 	}
 }

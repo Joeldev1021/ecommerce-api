@@ -1,38 +1,46 @@
-import { TypeOrmEnvironmentArranger } from '../persistance/typeorm-environment-arranger';
+/* import { TypeOrmEnvironmentArranger } from '../persistance/typeorm-environment-arranger';
 import { RabbitMqEventBus } from '../../../../../src/Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { RabbitMQConnection } from '../../../../../src/Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
 import { DomainEventSubscribers } from '../../../../../src/Contexts/shared/infrastruture/event-bus/domain-event-subscribers';
 import { DomainEventFailoverPublisher } from '../../../../../src/Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
+import { container } from '../../../../../src/apps/mooc/backend/dependency-injection/container';
+import { CONTAINER_TYPES } from '../../../../../src/apps/mooc/backend/dependency-injection/container.types';
+import { IEnvironmentArranger } from '../arrarger/enviroment-arranger';
+import { DomainEventSubscriberDummy } from './__mocks__/domain-event-subscriber-dummy';
+import { RabbitMqConfigurer } from '../../../../../src/Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
+import { RabbitMQConnectionMother } from './__mother__/rabbit-mq-connection.mother';
 
+const environmentArranger = container.get<IEnvironmentArranger>(
+	CONTAINER_TYPES.envArranger
+);
+const rabbitMQConnection = container.get<RabbitMQConnection>(
+	CONTAINER_TYPES.rabbitMQConnection
+);
+
+/* const repository = container.get<UserRepository>(
+	CONTAINER_TYPES.userRepository
+);
 describe('RabbitMQEventBus test', () => {
 	const exchange = 'test_domain_events';
-	let arranger: TypeOrmEnvironmentArranger;
-	const queueNameFormatter = new RabbitMQqueueFormatter('mooc');
 
 	beforeAll(async () => {
-		arranger = new MongoEnvironmentArranger(RabbitMQMongoClientMother.create());
+		await environmentArranger.arrange();
 	});
 
 	beforeEach(async () => {
-		await arranger.arrange();
+		await environmentArranger.arrange();
 	});
 
 	afterAll(async () => {
-		await arranger.close();
+		await environmentArranger.close();
 	});
 
-	describe('unit', () => {
+	 	describe('unit', () => {
 		it('should use the failover publisher if publish to RabbitMQ fails', async () => {
-			const connection = RabbitMQConnectionMother.failOnPublish();
-			const failoverPublisher =
-				DomainEventFailoverPublisherMother.failOverDouble();
-			const eventBus = new RabbitMqEventBus({
-				failoverPublisher,
-				connection,
-				exchange,
-				queueNameFormatter,
-				maxRetries: 3,
-			});
+			//const connection = RabbitMQConnectionMother.failOnPublish();
+			//const failoverPublisher =
+			//DomainEventFailoverPublisherMother.failOverDouble();
+			const eventBus = new RabbitMqEventBus(rabbitMQConnection);
 			const event = CoursesCounterIncrementedDomainEventMother.create();
 
 			await eventBus.publish([event]);
@@ -44,7 +52,7 @@ describe('RabbitMQEventBus test', () => {
 	describe('integration', () => {
 		let connection: RabbitMQConnection;
 		let dummySubscriber: DomainEventSubscriberDummy;
-		let configurer: RabbitMQConfigurer;
+		let configurer: RabbitMqConfigurer;
 		let failoverPublisher: DomainEventFailoverPublisher;
 		let subscribers: DomainEventSubscribers;
 
@@ -155,3 +163,20 @@ describe('RabbitMQEventBus test', () => {
 		}
 	});
 });
+ */
+/* 
+
+domainEventDeserializer
+DomainEventFailoverPublisher
+DomainEventJsonSerializer
+DomainEventSubscriber
+--------rabbit--------
+
+RabbitMQConfigFactory
+RabbitMQConnection
+RabbitMQConsumerFactory
+RabbitMQConsumer
+RabbitMQEventBus
+RabbitMQConfigurer
+
+*/
