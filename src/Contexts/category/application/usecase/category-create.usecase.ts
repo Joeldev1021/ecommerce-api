@@ -4,10 +4,11 @@ import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
-import { RabbitMqEventBus } from '../../../shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
 import { IEventBus } from '../../../shared/domain/interface/event-bus';
+import { CategoryIdAlreadyInUseException } from '../error/category-id-already-in-use.exception';
+import { CategoryNameAlreadyInUseException } from '../error/category-name-already-exists.exception';
 
 @injectable()
 export class CategoryCreateUseCase {
@@ -24,12 +25,18 @@ export class CategoryCreateUseCase {
 		description: DescriptionVO,
 		state: StateVO
 	): Promise<void> {
-		//const categoryExists = await this._categoryRepository.findById(id);
-		//if (categoryExists != null) throw new CategoryIdAlreadyInUseException();
-		//const categoryName = await this._categoryRepository.findByName(name);
-		//if (categoryName != null) throw new CategoryNameAlreadyInUseException();
+		const categoryExists = await this._categoryRepository.findById(id);
+
+		if (categoryExists) throw new CategoryIdAlreadyInUseException();
+
+		const categoryName = await this._categoryRepository.findByName(name);
+
+		if (!categoryName) throw new CategoryNameAlreadyInUseException();
+
 		const categoryModel = CategoryModel.create(id, name, description, state);
+
 		await this._categoryRepository.create(categoryModel);
+
 		await this._eventBus.publish(categoryModel.pullDomainEvents());
 	}
 }

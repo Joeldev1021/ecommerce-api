@@ -1,5 +1,6 @@
 import { CategoryModel } from '../../../../src/Contexts/category/domain/models/category.model';
 import { ICategoryRepository } from '../../../../src/Contexts/category/domain/repositories/category.repository';
+import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
 import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
 
@@ -30,7 +31,7 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 		return null;
 	}
 
-	async findByName(name: UsernameVO): Promise<CategoryModel | null> {
+	async findByName(name: NameVO): Promise<CategoryModel | null> {
 		return null;
 	}
 
