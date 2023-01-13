@@ -1,6 +1,6 @@
 import { CategoryModel } from '../models/category.model';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 
 export interface ICategoryRepository {
 	findById(id: UuidVO): Promise<CategoryModel | null>;

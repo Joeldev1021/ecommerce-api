@@ -1,6 +1,6 @@
-import { PasswordVO } from '../value-objects/password.vo';
-import { EmailVO } from '../value-objects/email.vo';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { PasswordVO } from '../../../shared/domain/value-objects/password.vo';
+import { EmailVO } from '../../../shared/domain/value-objects/email.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import {
@@ -9,7 +9,7 @@ import {
 } from '../../../shared/domain/aggregate-root';
 export interface IUserPrimitives extends AggregateRootPrimitives {
 	user_id: string;
-	name: string;
+	username: string;
 	email: string;
 	password: string;
 	avatar?: string;
@@ -19,7 +19,7 @@ export interface IUserPrimitives extends AggregateRootPrimitives {
 export class UserModel extends AggregateRoot {
 	constructor(
 		public readonly id: UuidVO,
-		public name: NameVO,
+		public username: UsernameVO,
 		public email: EmailVO,
 		public password: PasswordVO,
 		public state: StateVO
@@ -30,7 +30,7 @@ export class UserModel extends AggregateRoot {
 	static toDomain(user: IUserPrimitives): UserModel {
 		return new UserModel(
 			new UuidVO(user.user_id),
-			new NameVO(user.name),
+			new UsernameVO(user.username),
 			new EmailVO(user.email),
 			new PasswordVO(user.password),
 			new StateVO(user.state)
@@ -40,7 +40,7 @@ export class UserModel extends AggregateRoot {
 	toPrimitives(): IUserPrimitives {
 		return {
 			user_id: this.id.value,
-			name: this.name.value,
+			username: this.username.value,
 			email: this.email.value,
 			password: this.password.value,
 			state: this.state.value,

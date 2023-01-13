@@ -3,12 +3,13 @@ import {
 	ICategoryPrimitives,
 } from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryEntity } from '../../../shared/infrastruture/entity/category';
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
+import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 
 @injectable()
 export class CategoryRepository

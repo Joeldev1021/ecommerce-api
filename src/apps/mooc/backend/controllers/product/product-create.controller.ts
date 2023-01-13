@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { ProductCreateUseCase } from '../../../../../Contexts/product/application/usecases/product-create-usecase';
-import { PriceVO } from '../../../../../Contexts/product/domain/value-objects/price.vo';
-import { QuantityVO } from '../../../../../Contexts/product/domain/value-objects/quantity.vo';
+import { PriceVO } from '../../../../../Contexts/shared/domain/value-objects/price.vo';
+import { QuantityVO } from '../../../../../Contexts/shared/domain/value-objects/quantity.vo';
 import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
@@ -26,7 +26,7 @@ export class ProductCreateController {
 		try {
 			const product = this._productCreateUseCase.execute(
 				new UuidVO(id),
-				new NameVO(name),
+				new UsernameVO(name),
 				new DescriptionVO(description),
 				new UuidVO(categoryId),
 				new PriceVO(price),

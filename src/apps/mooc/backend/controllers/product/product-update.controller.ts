@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { ProductUpdateUseCase } from '../../../../../Contexts/product/application/usecases/product-update.usecase';
 import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 
@@ -24,7 +24,7 @@ export class ProductUpdateController {
 		try {
 			const product = this._productUpdateUseCase.execute(
 				new UuidVO(id),
-				new NameVO(name),
+				new UsernameVO(name),
 				new DescriptionVO(description),
 				new StateVO(state)
 			);

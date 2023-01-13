@@ -1,0 +1,48 @@
+import 'reflect-metadata';
+import { CategoryCreateCommandHandler } from '../../../../src/Contexts/category/application/command/category-create-command.handler';
+import { CategoryCreateUseCase } from '../../../../src/Contexts/category/application/usecase/category-create.usecase';
+import { VOFormatException } from '../../../../src/Contexts/shared/domain/errors/vo-format.exception';
+import EventBusMock from '../../shared/domain/__Mock__/event-bus-mock';
+import { CategoryCreatedEventMother } from '../domain/category-created-domain-event.mother';
+import { CategoryModelMother } from '../domain/category-model.mother';
+import { CategoryRepositoryMock } from '../__mocks__/category-repository.mock';
+import { CategoryCreateCommandMother } from './category-create-command.mother';
+
+let repository: CategoryRepositoryMock;
+let categoryCreateUseCase: CategoryCreateUseCase;
+let eventBus: EventBusMock;
+let handler: CategoryCreateCommandHandler;
+
+beforeEach(() => {
+	repository = new CategoryRepositoryMock();
+	eventBus = new EventBusMock();
+	categoryCreateUseCase = new CategoryCreateUseCase(repository, eventBus);
+	handler = new CategoryCreateCommandHandler(categoryCreateUseCase);
+});
+
+describe('CategoryCreateCommandHandler', () => {
+	it('should create a valid category', async () => {
+		const command = CategoryCreateCommandMother.random();
+		const category = CategoryModelMother.from(command);
+		const domainEvent = CategoryCreatedEventMother.fromCategory(category);
+		console.log(category);
+		await handler.handle(command);
+
+		repository.assertSaveHaveBeenCalledWith(category);
+		eventBus.assertLastPublishedEventIs(domainEvent);
+	});
+	it('should throw error if id invalid', async () => {
+		expect(() => {
+			const command = CategoryCreateCommandMother.invalid();
+			const commandInvalid = {
+				...command,
+				id: '22',
+			};
+			const category = CategoryModelMother.from(commandInvalid);
+
+			handler.handle(command);
+
+			repository.assertSaveHaveBeenCalledWith(category);
+		}).toThrow(VOFormatException);
+	});
+});

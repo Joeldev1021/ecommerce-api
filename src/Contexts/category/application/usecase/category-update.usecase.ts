@@ -1,6 +1,6 @@
 import { CategoryModel } from '../../domain/models/category.model';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
@@ -16,7 +16,7 @@ export class CategoryUpdateUseCase {
 
 	async execute(
 		id: UuidVO,
-		name: NameVO,
+		name: UsernameVO,
 		description: DescriptionVO,
 		state: StateVO
 	): Promise<void> {

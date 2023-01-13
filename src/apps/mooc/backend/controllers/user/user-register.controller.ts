@@ -17,11 +17,11 @@ export class UserRegisterController {
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		const { id, name, email, password } = req.body;
+		const { id, username, email, password } = req.body;
 		try {
 			const user = await this._userRegisterUseCase.execute(
 				id,
-				name,
+				username,
 				email,
 				password,
 				true

@@ -4,9 +4,7 @@ import { Container } from 'inversify';
 import { TagHandler } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 
 export class DomainEventSubscribers {
-	private constructor(
-		public items: Array<IDomainEventSubscriber<DomainEvent>>
-	) {}
+	constructor(public items: Array<IDomainEventSubscriber<DomainEvent>>) {}
 
 	static from(container: Container): DomainEventSubscribers {
 		const subscribers = container.getAll<IDomainEventSubscriber<DomainEvent>>(

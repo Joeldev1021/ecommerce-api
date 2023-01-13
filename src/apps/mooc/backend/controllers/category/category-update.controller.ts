@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { CategoryUpdateUseCase } from '../../../../../Contexts/category/application/usecase/category-update.usecase';
 import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../../../Contexts/shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
@@ -23,7 +23,7 @@ export class CategoryUpdateController {
 		try {
 			const category = await this._categoryUpdateUseCase.execute(
 				new UuidVO(id),
-				new NameVO(name),
+				new UsernameVO(name),
 				new DescriptionVO(description),
 				new StateVO(state)
 			);

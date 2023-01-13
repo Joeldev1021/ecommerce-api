@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ProductEntity } from '../../../shared/infrastruture/entity/product';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
@@ -26,7 +26,7 @@ export class ProductRepository
 		return ProductModel.toDomain(product);
 	}
 
-	async findByName(name: NameVO): Promise<ProductModel | null> {
+	async findByName(name: UsernameVO): Promise<ProductModel | null> {
 		const repository = await this.repository();
 		const product = await repository.findOneBy({ name: name.value });
 		if (!product) return null;

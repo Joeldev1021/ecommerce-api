@@ -1,12 +1,12 @@
-import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
-import { NameMother } from '../../shared/domain/name.mother';
+import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
+import { UsernameMother } from '../../shared/domain/username.mother';
 
 export class UserNameMother {
-	static create(value: string): NameVO {
-		return new NameVO(value);
+	static create(value: string): UsernameVO {
+		return new UsernameVO(value);
 	}
 
-	static random(): NameVO {
-		return this.create(NameMother.random());
+	static random(): UsernameVO {
+		return this.create(UsernameMother.random());
 	}
 }

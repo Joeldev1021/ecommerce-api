@@ -1,10 +1,10 @@
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
 import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
-import { PriceVO } from '../value-objects/price.vo';
+import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
+import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { QuantityVO } from '../value-objects/quantity.vo';
+import { QuantityVO } from '../../../shared/domain/value-objects/quantity.vo';
 import {
 	AggregateRoot,
 	AggregateRootPrimitives,
@@ -24,7 +24,7 @@ export interface IProductPrimitives extends AggregateRootPrimitives {
 export class ProductModel extends AggregateRoot {
 	constructor(
 		public readonly id: UuidVO,
-		public name: NameVO,
+		public name: UsernameVO,
 		public description: DescriptionVO,
 		public imageUrl: null,
 		public categoryId: UuidVO,
@@ -39,7 +39,7 @@ export class ProductModel extends AggregateRoot {
 	static toDomain(product: IProductPrimitives): ProductModel {
 		return new ProductModel(
 			new UuidVO(product.product_id),
-			new NameVO(product.name),
+			new UsernameVO(product.name),
 			new DescriptionVO(product.description),
 			null,
 			new UuidVO(product.category_id),
