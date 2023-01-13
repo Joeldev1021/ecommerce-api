@@ -8,7 +8,7 @@ import { CategoryNameMother } from '../domain/category-name.mother';
 import { CategoryStateMother } from '../domain/category-state.mother';
 import { CategoryCreateCommand } from '../../../../src/Contexts/category/domain/command/category-created.command';
 
-export class CreateCourseCommandMother {
+export class CategoryCreateCommandMother {
 	static create(
 		id: UuidVO,
 		name: NameVO,

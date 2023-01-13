@@ -7,6 +7,7 @@ import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-inject
 import { RabbitMqEventBus } from '../../../shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { NameVO } from '../../../shared/domain/value-objects/name.vo';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
+import { IEventBus } from '../../../shared/domain/interface/event-bus';
 
 @injectable()
 export class CategoryCreateUseCase {
@@ -14,7 +15,7 @@ export class CategoryCreateUseCase {
 		@inject(CONTAINER_TYPES.categoryRepository)
 		private readonly _categoryRepository: ICategoryRepository,
 		@inject(CONTAINER_TYPES.rabbitMqEventBus)
-		private readonly _eventBus: RabbitMqEventBus
+		private readonly _eventBus: IEventBus
 	) {}
 
 	async execute(
@@ -28,7 +29,7 @@ export class CategoryCreateUseCase {
 		//const categoryName = await this._categoryRepository.findByName(name);
 		//if (categoryName != null) throw new CategoryNameAlreadyInUseException();
 		const categoryModel = CategoryModel.create(id, name, description, state);
-		//await this._categoryRepository.create(categoryModel);
+		await this._categoryRepository.create(categoryModel);
 		await this._eventBus.publish(categoryModel.pullDomainEvents());
 	}
 }

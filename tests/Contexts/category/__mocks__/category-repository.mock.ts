@@ -14,7 +14,8 @@ export class CategoryRepositoryMock implements ICategoryRepository {
     this.saveMock(course);
   } */
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
-		return this.saveMock(category);
+		this.saveMock(category);
+		return null;
 	}
 
 	assertSaveHaveBeenCalledWith(expected: CategoryModel): void {

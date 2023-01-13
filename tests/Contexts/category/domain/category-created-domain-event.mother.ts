@@ -21,10 +21,10 @@ export class CategoryCreatedEventMother {
 		});
 	}
 
-	static fromCourse(category: CategoryModel): CategoryCreatedEvent {
+	static fromCategory(category: CategoryModel): CategoryCreatedEvent {
 		return new CategoryCreatedEvent({
 			aggregateId: category.id.value,
-			eventId: category.name.value,
+			eventId: category.id.value,
 			categoryId: category.id.value,
 		});
 	}
