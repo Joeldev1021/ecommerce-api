@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ICategoryRepository } from '../../../../../src/Contexts/category/domain/repositories/category.repository';
 import { CONTAINER_TYPES } from '../../../../../src/apps/mooc/backend/dependency-injection/container.types';
 import { container } from '../../../../../src/apps/mooc/backend/dependency-injection/container';

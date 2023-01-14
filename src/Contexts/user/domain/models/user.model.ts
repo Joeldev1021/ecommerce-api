@@ -1,6 +1,6 @@
-import { PasswordVO } from '../../../shared/domain/value-objects/password.vo';
-import { EmailVO } from '../../../shared/domain/value-objects/email.vo';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
+import { PasswordVO } from '../value-objects/password.vo';
+import { EmailVO } from '../value-objects/email.vo';
+import { UsernameVO } from '../value-objects/username.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import {

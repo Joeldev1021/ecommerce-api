@@ -1,15 +1,15 @@
 import { ProductModel } from '../models/product.model';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { ProductId } from '../value-objects/product-id.vo';
+import { ProductName } from '../value-objects/product-name.vo';
 
 export interface IProductRepository {
-	findById(id: UuidVO): Promise<ProductModel | null>;
+	findById(id: ProductId): Promise<ProductModel | null>;
 
 	create(product: ProductModel): Promise<ProductModel | null>;
 
-	findByName(name: UsernameVO): Promise<ProductModel | null>;
+	findByName(name: ProductName): Promise<ProductModel | null>;
 
-	delete(productId: UuidVO): Promise<void>;
+	delete(productId: ProductId): Promise<void>;
 
 	findAll(): Promise<ProductModel[] | null>;
 

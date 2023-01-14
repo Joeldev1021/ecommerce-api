@@ -29,6 +29,6 @@ export class CategoryEntity extends BaseEntity {
 	product_ids: string;
 
 	@OneToMany(() => ProductEntity, product => product.category)
-	@JoinColumn({ name: 'product_ids' })
+	@JoinColumn({ name: 'product_ids', referencedColumnName: 'product_id' })
 	products: ProductEntity[];
 }

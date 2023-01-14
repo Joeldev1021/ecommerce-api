@@ -2,9 +2,9 @@
 import { VOFormatException } from '../../../../src/Contexts/shared/domain/errors/vo-format.exception';
 import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
-import { EmailVO } from '../../../../src/Contexts/shared/domain/value-objects/email.vo';
-import { PasswordVO } from '../../../../src/Contexts/shared/domain/value-objects/password.vo';
-import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
+import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
+import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
+import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
 
 describe('Test Value-Object', () => {
 	it('should throw error if  userame length is < 4', async () => {

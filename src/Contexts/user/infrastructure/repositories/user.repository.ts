@@ -1,5 +1,5 @@
 import { IUserPrimitives, UserModel } from '../../domain/models/user.model';
-import { EmailVO } from '../../../shared/domain/value-objects/email.vo';
+import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { injectable } from 'inversify';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';

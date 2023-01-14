@@ -1,17 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { CategoryUpdateUseCase } from '../../../../../Contexts/category/application/usecase/category-update.usecase';
-import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
-import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
-import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
+import { ICommandBus } from '../../../../../Contexts/shared/domain/interface/command-bust';
+import { CategoryUpdateCommand } from '../../../../../Contexts/category/domain/command/category-update-command';
 
 @injectable()
 export class CategoryUpdateController {
 	constructor(
-		@inject(CONTAINER_TYPES.productUpdateUseCase)
-		private readonly _categoryUpdateUseCase: CategoryUpdateUseCase
+		@inject(CONTAINER_TYPES.commandBus)
+		private readonly _commandBus: ICommandBus
 	) {}
 
 	async execute(
@@ -21,11 +18,8 @@ export class CategoryUpdateController {
 	): Promise<void> {
 		const { id, name, description, state } = req.body;
 		try {
-			const category = await this._categoryUpdateUseCase.execute(
-				new UuidVO(id),
-				new UsernameVO(name),
-				new DescriptionVO(description),
-				new StateVO(state)
+			const category = await this._commandBus.dispatch(
+				new CategoryUpdateCommand(id, name, description, state)
 			);
 			res.status(200).send(category);
 		} catch (error) {

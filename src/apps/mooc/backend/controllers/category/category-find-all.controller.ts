@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { CategoryFindAllUseCase } from '../../../../../Contexts/category/application/usecase/category-find-all.usecase';
+import { CategoryFindAllQuery } from '../../../../../Contexts/category/application/find-all/category-find-all.query';
+import { CategoryFindAllResponse } from '../../../../../Contexts/category/application/find-all/category-find-all.response';
+import { IQueryBus } from '../../../../../Contexts/shared/domain/interface/query-bus';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindAllController {
 	constructor(
-		@inject(CONTAINER_TYPES.categoryFindAllUseCase)
-		private readonly _categoryFindAllUseCase: CategoryFindAllUseCase
+		@inject(CONTAINER_TYPES.queryBus)
+		private readonly _queryBus: IQueryBus
 	) {}
 
 	async execute(
@@ -16,7 +18,9 @@ export class CategoryFindAllController {
 		next: NextFunction
 	): Promise<void> {
 		try {
-			const category = await this._categoryFindAllUseCase.execute();
+			const category = await this._queryBus.ask<CategoryFindAllResponse>(
+				new CategoryFindAllQuery()
+			);
 
 			res.status(200).send(category);
 		} catch (error) {

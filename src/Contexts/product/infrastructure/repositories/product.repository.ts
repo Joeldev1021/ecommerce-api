@@ -1,7 +1,5 @@
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ProductEntity } from '../../../shared/infrastruture/entity/product';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
 import {
@@ -9,6 +7,8 @@ import {
 	ProductModel,
 } from '../../domain/models/product.model';
 import { IProductRepository } from '../../domain/repositories/product.repository';
+import { ProductId } from '../../domain/value-objects/product-id.vo';
+import { ProductName } from '../../domain/value-objects/product-name.vo';
 
 @injectable()
 export class ProductRepository
@@ -19,14 +19,14 @@ export class ProductRepository
 		return ProductEntity;
 	}
 
-	async findById(id: UuidVO): Promise<ProductModel | null> {
+	async findById(id: ProductId): Promise<ProductModel | null> {
 		const repository = await this.repository();
 		const product = await repository.findOneBy({ product_id: id.value });
 		if (!product) return null;
 		return ProductModel.toDomain(product);
 	}
 
-	async findByName(name: UsernameVO): Promise<ProductModel | null> {
+	async findByName(name: ProductName): Promise<ProductModel | null> {
 		const repository = await this.repository();
 		const product = await repository.findOneBy({ name: name.value });
 		if (!product) return null;
@@ -51,7 +51,7 @@ export class ProductRepository
 		return ProductModel.toDomain(product);
 	}
 
-	async delete(productId: UuidVO): Promise<void> {
+	async delete(productId: ProductId): Promise<void> {
 		const repository = await this.repository();
 		await repository.delete({ product_id: productId.value });
 	}
@@ -64,8 +64,13 @@ export class ProductRepository
 	}
 
 	async update(product: ProductModel): Promise<ProductModel | null> {
-		//const repository = await this.repository();
-		//todo => should return productModel updated
+		const productPrimitives = product.toPrimitives();
+		const repository = await this.repository();
+		const productUpdate = await repository.update(
+			{ product_id: product.id.value },
+			productPrimitives
+		);
+		console.log(productUpdate);
 		return null;
 	}
 }

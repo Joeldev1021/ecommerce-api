@@ -3,7 +3,7 @@ services:
   db:
     image: mysql:latest
     restart: always
-    container_name: 'mysql'
+    container_name: 'mysql_ecom'
     environment:
       MYSQL_DATABASE: 'ecommerce'
       MYSQL_USER: 'user_mysql'

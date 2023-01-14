@@ -3,11 +3,10 @@ import {
 	AggregateRoot,
 	AggregateRootPrimitives,
 } from '../../../shared/domain/aggregate-root';
-import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
-import { StateVO } from '../../../shared/domain/value-objects/state.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { NameVO } from '../../../shared/domain/value-objects/name.vo';
+import { CategoryDesc } from '../value-objects/category-description.vo';
+import { CategoryId } from '../value-objects/category-id.vo';
+import { CategoryState } from '../value-objects/category-state.vo';
+import { CategoryName } from '../value-objects/category-name.vo';
 
 export interface ICategoryPrimitives extends AggregateRootPrimitives {
 	category_id: string;
@@ -19,21 +18,21 @@ export interface ICategoryPrimitives extends AggregateRootPrimitives {
 
 export class CategoryModel extends AggregateRoot {
 	constructor(
-		public readonly id: UuidVO,
-		public name: NameVO,
-		public description: DescriptionVO,
+		public readonly id: CategoryId,
+		public name: CategoryName,
+		public description: CategoryDesc,
 		//public image: string,
-		public state: StateVO
+		public state: CategoryState
 	) {
 		super();
 	}
 
 	static create(
-		id: UuidVO,
-		name: NameVO,
-		description: DescriptionVO,
+		id: CategoryId,
+		name: CategoryName,
+		description: CategoryDesc,
 		//public image: string,
-		state: StateVO
+		state: CategoryState
 	): CategoryModel {
 		const category = new CategoryModel(id, name, description, state);
 
@@ -49,10 +48,10 @@ export class CategoryModel extends AggregateRoot {
 
 	static toDomain(category: ICategoryPrimitives): CategoryModel {
 		return new CategoryModel(
-			new UuidVO(category.category_id),
-			new NameVO(category.name),
-			new DescriptionVO(category.description),
-			new StateVO(category.state)
+			new CategoryId(category.category_id),
+			new CategoryName(category.name),
+			new CategoryDesc(category.description),
+			new CategoryState(category.state)
 		);
 	}
 

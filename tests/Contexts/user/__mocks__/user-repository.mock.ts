@@ -1,7 +1,7 @@
 import { IUserRepository } from '../../../../src/Contexts/user/domain/repositories/user.repository';
-import { EmailVO } from '../../../../src/Contexts/shared/domain/value-objects/email.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
 import { UserModel } from '../../../../src/Contexts/user/domain/models/user.model';
+import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 
 export class UserRepositoryMock implements IUserRepository {
 	private saveMock: jest.Mock;

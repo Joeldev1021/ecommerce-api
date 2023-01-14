@@ -42,11 +42,9 @@ export const CONTAINER_TYPES = {
 	domainEventFailoverPublisher: Symbol.for('domainEventFailoverPublisher'),
 	domainEventDeserializer: Symbol.for('domainEventDeserializer'),
 	/* ====================: Symbol.for(CQRS =========================*/
-	commandHandlers: Symbol.for('commandHandlers'),
 	commandBus: Symbol.for('commandBus'),
-	queryHandlers: Symbol.for('queryHandlers'),
 	queryBus: Symbol.for('queryBus'),
-	categoryFindCounter: Symbol.for('categoryFindCounter'),
+	categoryFindCounterUseCase: Symbol.for('categoryFindCounterUseCase'),
 
 	/*==================== test ================================*/
 	envArranger: Symbol.for('EnvArranger'),

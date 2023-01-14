@@ -18,9 +18,8 @@ export class CategoryCreateController {
 	): Promise<void> {
 		const { id, name, description, state } = req.body;
 		try {
-			const category = await this._commandBus.dispatch(
-				new CategoryCreateCommand(id, name, description, state)
-			);
+			const query = new CategoryCreateCommand(id, name, description, state);
+			const category = await this._commandBus.dispatch(query);
 
 			res.status(200).send(category);
 		} catch (error) {

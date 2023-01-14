@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { ProductFindAllUseCase } from '../../../../../Contexts/product/application/usecases/product-find-all.usecase';
+import { ProductFindAllUseCase } from '../../../../../Contexts/product/application/find-all/product-find-all.usecase';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()

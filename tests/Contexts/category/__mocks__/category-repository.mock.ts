@@ -1,8 +1,7 @@
 import { CategoryModel } from '../../../../src/Contexts/category/domain/models/category.model';
 import { ICategoryRepository } from '../../../../src/Contexts/category/domain/repositories/category.repository';
-import { NameVO } from '../../../../src/Contexts/shared/domain/value-objects/name.vo';
-import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
-import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
+import { CategoryId } from '../../../../src/Contexts/category/domain/value-objects/category-id.vo';
+import { CategoryName } from '../../../../src/Contexts/category/domain/value-objects/category-name.vo';
 
 export class CategoryRepositoryMock implements ICategoryRepository {
 	private saveMock: jest.Mock;
@@ -27,15 +26,15 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 		return null;
 	}
 
-	async findById(id: UuidVO): Promise<CategoryModel | null> {
+	async findById(id: CategoryId): Promise<CategoryModel | null> {
 		return null;
 	}
 
-	async findByName(name: NameVO): Promise<CategoryModel | null> {
+	async findByName(name: CategoryName): Promise<CategoryModel | null> {
 		return null;
 	}
 
-	async delete(categoryId: UuidVO): Promise<void> {}
+	async delete(categoryId: CategoryId): Promise<void> {}
 
 	async update(category: CategoryModel): Promise<CategoryModel | null> {
 		return null;

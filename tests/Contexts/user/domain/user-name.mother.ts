@@ -1,4 +1,4 @@
-import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
+import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
 import { UsernameMother } from '../../shared/domain/username.mother';
 
 export class UserNameMother {

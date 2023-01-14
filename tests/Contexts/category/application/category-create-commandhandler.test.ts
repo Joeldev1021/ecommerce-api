@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import { CategoryCreateCommandHandler } from '../../../../src/Contexts/category/application/command/category-create-command.handler';
-import { CategoryCreateUseCase } from '../../../../src/Contexts/category/application/usecase/category-create.usecase';
 import { VOFormatException } from '../../../../src/Contexts/shared/domain/errors/vo-format.exception';
+import { CategoryCreateUseCase } from '../../../../src/Contexts/category/application/create/category-create.usecase';
+import { CategoryCreateCommandHandler } from '../../../../src/Contexts/category/application/create/category-create-command-handler';
 import EventBusMock from '../../shared/domain/__Mock__/event-bus-mock';
 import { CategoryCreatedEventMother } from '../domain/category-created-domain-event.mother';
 import { CategoryModelMother } from '../domain/category-model.mother';

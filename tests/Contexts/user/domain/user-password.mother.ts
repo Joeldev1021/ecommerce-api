@@ -1,4 +1,4 @@
-import { PasswordVO } from '../../../../src/Contexts/shared/domain/value-objects/password.vo';
+import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
 import { PasswordMother } from '../../shared/domain/password.mother';
 
 export class UserPasswordMother {

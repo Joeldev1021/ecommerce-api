@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { ProductCreateUseCase } from '../../../../../Contexts/product/application/usecases/product-create-usecase';
+import { ProductCreateUseCase } from '../../../../../Contexts/product/application/create/product-create-usecase';
 import { PriceVO } from '../../../../../Contexts/shared/domain/value-objects/price.vo';
 import { QuantityVO } from '../../../../../Contexts/shared/domain/value-objects/quantity.vo';
-import { DescriptionVO } from '../../../../../Contexts/shared/domain/value-objects/description.vo';
-import { UsernameVO } from '../../../../../Contexts/shared/domain/value-objects/username.vo';
-import { StateVO } from '../../../../../Contexts/shared/domain/value-objects/state.vo';
-import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
+import { ProductName } from '../../../../../Contexts/product/domain/value-objects/product-name.vo';
+import { ProductId } from '../../../../../Contexts/product/domain/value-objects/product-id.vo';
+import { ProductDesc } from '../../../../../Contexts/product/domain/value-objects/product-description.vo';
+import { ProductState } from '../../../../../Contexts/product/domain/value-objects/product-state.vo';
+import { CategoryId } from '../../../../../Contexts/category/domain/value-objects/category-id.vo';
 
 @injectable()
 export class ProductCreateController {
@@ -25,13 +26,13 @@ export class ProductCreateController {
 			req.body;
 		try {
 			const product = this._productCreateUseCase.execute(
-				new UuidVO(id),
-				new UsernameVO(name),
-				new DescriptionVO(description),
-				new UuidVO(categoryId),
+				new ProductId(id),
+				new ProductName(name),
+				new ProductDesc(description),
+				new CategoryId(categoryId),
 				new PriceVO(price),
 				new QuantityVO(quantity),
-				new StateVO(state)
+				new ProductState(state)
 			);
 			res.status(200).send(product);
 		} catch (error) {
