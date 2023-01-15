@@ -8,7 +8,7 @@ import {
 	AggregateRootPrimitives,
 } from '../../../shared/domain/aggregate-root';
 export interface IUserPrimitives extends AggregateRootPrimitives {
-	user_id: string;
+	userId: string;
 	username: string;
 	email: string;
 	password: string;
@@ -29,7 +29,7 @@ export class UserModel extends AggregateRoot {
 
 	static toDomain(user: IUserPrimitives): UserModel {
 		return new UserModel(
-			new UuidVO(user.user_id),
+			new UuidVO(user.userId),
 			new UsernameVO(user.username),
 			new EmailVO(user.email),
 			new PasswordVO(user.password),
@@ -39,7 +39,7 @@ export class UserModel extends AggregateRoot {
 
 	toPrimitives(): IUserPrimitives {
 		return {
-			user_id: this.id.value,
+			userId: this.id.value,
 			username: this.username.value,
 			email: this.email.value,
 			password: this.password.value,

@@ -25,7 +25,7 @@ export class UserModelMother {
 
 	static fromRequest(request: IUserPrimitives): UserModel {
 		return this.create(
-			new UuidVO(request.user_id),
+			new UuidVO(request.userId),
 			new UsernameVO(request.username),
 			new EmailVO(request.email),
 			new PasswordVO(request.password),

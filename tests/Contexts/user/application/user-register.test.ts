@@ -16,7 +16,7 @@ describe('User-Register', () => {
 		const userRequest = UserRequestMother.random();
 		const userModel = UserModelMother.fromRequest(userRequest);
 		await userRegisterUseCase.execute(
-			userRequest.user_id,
+			userRequest.userId,
 			userRequest.username,
 			userRequest.email,
 			userRequest.password,

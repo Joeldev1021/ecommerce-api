@@ -9,7 +9,7 @@ import { CategoryState } from '../value-objects/category-state.vo';
 import { CategoryName } from '../value-objects/category-name.vo';
 
 export interface ICategoryPrimitives extends AggregateRootPrimitives {
-	category_id: string;
+	categoryId: string;
 	name: string;
 	image?: string;
 	description: string;
@@ -48,7 +48,7 @@ export class CategoryModel extends AggregateRoot {
 
 	static toDomain(category: ICategoryPrimitives): CategoryModel {
 		return new CategoryModel(
-			new CategoryId(category.category_id),
+			new CategoryId(category.categoryId),
 			new CategoryName(category.name),
 			new CategoryDesc(category.description),
 			new CategoryState(category.state)
@@ -57,7 +57,7 @@ export class CategoryModel extends AggregateRoot {
 
 	toPrimitives(): ICategoryPrimitives {
 		return {
-			category_id: this.id.value,
+			categoryId: this.id.value,
 			name: this.name.value,
 			description: this.description.value,
 			state: this.state.value,

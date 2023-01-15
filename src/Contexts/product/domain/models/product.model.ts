@@ -11,7 +11,7 @@ import { ProductName } from '../value-objects/product-name.vo';
 import { ProductDesc } from '../value-objects/product-description.vo';
 import { ProductState } from '../value-objects/product-state.vo';
 export interface IProductPrimitives extends AggregateRootPrimitives {
-	product_id: string;
+	productId: string;
 	name: string;
 	description: string;
 	imageUrl?: string;
@@ -19,7 +19,7 @@ export interface IProductPrimitives extends AggregateRootPrimitives {
 	quantity: number;
 	createdAt: Date;
 	state: boolean;
-	category_id: string;
+	categoryId: string;
 }
 
 export class ProductModel extends AggregateRoot {
@@ -39,11 +39,11 @@ export class ProductModel extends AggregateRoot {
 
 	static toDomain(product: IProductPrimitives): ProductModel {
 		return new ProductModel(
-			new ProductId(product.product_id),
+			new ProductId(product.productId),
 			new ProductName(product.name),
 			new ProductDesc(product.description),
 			null,
-			new ProductId(product.category_id),
+			new CategoryId(product.categoryId),
 			new PriceVO(product.price),
 			new QuantityVO(product.quantity),
 			new ProductState(product.state),
@@ -53,11 +53,11 @@ export class ProductModel extends AggregateRoot {
 
 	toPrimitives(): IProductPrimitives {
 		return {
-			product_id: this.id.value,
+			productId: this.id.value,
 			name: this.name.value,
 			description: this.description.value,
 			imageUrl: '',
-			category_id: this.categoryId.value,
+			categoryId: this.categoryId.value,
 			price: this.price.value,
 			quantity: this.quantity.value,
 			state: this.state.value,

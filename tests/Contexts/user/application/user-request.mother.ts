@@ -19,7 +19,7 @@ export class UserRequestMother {
 		state: StateVO
 	): IUserPrimitives {
 		return {
-			user_id: id.value,
+			userId: id.value,
 			username: username.value,
 			email: email.value,
 			password: password.value,

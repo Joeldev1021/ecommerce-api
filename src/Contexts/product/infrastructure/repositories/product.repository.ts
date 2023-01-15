@@ -21,7 +21,7 @@ export class ProductRepository
 
 	async findById(id: ProductId): Promise<ProductModel | null> {
 		const repository = await this.repository();
-		const product = await repository.findOneBy({ product_id: id.value });
+		const product = await repository.findOneBy({ productId: id.value });
 		if (!product) return null;
 		return ProductModel.toDomain(product);
 	}
@@ -36,11 +36,11 @@ export class ProductRepository
 
 	async create(productModel: ProductModel): Promise<ProductModel | null> {
 		const product = new ProductEntity();
-		product.product_id = productModel.id.value;
+		product.productId = productModel.id.value;
 		product.name = productModel.name.value;
 		product.description = productModel.description.value;
 		product.imageUrl = productModel.imageUrl || '';
-		product.category_id = productModel.categoryId.value;
+		product.categoryId = productModel.categoryId.value;
 		product.price = productModel.price.value;
 		product.quantity = productModel.quantity.value;
 		product.state = productModel.state.value;
@@ -53,7 +53,7 @@ export class ProductRepository
 
 	async delete(productId: ProductId): Promise<void> {
 		const repository = await this.repository();
-		await repository.delete({ product_id: productId.value });
+		await repository.delete({ productId: productId.value });
 	}
 
 	async findAll(): Promise<ProductModel[] | null> {
@@ -67,7 +67,7 @@ export class ProductRepository
 		const productPrimitives = product.toPrimitives();
 		const repository = await this.repository();
 		const productUpdate = await repository.update(
-			{ product_id: product.id.value },
+			{ productId: product.id.value },
 			productPrimitives
 		);
 		console.log(productUpdate);

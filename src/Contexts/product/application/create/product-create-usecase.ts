@@ -12,12 +12,16 @@ import { ProductName } from '../../domain/value-objects/product-name.vo';
 import { CategoryId } from '../../../category/domain/value-objects/category-id.vo';
 import { ProductId } from '../../domain/value-objects/product-id.vo';
 import { ProductDesc } from '../../domain/value-objects/product-description.vo';
+import { ICategoryRepository } from '../../../category/domain/repositories/category.repository';
+import { CategoryIdNotFoundException } from '../errors/category-id-not-found.exception';
 
 @injectable()
 export class ProductCreateUseCase {
 	constructor(
 		@inject(CONTAINER_TYPES.productRepository)
-		private readonly _productRepository: IProductRepository
+		@inject(CONTAINER_TYPES.categoryRepository)
+		private readonly _productRepository: IProductRepository,
+		private readonly _categoryRepository: ICategoryRepository
 	) {}
 
 	async execute(
@@ -31,10 +35,16 @@ export class ProductCreateUseCase {
 		quantity: QuantityVO,
 		state: StateVO
 	): Promise<ProductModel | null> {
+		const categoryExists = await this._categoryRepository.findById(categoryId);
+
+		if (!categoryExists) throw new CategoryIdNotFoundException();
+
 		const productExists = await this._productRepository.findById(id);
-		if (productExists != null) throw new ProductIdAlreadyInUseException();
+
+		if (productExists) throw new ProductIdAlreadyInUseException();
 		const productName = await this._productRepository.findByName(name);
-		if (productName != null) throw new ProductNameAlreadyInUseException();
+
+		if (productName) throw new ProductNameAlreadyInUseException();
 
 		return await this._productRepository.create(
 			new ProductModel(

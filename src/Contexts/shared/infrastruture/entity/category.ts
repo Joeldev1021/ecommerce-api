@@ -1,17 +1,10 @@
-import {
-	BaseEntity,
-	Column,
-	Entity,
-	JoinColumn,
-	OneToMany,
-	PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import { ProductEntity } from './product';
 
 @Entity({ name: 'category' })
-export class CategoryEntity extends BaseEntity {
+export class CategoryEntity {
 	@PrimaryColumn()
-	category_id: string;
+	categoryId: string;
 
 	@Column()
 	name: string;
@@ -25,10 +18,7 @@ export class CategoryEntity extends BaseEntity {
 	@Column({ default: true })
 	state: boolean;
 
-	@Column()
-	product_ids: string;
-
 	@OneToMany(() => ProductEntity, product => product.category)
-	@JoinColumn({ name: 'product_ids', referencedColumnName: 'product_id' })
+	@JoinColumn({ name: 'products' })
 	products: ProductEntity[];
 }

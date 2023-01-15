@@ -43,12 +43,12 @@ export class UserRepository
 	 */
 	async findById(id: UuidVO): Promise<UserModel | null> {
 		const repository = await this.repository();
-		const user = await repository.findOneBy({ user_id: id.value });
+		const user = await repository.findOneBy({ userId: id.value });
 		if (!user) return null;
 
 		return UserModel.toDomain(user);
 
-		/* const user = await this.repository.findOneBy({ user_id: id.value });
+		/* const user = await this.repository.findOneBy({ userId: id.value });
 
 		if (user == null) return null;
 		return UserModel.toDomain(user); */
@@ -64,7 +64,7 @@ export class UserRepository
 	async register(user: UserModel): Promise<void> {
 		const repository = await this.repository();
 		const userCreate = new UserEntity();
-		userCreate.user_id = user.id.value;
+		userCreate.userId = user.id.value;
 		userCreate.username = user.username.value;
 		userCreate.email = user.email.value;
 		userCreate.password = user.password.value;

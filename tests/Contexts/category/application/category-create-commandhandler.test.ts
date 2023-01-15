@@ -25,7 +25,6 @@ describe('CategoryCreateCommandHandler', () => {
 		const command = CategoryCreateCommandMother.random();
 		const category = CategoryModelMother.from(command);
 		const domainEvent = CategoryCreatedEventMother.fromCategory(category);
-		console.log(category);
 		await handler.handle(command);
 
 		repository.assertSaveHaveBeenCalledWith(category);

@@ -30,7 +30,7 @@ export class CategoryRepository
 	async findById(id: CategoryId): Promise<CategoryModel | null> {
 		const repository = await this.repository();
 		const category = await repository.findOneBy({
-			category_id: id.value,
+			categoryId: id.value,
 		});
 		if (category == null) return null;
 		return CategoryModel.toDomain(category);
@@ -47,7 +47,7 @@ export class CategoryRepository
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
 		const categoryCreated = new CategoryEntity();
 
-		categoryCreated.category_id = category.id.value;
+		categoryCreated.categoryId = category.id.value;
 		categoryCreated.name = category.name.value;
 		categoryCreated.description = category.description.value;
 		categoryCreated.state = category.state.value;
@@ -64,6 +64,6 @@ export class CategoryRepository
 
 	async delete(categoryId: CategoryId): Promise<void> {
 		const repository = await this.repository();
-		await repository.delete({ category_id: categoryId.value });
+		await repository.delete({ categoryId: categoryId.value });
 	}
 }
