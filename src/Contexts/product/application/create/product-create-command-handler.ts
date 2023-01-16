@@ -11,6 +11,7 @@ import { ProductName } from '../../domain/value-objects/product-name.vo';
 import { ProductDesc } from '../../domain/value-objects/product-description.vo';
 import { CategoryId } from '../../../category/domain/value-objects/category-id.vo';
 import { ProductState } from '../../domain/value-objects/product-state.vo';
+import { ProductCreatedAt } from '../../domain/value-objects/product-created-at.vo';
 
 @injectable()
 export class ProductCreateCommandHandler
@@ -30,10 +31,11 @@ export class ProductCreateCommandHandler
 			new ProductId(command.id),
 			new ProductName(command.name),
 			new ProductDesc(command.description),
-			new CategoryId(command.productId),
+			new CategoryId(command.categoryId),
 			new PriceVO(command.price),
 			new QuantityVO(command.quantity),
-			new ProductState(command.state)
+			new ProductState(command.state),
+			new ProductCreatedAt(command.createdAt)
 		);
 	}
 }

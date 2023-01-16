@@ -5,9 +5,10 @@ export class ProductCreateCommand implements Command {
 		readonly id: string,
 		readonly name: string,
 		readonly description: string,
-		readonly productId: string,
+		readonly categoryId: string,
 		readonly price: number,
 		readonly quantity: number,
-		readonly state: boolean
+		readonly state: boolean,
+		readonly createdAt: Date
 	) {}
 }

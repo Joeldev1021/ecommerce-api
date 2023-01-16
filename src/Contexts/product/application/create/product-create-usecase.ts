@@ -1,5 +1,4 @@
 import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
-import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { ProductIdAlreadyInUseException } from '../errors/product-id-already.in-use.exception';
 import { ProductModel } from '../../domain/models/product.model';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
@@ -13,14 +12,15 @@ import { CategoryId } from '../../../category/domain/value-objects/category-id.v
 import { ProductId } from '../../domain/value-objects/product-id.vo';
 import { ProductDesc } from '../../domain/value-objects/product-description.vo';
 import { ICategoryRepository } from '../../../category/domain/repositories/category.repository';
-import { CategoryIdNotFoundException } from '../errors/category-id-not-found.exception';
+import { ProductState } from '../../domain/value-objects/product-state.vo';
+import { ProductCreatedAt } from '../../domain/value-objects/product-created-at.vo';
 
 @injectable()
 export class ProductCreateUseCase {
 	constructor(
 		@inject(CONTAINER_TYPES.productRepository)
-		@inject(CONTAINER_TYPES.categoryRepository)
 		private readonly _productRepository: IProductRepository,
+		@inject(CONTAINER_TYPES.categoryRepository)
 		private readonly _categoryRepository: ICategoryRepository
 	) {}
 
@@ -33,11 +33,12 @@ export class ProductCreateUseCase {
 		categoryId: CategoryId,
 		price: PriceVO,
 		quantity: QuantityVO,
-		state: StateVO
+		state: ProductState,
+		createdAt: ProductCreatedAt
 	): Promise<ProductModel | null> {
-		const categoryExists = await this._categoryRepository.findById(categoryId);
+		//const categoryExists = await this._categoryRepository.findById(categoryId);
 
-		if (!categoryExists) throw new CategoryIdNotFoundException();
+		//if (!categoryExists) throw new CategoryIdNotFoundException();
 
 		const productExists = await this._productRepository.findById(id);
 
@@ -56,7 +57,7 @@ export class ProductCreateUseCase {
 				price,
 				quantity,
 				state,
-				new CreatedAtVO(new Date())
+				createdAt
 			)
 		);
 	}

@@ -6,7 +6,7 @@ export class UserPasswordMother {
 		return new PasswordVO(value);
 	}
 
-	static async hash(value: string): Promise<PasswordVO> {
+	static hash(value: string): PasswordVO {
 		return PasswordVO.create(value);
 	}
 

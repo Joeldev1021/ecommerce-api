@@ -5,9 +5,11 @@ import { CategoryName } from '../../../../src/Contexts/category/domain/value-obj
 
 export class CategoryRepositoryMock implements ICategoryRepository {
 	private saveMock: jest.Mock;
+	private CategoryFindIdMock: jest.Mock;
 
 	constructor() {
 		this.saveMock = jest.fn();
+		this.CategoryFindIdMock = jest.fn();
 	}
 
 	/* async (category: CategoryModel): Promise<void> {

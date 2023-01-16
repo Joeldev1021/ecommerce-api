@@ -11,8 +11,9 @@ export class PasswordVO extends ValueObject<string> {
 		if (value.length < 4) throw new VOFormatException(PasswordVO.name, value);
 	}
 
-	static async create(password: string): Promise<PasswordVO> {
-		const hash = await bcrypt.hash(password, 10);
+	static create(password: string): PasswordVO {
+		const salt = bcrypt.genSaltSync(10);
+		const hash = bcrypt.hashSync(password, salt);
 		return new PasswordVO(hash);
 	}
 }

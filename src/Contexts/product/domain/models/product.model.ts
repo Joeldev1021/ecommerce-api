@@ -10,6 +10,7 @@ import { CategoryId } from '../../../category/domain/value-objects/category-id.v
 import { ProductName } from '../value-objects/product-name.vo';
 import { ProductDesc } from '../value-objects/product-description.vo';
 import { ProductState } from '../value-objects/product-state.vo';
+import { ProductCreatedAt } from '../value-objects/product-created-at.vo';
 export interface IProductPrimitives extends AggregateRootPrimitives {
 	productId: string;
 	name: string;
@@ -32,7 +33,7 @@ export class ProductModel extends AggregateRoot {
 		public price: PriceVO,
 		public quantity: QuantityVO,
 		public state: ProductState,
-		public createdAt: CreatedAtVO
+		public createdAt: ProductCreatedAt
 	) {
 		super();
 	}
