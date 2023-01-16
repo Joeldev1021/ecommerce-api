@@ -15,17 +15,17 @@ import { UserLoginController } from '../controllers/user/user-login.controller';
 import { UserLoginUseCase } from '../../../../Contexts/user/application/usecase/user-login.usecase';
 import { UserRegisterUseCase } from '../../../../Contexts/user/application/usecase/user-register.usecase';
 import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
-import { CategoryCreateUseCase } from '../../../../Contexts/category/application/usecase/category-create.usecase';
-import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/usecase/category-find-by-id.usecase';
-import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/usecase/category-delete.usecase';
-import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/usecase/category-update.usecase';
-import { CategoryFindAllUseCase } from '../../../../Contexts/category/application/usecase/category-find-all.usecase';
+import { CategoryCreateUseCase } from '../../../../Contexts/category/application/create/category-create.usecase';
+import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/find-by-id/category-find-by-id.usecase';
+import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/delete/category-delete.usecase';
+import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/update/category-update.usecase';
+import { CategoryFindAllUseCase } from '../../../../Contexts/category/application/find-all/category-find-all.usecase';
 import { CategoryRepository } from '../../../../Contexts/category/infrastructure/repositories/category.repository';
-import { ProductCreateUseCase } from '../../../../Contexts/product/application/usecases/product-create-usecase';
-import { ProductFindAllUseCase } from '../../../../Contexts/product/application/usecases/product-find-all.usecase';
-import { ProductFindByIdUseCase } from '../../../../Contexts/product/application/usecases/product-find-by-id.usecase';
-import { ProductDeleteUseCase } from '../../../../Contexts/product/application/usecases/product-delete.usecase';
-import { ProductUpdateUseCase } from '../../../../Contexts/product/application/usecases/product-update.usecase';
+import { ProductCreateUseCase } from '../../../../Contexts/product/application/create/product-create-usecase';
+import { ProductFindAllUseCase } from '../../../../Contexts/product/application/find-all/product-find-all.usecase';
+import { ProductFindByIdUseCase } from '../../../../Contexts/product/application/find-by-id/product-find-by-id.usecase';
+import { ProductDeleteUseCase } from '../../../../Contexts/product/application/delete/product-delete.usecase';
+import { ProductUpdateUseCase } from '../../../../Contexts/product/application/update/product-update.usecase';
 import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
@@ -33,19 +33,20 @@ import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/ev
 import { RabbitMQQueueFormatter } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/file-ex/rabbit-mq-queue-formatter';
 import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-failover-publisher';
 import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
-import { CommandHandlers } from '../../../../Contexts/shared/infrastruture/command-bus/command-handlers';
 import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/command-bus/in-memory-command-bus';
 import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
-import { CategoryFindCounter } from '../../../../Contexts/category/application/usecase/find/category-find-counter';
-import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/usecase/find/category-find-counter.queryHandler';
+import { CategoryFindCounterUseCase } from '../../../../Contexts/category/application/find-counter/category-find-counter.usecase';
+import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/find-counter/category-find-counter.query-handler';
 import { IEventBus } from '../../../../Contexts/shared/domain/interface/event-bus';
 import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/events/category-created.handler';
 import { IQueryBus } from '../../../../Contexts/shared/domain/interface/query-bus';
 import { ICommandBus } from '../../../../Contexts/shared/domain/interface/command-bust';
-import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/command/category-create-command.handler';
+import { CategoryCreateCommandHandler } from '../../../../Contexts/category/application/create/category-create-command-handler';
 import { IEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/arrarger/enviroment-arranger';
-import { TypeOrmIEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
+import { TypeOrmEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
+import { CategoryDeleteCommandHandler } from '../../../../Contexts/category/application/delete/category-delete-command-handler';
+import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/application/find-all/category-find-all.query-handler';
 const container = new Container();
 
 container
@@ -165,12 +166,7 @@ container
 container
 	.bind<RabbitMQQueueFormatter>(CONTAINER_TYPES.rabbitMQQueueFormatter)
 	.to(RabbitMQQueueFormatter);
-/* container
-	.bind<RabbitMQConfigFactory>(CONTAINER_TYPES.rabbitMQConfigFactory)
-	.to(RabbitMQConfigFactory); */
-/* container
-	.bind<RabbitMqConfigurer>(CONTAINER_TYPES.rabbitMQConfigurer)
-	.to(RabbitMqConfigurer); */
+
 container
 	.bind<DomainEventFailoverPublisher>(
 		CONTAINER_TYPES.domainEventFailoverPublisher
@@ -182,27 +178,28 @@ container
 	.to(DomainEventDeserializer);
 /* ============ CQRS ===================== */
 /* command */
-container
-	.bind<CommandHandlers>(CONTAINER_TYPES.commandHandlers)
-	.to(CommandHandlers);
-
 container.bind<ICommandBus>(CONTAINER_TYPES.commandBus).to(InMemoryCommandBus);
+
 /* query  */
 container.bind<IQueryBus>(CONTAINER_TYPES.queryBus).to(InMemoryQueryBus);
+
 container
-	.bind<CategoryFindCounter>(CONTAINER_TYPES.categoryFindCounter)
-	.to(CategoryFindCounter);
+	.bind<CategoryFindCounterUseCase>(CONTAINER_TYPES.categoryFindCounterUseCase)
+	.to(CategoryFindCounterUseCase);
 
 /* tag */
 container.bind(TagHandler.QueryHandlers).to(CategoryFindCounterQueryHandler);
+container.bind(TagHandler.QueryHandlers).to(CategoryFindAllQueryHandler);
 
 container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
 
 container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
 
+container.bind(TagHandler.CommandHandlers).to(CategoryDeleteCommandHandler);
+
 /* ==================== test ========================= */
 container
 	.bind<IEnvironmentArranger>(CONTAINER_TYPES.envArranger)
-	.to(TypeOrmIEnvironmentArranger);
+	.to(TypeOrmEnvironmentArranger);
 
 export { container };

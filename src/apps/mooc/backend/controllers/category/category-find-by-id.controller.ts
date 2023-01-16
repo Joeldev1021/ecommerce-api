@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { CategoryFindByIdUseCase } from '../../../../../Contexts/category/application/usecase/category-find-by-id.usecase';
-import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
+import { CategoryFindByIdQuery } from '../../../../../Contexts/category/application/find-by-id/category-find-by-id.query';
+import { CategoryFindByIdResponse } from '../../../../../Contexts/category/application/find-by-id/category-find-by-id.response';
+import { IQueryBus } from '../../../../../Contexts/shared/domain/interface/query-bus';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class CategoryFindByIdController {
 	constructor(
-		@inject(CONTAINER_TYPES.categoryFindByIdUseCase)
-		private readonly _categoryFindByIdUseCase: CategoryFindByIdUseCase
+		@inject(CONTAINER_TYPES.queryBus)
+		private readonly _queryBus: IQueryBus
 	) {}
 
 	async execute(
@@ -18,9 +19,10 @@ export class CategoryFindByIdController {
 	): Promise<void> {
 		const categoryId = req.params.id;
 		try {
-			const category = await this._categoryFindByIdUseCase.execute(
-				new UuidVO(categoryId)
-			);
+			const query = new CategoryFindByIdQuery(categoryId);
+
+			const category = this._queryBus.ask<CategoryFindByIdResponse>(query);
+
 			res.status(200).send(category);
 		} catch (error) {
 			next(error);

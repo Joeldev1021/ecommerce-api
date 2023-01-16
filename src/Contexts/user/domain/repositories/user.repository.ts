@@ -1,6 +1,6 @@
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserModel } from '../models/user.model';
-import { EmailVO } from '../../../shared/domain/value-objects/email.vo';
+import { EmailVO } from '../value-objects/email.vo';
 
 export interface IUserRepository {
 	findByEmail(email: EmailVO): Promise<UserModel | null>;

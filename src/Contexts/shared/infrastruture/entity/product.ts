@@ -1,5 +1,4 @@
 import {
-	BaseEntity,
 	Column,
 	CreateDateColumn,
 	Entity,
@@ -10,9 +9,9 @@ import {
 import { CategoryEntity } from './category';
 
 @Entity({ name: 'products' })
-export class ProductEntity extends BaseEntity {
+export class ProductEntity {
 	@PrimaryColumn()
-	product_id: string;
+	productId: string;
 
 	@Column()
 	name: string;
@@ -27,10 +26,10 @@ export class ProductEntity extends BaseEntity {
 	quantity: number;
 
 	@Column()
-	category_id: string;
+	categoryId: string;
 
 	@ManyToOne(() => CategoryEntity, category => category.products)
-	@JoinColumn({ name: 'category_id' })
+	@JoinColumn({ name: 'categoryId' })
 	category: CategoryEntity;
 
 	@Column()

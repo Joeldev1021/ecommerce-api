@@ -3,12 +3,13 @@ import {
 	ICategoryPrimitives,
 } from '../../domain/models/category.model';
 import { ICategoryRepository } from '../../domain/repositories/category.repository';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CategoryEntity } from '../../../shared/infrastruture/entity/category';
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
+import { CategoryId } from '../../domain/value-objects/category-id.vo';
+import { CategoryName } from '../../domain/value-objects/category-name.vo';
+import { ProductEntity } from '../../../shared/infrastruture/entity/product';
 
 @injectable()
 export class CategoryRepository
@@ -26,16 +27,16 @@ export class CategoryRepository
 		return category.map(ctg => CategoryModel.toDomain(ctg));
 	}
 
-	async findById(id: UuidVO): Promise<CategoryModel | null> {
+	async findById(id: CategoryId): Promise<CategoryModel | null> {
 		const repository = await this.repository();
 		const category = await repository.findOneBy({
-			category_id: id.value,
+			categoryId: id.value,
 		});
 		if (category == null) return null;
 		return CategoryModel.toDomain(category);
 	}
 
-	async findByName(name: UsernameVO): Promise<CategoryModel | null> {
+	async findByName(name: CategoryName): Promise<CategoryModel | null> {
 		const repository = await this.repository();
 		const category = await repository.findOneBy({ name: name.value });
 		if (category == null) return null;
@@ -46,7 +47,7 @@ export class CategoryRepository
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
 		const categoryCreated = new CategoryEntity();
 
-		categoryCreated.category_id = category.id.value;
+		categoryCreated.categoryId = category.id.value;
 		categoryCreated.name = category.name.value;
 		categoryCreated.description = category.description.value;
 		categoryCreated.state = category.state.value;
@@ -61,8 +62,8 @@ export class CategoryRepository
 		return null;
 	}
 
-	async delete(categoryId: UuidVO): Promise<void> {
+	async delete(categoryId: CategoryId): Promise<void> {
 		const repository = await this.repository();
-		await repository.delete({ category_id: categoryId.value });
+		await repository.delete({ categoryId: categoryId.value });
 	}
 }

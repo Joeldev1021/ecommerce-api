@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { ProductFindByIdUseCase } from '../../../../../Contexts/product/application/usecases/product-find-by-id.usecase';
+import { ProductFindByIdUseCase } from '../../../../../Contexts/product/application/find-by-id/product-find-by-id.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 

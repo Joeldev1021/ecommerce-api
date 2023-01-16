@@ -1,8 +1,5 @@
-import { UsernameVO } from '../../../../src/Contexts/shared/domain/value-objects/username.vo';
 import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
-import { PasswordVO } from '../../../../src/Contexts/shared/domain/value-objects/password.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
-import { EmailVO } from '../../../../src/Contexts/shared/domain/value-objects/email.vo';
 import { UserEmailMother } from './user-email.mother';
 import { UserIdMother } from './user-id.mother';
 import { UserNameMother } from './user-name.mother';
@@ -12,6 +9,9 @@ import {
 	IUserPrimitives,
 	UserModel,
 } from '../../../../src/Contexts/user/domain/models/user.model';
+import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
+import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
+import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
 export class UserModelMother {
 	static create(
 		id: UuidVO,
@@ -25,7 +25,7 @@ export class UserModelMother {
 
 	static fromRequest(request: IUserPrimitives): UserModel {
 		return this.create(
-			new UuidVO(request.user_id),
+			new UuidVO(request.userId),
 			new UsernameVO(request.username),
 			new EmailVO(request.email),
 			new PasswordVO(request.password),

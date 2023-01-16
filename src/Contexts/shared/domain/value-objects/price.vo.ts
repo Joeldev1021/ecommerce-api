@@ -7,7 +7,7 @@ export class PriceVO extends ValueObject<number> {
 	}
 
 	protected assertIsValid(value: number): void {
-		if (!(Number(value) === value && value % 1 !== 0))
+		if (!(Number(value) === value))
 			throw new VOFormatException(PriceVO.name, `${value}`);
 	}
 }

@@ -1,16 +1,18 @@
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { DescriptionVO } from '../../../shared/domain/value-objects/description.vo';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
 import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
-import { StateVO } from '../../../shared/domain/value-objects/state.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { QuantityVO } from '../../../shared/domain/value-objects/quantity.vo';
 import {
 	AggregateRoot,
 	AggregateRootPrimitives,
 } from '../../../shared/domain/aggregate-root';
+import { ProductId } from '../value-objects/product-id.vo';
+import { CategoryId } from '../../../category/domain/value-objects/category-id.vo';
+import { ProductName } from '../value-objects/product-name.vo';
+import { ProductDesc } from '../value-objects/product-description.vo';
+import { ProductState } from '../value-objects/product-state.vo';
+import { ProductCreatedAt } from '../value-objects/product-created-at.vo';
 export interface IProductPrimitives extends AggregateRootPrimitives {
-	product_id: string;
+	productId: string;
 	name: string;
 	description: string;
 	imageUrl?: string;
@@ -18,45 +20,45 @@ export interface IProductPrimitives extends AggregateRootPrimitives {
 	quantity: number;
 	createdAt: Date;
 	state: boolean;
-	category_id: string;
+	categoryId: string;
 }
 
 export class ProductModel extends AggregateRoot {
 	constructor(
-		public readonly id: UuidVO,
-		public name: UsernameVO,
-		public description: DescriptionVO,
+		public readonly id: ProductId,
+		public name: ProductName,
+		public description: ProductDesc,
 		public imageUrl: null,
-		public categoryId: UuidVO,
+		public categoryId: CategoryId,
 		public price: PriceVO,
 		public quantity: QuantityVO,
-		public state: StateVO,
-		public createdAt: CreatedAtVO
+		public state: ProductState,
+		public createdAt: ProductCreatedAt
 	) {
 		super();
 	}
 
 	static toDomain(product: IProductPrimitives): ProductModel {
 		return new ProductModel(
-			new UuidVO(product.product_id),
-			new UsernameVO(product.name),
-			new DescriptionVO(product.description),
+			new ProductId(product.productId),
+			new ProductName(product.name),
+			new ProductDesc(product.description),
 			null,
-			new UuidVO(product.category_id),
+			new CategoryId(product.categoryId),
 			new PriceVO(product.price),
 			new QuantityVO(product.quantity),
-			new StateVO(product.state),
+			new ProductState(product.state),
 			new CreatedAtVO(product.createdAt)
 		);
 	}
 
 	toPrimitives(): IProductPrimitives {
 		return {
-			product_id: this.id.value,
+			productId: this.id.value,
 			name: this.name.value,
 			description: this.description.value,
 			imageUrl: '',
-			category_id: this.categoryId.value,
+			categoryId: this.categoryId.value,
 			price: this.price.value,
 			quantity: this.quantity.value,
 			state: this.state.value,

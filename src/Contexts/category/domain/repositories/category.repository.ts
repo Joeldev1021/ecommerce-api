@@ -1,15 +1,15 @@
 import { CategoryModel } from '../models/category.model';
-import { UsernameVO } from '../../../shared/domain/value-objects/username.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { CategoryId } from '../value-objects/category-id.vo';
+import { CategoryName } from '../value-objects/category-name.vo';
 
 export interface ICategoryRepository {
-	findById(id: UuidVO): Promise<CategoryModel | null>;
+	findById(id: CategoryId): Promise<CategoryModel | null>;
 
 	create(category: CategoryModel): Promise<CategoryModel | null>;
 
-	findByName(name: UsernameVO): Promise<CategoryModel | null>;
+	findByName(name: CategoryName): Promise<CategoryModel | null>;
 
-	delete(categoryId: UuidVO): Promise<void>;
+	delete(categoryId: CategoryId): Promise<void>;
 
 	findAll(): Promise<CategoryModel[] | null>;
 

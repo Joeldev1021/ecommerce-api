@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { ProductDeleteUseCase } from '../../../../../Contexts/product/application/usecases/product-delete.usecase';
+import { ProductDeleteUseCase } from '../../../../../Contexts/product/application/delete/product-delete.usecase';
 import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 

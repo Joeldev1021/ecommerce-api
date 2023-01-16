@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { CategoryFindCounterQuery } from '../../../../../Contexts/category/application/usecase/find/category-find-counter.query';
-import { CategoryFindCounterResponse } from '../../../../../Contexts/category/application/usecase/find/category-find-counter.response';
+import { CategoryFindCounterQuery } from '../../../../../Contexts/category/application/find-counter/category-find-counter.query';
+import { CategoryFindCounterResponse } from '../../../../../Contexts/category/application/find-counter/category-find-counter.response';
 import { IQueryBus } from '../../../../../Contexts/shared/domain/interface/query-bus';
-import { InMemoryQueryBus } from '../../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
@@ -19,7 +18,7 @@ export class CategoryFindCounterController {
 		next: NextFunction
 	): Promise<void> {
 		try {
-			console.log('controller find');
+			console.log('controller counter');
 			const query = new CategoryFindCounterQuery();
 			const counter = await this._queryBus.ask<CategoryFindCounterResponse>(
 				query

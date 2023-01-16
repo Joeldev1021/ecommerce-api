@@ -4,7 +4,6 @@ import { DomainEvent } from '../../../domain/domain-event';
 import { IDomainEventSubscriber } from '../../../domain/interface/domain-event-subscriber';
 import { IEventBus } from '../../../domain/interface/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
-import { DomainEventFailoverPublisher } from '../domain-event-failover-publisher';
 import { DomainEventSubscribers } from '../domain-event-subscribers';
 import { configSettings } from './config';
 import { RabbitMQConnection } from './rabbit-mq-connection';
