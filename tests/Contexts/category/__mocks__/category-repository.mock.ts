@@ -5,19 +5,22 @@ import { CategoryName } from '../../../../src/Contexts/category/domain/value-obj
 
 export class CategoryRepositoryMock implements ICategoryRepository {
 	private saveMock: jest.Mock;
-	private CategoryFindIdMock: jest.Mock;
-
+	private CategoryFind: CategoryModel;
+	private findByIdMock: jest.Mock;
 	constructor() {
 		this.saveMock = jest.fn();
-		this.CategoryFindIdMock = jest.fn();
+		this.findByIdMock = jest.fn();
 	}
 
 	/* async (category: CategoryModel): Promise<void> {
     this.saveMock(course);
   } */
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
-		this.saveMock(category);
-		return null;
+		return this.saveMock(category);
+	}
+
+	returnOnFindById(category: CategoryModel) {
+		this.CategoryFind = category;
 	}
 
 	assertSaveHaveBeenCalledWith(expected: CategoryModel): void {
@@ -29,7 +32,8 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 	}
 
 	async findById(id: CategoryId): Promise<CategoryModel | null> {
-		return null;
+		this.findByIdMock();
+		return this.CategoryFind;
 	}
 
 	async findByName(name: CategoryName): Promise<CategoryModel | null> {

@@ -47,6 +47,8 @@ import { IEnvironmentArranger } from '../../../../../tests/Contexts/shared/infra
 import { TypeOrmEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
 import { CategoryDeleteCommandHandler } from '../../../../Contexts/category/application/delete/category-delete-command-handler';
 import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/application/find-all/category-find-all.query-handler';
+import { IProductRepository } from '../../../../Contexts/product/domain/repositories/product.repository';
+import { ICategoryRepository } from '../../../../Contexts/category/domain/repositories/category.repository';
 const container = new Container();
 
 container
@@ -111,7 +113,7 @@ container
 	.bind<CategoryFindAllUseCase>(CONTAINER_TYPES.categoryFindAllUseCase)
 	.to(CategoryFindAllUseCase);
 container
-	.bind<CategoryRepository>(CONTAINER_TYPES.categoryRepository)
+	.bind<ICategoryRepository>(CONTAINER_TYPES.categoryRepository)
 	.to(CategoryRepository);
 
 /* product  controller*/
@@ -150,7 +152,7 @@ container
 	.bind<ProductFindAllUseCase>(CONTAINER_TYPES.productFindAllUseCase)
 	.to(ProductFindAllUseCase);
 container
-	.bind<ProductRepository>(CONTAINER_TYPES.productRepository)
+	.bind<IProductRepository>(CONTAINER_TYPES.productRepository)
 	.to(ProductRepository);
 /* event bus */
 
