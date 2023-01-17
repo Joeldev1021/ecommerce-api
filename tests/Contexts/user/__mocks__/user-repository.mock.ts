@@ -5,6 +5,7 @@ import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/emai
 
 export class UserRepositoryMock implements IUserRepository {
 	private saveMock: jest.Mock;
+	private userSave: UserModel;
 
 	constructor() {
 		this.saveMock = jest.fn();
@@ -12,6 +13,7 @@ export class UserRepositoryMock implements IUserRepository {
 
 	async register(user: UserModel): Promise<void> {
 		this.saveMock(user);
+		this.userSave = user;
 	}
 
 	async findById(id: UuidVO): Promise<UserModel | null> {
@@ -19,7 +21,7 @@ export class UserRepositoryMock implements IUserRepository {
 	}
 
 	async findByEmail(email: EmailVO): Promise<UserModel | null> {
-		return this.saveMock(email);
+		return this.userSave;
 	}
 
 	async login(user: UserModel): Promise<void> {}
