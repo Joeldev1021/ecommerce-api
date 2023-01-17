@@ -49,6 +49,7 @@ import { CategoryDeleteCommandHandler } from '../../../../Contexts/category/appl
 import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/application/find-all/category-find-all.query-handler';
 import { IProductRepository } from '../../../../Contexts/product/domain/repositories/product.repository';
 import { ICategoryRepository } from '../../../../Contexts/category/domain/repositories/category.repository';
+import { JwtService } from '../../../../Contexts/shared/infrastruture/services/jwt.service';
 const container = new Container();
 
 container
@@ -154,6 +155,10 @@ container
 container
 	.bind<IProductRepository>(CONTAINER_TYPES.productRepository)
 	.to(ProductRepository);
+
+/*=================service ======================== */
+container.bind<JwtService>(CONTAINER_TYPES.jwtService).to(JwtService);
+
 /* event bus */
 
 container.bind<IEventBus>(CONTAINER_TYPES.eventBus).to(EventBus);

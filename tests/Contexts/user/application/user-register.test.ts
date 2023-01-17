@@ -24,8 +24,8 @@ describe('User-Register', () => {
 			userRequest.password,
 			userRequest.state
 		);
-		const userFound = await repository.findByEmail(userModel.email);
 
+		const userFound = await repository.findByEmail(userModel.email);
 		expect(userFound?.email).toEqual(userModel.email);
 	});
 });

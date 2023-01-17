@@ -27,14 +27,12 @@ export class UserRegisterUseCase {
 	): Promise<void> {
 		const userId = new UuidVO(id);
 		const userFound = await this._userRepository.findById(userId);
-		if (userFound != null) throw new UserIdAlreadyInUseException();
+		if (userFound) throw new UserIdAlreadyInUseException();
 
 		const userEmail = new EmailVO(email);
 		const userFoundEmail = await this._userRepository.findByEmail(userEmail);
-		if (userFoundEmail != null) throw new UserEmailAlreadyInUseException();
+		if (userFoundEmail) throw new UserEmailAlreadyInUseException();
 
-		//await PasswordVO.create(password),
-		//todo hash password
 		await this._userRepository.register(
 			new UserModel(
 				userId,
