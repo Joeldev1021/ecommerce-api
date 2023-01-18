@@ -10,6 +10,8 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
+import { UserRoleVO } from '../../domain/value-objects/user-role.vo';
+import { ROLES_USER } from '../../../shared/infrastruture/utils/roles';
 
 @injectable()
 export class UserRegisterUseCase {
@@ -23,14 +25,17 @@ export class UserRegisterUseCase {
 		username: string,
 		email: string,
 		password: string,
-		state: boolean
+		state: boolean,
+		role?:string
 	): Promise<void> {
 		const userId = new UuidVO(id);
 		const userFound = await this._userRepository.findById(userId);
 		if (userFound) throw new UserIdAlreadyInUseException();
 
 		const userEmail = new EmailVO(email);
+
 		const userFoundEmail = await this._userRepository.findByEmail(userEmail);
+
 		if (userFoundEmail) throw new UserEmailAlreadyInUseException();
 
 		await this._userRepository.register(
@@ -39,7 +44,8 @@ export class UserRegisterUseCase {
 				new UsernameVO(username),
 				userEmail,
 				PasswordVO.create(password),
-				new StateVO(state)
+				new StateVO(state),
+				role ? new UserRoleVO(role): new UserRoleVO(ROLES_USER.USER) 
 			)
 		);
 	}

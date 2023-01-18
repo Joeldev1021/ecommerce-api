@@ -1,9 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { NextFunction, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 import { UserLoginUseCase } from '../../../../../Contexts/user/application/usecase/user-login.usecase';
 import { UserLoginDTO } from '../../../../../Contexts/user/infrastructure/dtos/user-login.dto';
-import { AuthRequest } from '../../../../../Contexts/user/infrastructure/interface';
 
 @injectable()
 export class UserLoginController {
@@ -13,14 +12,17 @@ export class UserLoginController {
 	) {}
 
 	async execute(
-		req: AuthRequest<UserLoginDTO>,
+		req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		const { email, password } = req.body;
+		const user: UserLoginDTO = req.body;
 		try {
-			const user = await this._userLoginUseCase.execute(email, password);
-			res.status(200).send(user);
+			const userLogin = await this._userLoginUseCase.execute(
+				user.email,
+				user.password
+			);
+			res.status(200).send(userLogin);
 		} catch (error) {
 			next(error);
 		}

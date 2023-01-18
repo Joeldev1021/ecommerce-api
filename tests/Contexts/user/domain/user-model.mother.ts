@@ -12,15 +12,18 @@ import {
 import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
 import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
+import { UserRoleVO } from '../../../../src/Contexts/user/domain/value-objects/user-role.vo';
+import { UserRoleMother } from './user-role.mother';
 export class UserModelMother {
 	static create(
 		id: UuidVO,
 		username: UsernameVO,
 		email: EmailVO,
 		password: PasswordVO,
-		state: StateVO
+		state: StateVO,
+		role: UserRoleVO
 	): UserModel {
-		return new UserModel(id, username, email, password, state);
+		return new UserModel(id, username, email, password, state, role);
 	}
 
 	static fromRequest(request: IUserPrimitives): UserModel {
@@ -29,7 +32,8 @@ export class UserModelMother {
 			new UsernameVO(request.username),
 			new EmailVO(request.email),
 			new PasswordVO(request.password),
-			new StateVO(request.state)
+			new StateVO(request.state),
+			new UserRoleVO(request.role)
 		);
 	}
 
@@ -39,7 +43,8 @@ export class UserModelMother {
 			UserNameMother.random(),
 			UserEmailMother.random(),
 			UserPasswordMother.random(),
-			UserStateMother.random()
+			UserStateMother.random(),
+			UserRoleMother.random()
 		);
 	}
 }

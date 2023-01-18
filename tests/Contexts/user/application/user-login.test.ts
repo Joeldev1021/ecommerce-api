@@ -1,7 +1,6 @@
 import { UserRepositoryMock } from '../__mocks__/user-repository.mock';
 import { UserLoginUseCase } from '../../../../src/Contexts/user/application/usecase/user-login.usecase';
 import { UserRequestMother } from './user-request.mother';
-import { UserModelMother } from '../domain/user-model.mother';
 import { UserRegisterUseCase } from '../../../../src/Contexts/user/application/usecase/user-register.usecase';
 import { IUserPrimitives } from '../../../../src/Contexts/user/domain/models/user.model';
 import { InvalidLoginException } from '../../../../src/Contexts/user/application/errors/invalid-login.exception';

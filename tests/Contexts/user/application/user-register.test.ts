@@ -16,13 +16,14 @@ describe('User-Register', () => {
 		const userRequest = UserRequestMother.random();
 
 		const userModel = UserModelMother.fromRequest(userRequest);
-
+		console.log(userRequest);
 		await userRegisterUseCase.execute(
 			userRequest.userId,
 			userRequest.username,
 			userRequest.email,
 			userRequest.password,
-			userRequest.state
+			userRequest.state,
+			userRequest.role
 		);
 
 		const userFound = await repository.findByEmail(userModel.email);

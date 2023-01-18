@@ -8,7 +8,7 @@
 		"test": "NODE_ENV=test && jest --watchAll  --verbose  --runInBand",
 		"docker:up": "docker-compose -p ecommerce up -d",
 		"docker:down": "docker-compose -p ecommerce down",
-		"config:rabbitmq:command": "ts-node-dev  src/apps/mooc/backend/command/run-configure-rabbitmq-command.ts"
+		"rabbit:config:command": "ts-node-dev  src/apps/mooc/backend/command/run-configure-rabbitmq-command.ts"
 	},
 	"keywords": [],
 	"author": "",
@@ -53,7 +53,6 @@
 		"mongodb": "^4.13.0",
 		"mysql2": "^2.3.3",
 		"reflect-metadata": "^0.1.13",
-		"sequelize": "^6.25.8",
 		"sqlite3": "^5.1.2",
 		"typeorm": "^0.3.11",
 		"uuid": "^9.0.0",

@@ -3,11 +3,13 @@ import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uui
 import { IUserPrimitives } from '../../../../src/Contexts/user/domain/models/user.model';
 import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
+import { UserRoleVO } from '../../../../src/Contexts/user/domain/value-objects/user-role.vo';
 import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
 import { UserEmailMother } from '../domain/user-email.mother';
 import { UserIdMother } from '../domain/user-id.mother';
 import { UserNameMother } from '../domain/user-name.mother';
 import { UserPasswordMother } from '../domain/user-password.mother';
+import { UserRoleMother } from '../domain/user-role.mother';
 import { UserStateMother } from '../domain/user-state.mother';
 
 export class UserRequestMother {
@@ -16,7 +18,8 @@ export class UserRequestMother {
 		username: UsernameVO,
 		email: EmailVO,
 		password: PasswordVO,
-		state: StateVO
+		state: StateVO,
+		role: UserRoleVO
 	): IUserPrimitives {
 		return {
 			userId: id.value,
@@ -24,6 +27,7 @@ export class UserRequestMother {
 			email: email.value,
 			password: password.value,
 			state: state.value,
+			role: role.value,
 		};
 	}
 
@@ -33,7 +37,8 @@ export class UserRequestMother {
 			UserNameMother.random(),
 			UserEmailMother.random(),
 			UserPasswordMother.random(),
-			UserStateMother.random()
+			UserStateMother.random(),
+			UserRoleMother.random()
 		);
 	}
 }

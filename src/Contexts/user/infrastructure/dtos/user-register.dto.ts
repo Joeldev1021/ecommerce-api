@@ -16,4 +16,7 @@ export class UserRegisterDTO {
 	@IsString()
 	@IsNotEmpty()
 	public password: string;
+
+	@IsString()
+	public role?: string;
 }

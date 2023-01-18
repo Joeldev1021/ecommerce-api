@@ -19,6 +19,7 @@ export class CategoryDeleteCommandHandler implements ICommandHandler<Command> {
 
 	async handle(command: CategoryDeleteCommand): Promise<void> {
 		const { id } = command;
+
 		await this._categoryDeleteUseCase.execute(new CategoryId(id));
 	}
 }
