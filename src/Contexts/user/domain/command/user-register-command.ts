@@ -6,7 +6,8 @@ export class UserRegisterCommand extends Command {
 		public name: string,
 		public email: string,
 		public password: string,
-		public state: boolean
+		public state: boolean,
+		public role?: string
 	) {
 		super();
 	}

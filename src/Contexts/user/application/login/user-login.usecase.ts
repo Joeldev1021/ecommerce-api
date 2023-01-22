@@ -17,16 +17,15 @@ export class UserLoginUseCase {
 		private readonly _jwtService: JwtService
 	) {}
 
-	async execute(email: string, password: string): Promise<{ token: string }> {
-		console.log(this._jwtService);
-		const userEmail = new EmailVO(email);
-		const userPassword = new PasswordVO(password);
-
-		const userFound = await this._userRepository.findByEmail(userEmail);
+	async execute(
+		email: EmailVO,
+		password: PasswordVO
+	): Promise<{ token: string }> {
+		const userFound = await this._userRepository.findByEmail(email);
 
 		if (!userFound) throw new UserNotFoundException();
 
-		const isPasswordValid = await userFound.password.compare(userPassword);
+		const isPasswordValid = await userFound.password.compare(password);
 
 		if (!isPasswordValid) throw new InvalidLoginException();
 
