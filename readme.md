@@ -1,43 +1,93 @@
+# E-commerce API!
+##  Description 
 
-# Ecommerce-node-ts
+Este proyecto es una API ecommerce que basado en el diseño Doman-Driven Desing **(DDD)** y también implementa un patrón **CQRS**.
 
-Este proyecto está basado en Domain-Driven Design (DDD), que es un enfoque para el desarrollo de software que se centra en la comprensión y la modelización de los problemas del negocio. En este caso, se ha modelado el dominio de una ecommerce.
+En DDD se separa las distintas partes del sistema “dominios” distintos cada uno con su propia lógica y reglas de negocio. Cada dominio se divide a su vez en "subdominios" que se enfocan en una tarea específica. Para manejar los eventos de dominios utilizaremos RabbitMQ, que nos permite intercambiar mensajes de manera asíncrona y escalable.
+Por ahora  este proyecto cuenta con 3 dominios
 
-En DDD, se separan las diferentes partes del sistema en "dominios" distintos, cada uno con su propia lógica y reglas de negocio. Cada dominio se divide a su vez en "subdominios" que se enfocan en una tarea específica.
+-  **User**
+-  **Category**
+-  **Product**
+  
+> **Note:** Tenga en cuenta que no soy un experto en estas tecnologías, métodos y patrones , si tiene algún consejo o feedback será bienvenida.
 
+![ E-commerce API](https://res.cloudinary.com/practicaldev/image/fetch/s--NIfW82Gj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/r8iufg4qjc63uu8jzf6y.jpg)
 
-Este  proyecto también utiliza RabbitMQ para manejar los eventos de dominio. RabbitMQ es una plataforma de mensajería de código abierto que permite a los sistemas intercambiar mensajes de manera asíncrona y escalable. Al utilizar RabbitMQ, se permite una mayor escalabilidad y flexibilidad en el proyecto, ya que los eventos de dominio pueden ser manejados de manera independiente y asíncrona, lo que permite un mejor rendimiento y una mejor capacidad de manejar cargas de trabajo altas.
+## Tecnologias
 
+> Nodejs, Express, Typescript, Typeorm, Inversify, amqplib, Eslint, Prettier, Docker
 
-## En el proyecto, tiene los siguientes subdominios:
+##  Estructura del proyecto ☘️
 
-1. Catalogo: encargado de manejar la información de los productos, categorías y marcas.
-2. Carrito: encargado de manejar las operaciones relacionadas con el carrito de compras.
-3. Orden: encargado de manejar las operaciones relacionadas con la orden de compra.
-4. Usuario: encargado de manejar las operaciones relacionadas con el usuario.
+```tree
 
+├── src
+│   ├── apps 
+│   │   ├── mooc
+│   │   └── backend
+│   │       ├── command
+│   │       ├── controller
+│   │       ├── dependency-injection
+│   │       ├── routes
+│   │       ├── bootstrap.ts
+│   │       └── server.ts
+│   └── contexts
+│       ├── category
+│       │   ├── infrastructure
+│       │   ├── application
+│       │   └── domain
+│       ├── product
+│       │   ├── infrastructure
+│       │   ├── application
+│       │   └── domain
+│       ├── shared
+│       │   ├── infrastructure
+│       │   ├── application
+│       │   └── domain
+│       └── user
+│           ├── infrastructure
+│           ├── application
+│           └── domain
+└── test
+```
 
-## Acknowledgements
+##  Environment 🔑
+```
+PORT=4000
+DB_NAME=ecommerce
+MYSQL_USER=root
+MYSQL_PASSWORD=example
+MYSQL_PORT=3306
+```
+```
+RABBIT_USERNAME='example'
+RABBIT_PASSWORD='example'
+RABBIT_VHOST='/'
+RABBIT_SECURE=false
+RABBIT_HOSTNAME='localhost'
+RABBIT_PORT=5672
+EXCHANGE_NAME='domain_events'
+MAX_RETRIES=3
+MODULE_NAME='mooc'
+````
 
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
+##   Getting Started 🚀
 
+1. Fork this project:
 
-## Contributing
+-   [Click here](https://github.com/Joeldev1021/ecommerce-api).
 
-Contributions are always welcome!
+2.  Clone the repository:
+```
+git clone https://github.com/Joeldev1021/ecommerce-api
+```
+3. Install dependencies:
+```
+npm install
+npm run docker:up
 
-See `contributing.md` for ways to get started.
+npm run rabbit:config:command
 
-Please adhere to this project's `code of conduct`.
-
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
-
+npm run dev 
+```
