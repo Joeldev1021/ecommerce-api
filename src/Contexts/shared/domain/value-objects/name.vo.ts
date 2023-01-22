@@ -8,7 +8,7 @@ export class NameVO extends ValueObject<string> {
 	}
 
 	protected assertIsValid(value: string): void {
-		if (value.length < 4 || !NAME_REGEX.test(value))
+		if (value.length < 3 || !NAME_REGEX.test(value))
 			throw new VOFormatException(NameVO.name, value);
 	}
 }

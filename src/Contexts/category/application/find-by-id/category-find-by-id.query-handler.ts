@@ -13,7 +13,7 @@ export class CategoryFindCounterQueryHandler
 {
 	constructor(
 		@inject(CONTAINER_TYPES.categoryFindByIdUseCase)
-		private _categoryFindByIUseCase: CategoryFindByIdUseCase
+		private _categoryFindByIdUseCase: CategoryFindByIdUseCase
 	) {}
 
 	subscribeTo(): Query {
@@ -23,8 +23,7 @@ export class CategoryFindCounterQueryHandler
 	async handle(
 		query: CategoryFindByIdQuery
 	): Promise<CategoryFindByIdResponse> {
-		console.log('catgoryfindCOunterqueryhandler');
-		const categories = await this._categoryFindByIUseCase.execute(
+		const categories = await this._categoryFindByIdUseCase.execute(
 			new CategoryId(query.id)
 		);
 

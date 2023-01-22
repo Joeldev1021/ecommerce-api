@@ -40,7 +40,7 @@ export class UserRegisterUseCase {
 				userId,
 				new UsernameVO(username),
 				userEmail,
-				new PasswordVO(password),
+				PasswordVO.create(password),
 				new StateVO(state)
 			)
 		);

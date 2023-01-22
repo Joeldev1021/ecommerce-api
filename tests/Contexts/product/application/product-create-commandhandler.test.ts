@@ -6,44 +6,52 @@ import { ProductCreateCommandHandler } from '../../../../src/Contexts/product/ap
 import { CategoryRepositoryMock } from '../../category/__mocks__/category-repository.mock';
 import { ProductCreateCommandMother } from './product-create-command.mother';
 import { ProductModelMother } from '../domain/product-model.mother';
+import { CategoryModelMother } from '../../category/domain/category-model.mother';
+import { CategoryIdNotFoundException } from '../../../../src/Contexts/product/application/errors/category-id-not-found.exception';
 
 let repository: ProductRepositoryMock;
 let productCreateUseCase: ProductCreateUseCase;
 let categoryRepository: CategoryRepositoryMock;
 let eventBus: EventBusMock;
-let handler: ProductCreateCommandHandler;
+let commandHandler: ProductCreateCommandHandler;
 
 beforeEach(() => {
 	repository = new ProductRepositoryMock();
+	categoryRepository = new CategoryRepositoryMock();
 	eventBus = new EventBusMock();
 	productCreateUseCase = new ProductCreateUseCase(
-		repository,
-		categoryRepository
+		categoryRepository,
+		repository
 	);
-	handler = new ProductCreateCommandHandler(productCreateUseCase);
+	commandHandler = new ProductCreateCommandHandler(productCreateUseCase);
 });
 
 describe('ProductCreateCommandHandler', () => {
 	it('should create a valid Product', async () => {
-		const command = ProductCreateCommandMother.random();
+		const categoryRandom = CategoryModelMother.random();
+
+		const productRandom = ProductCreateCommandMother.random();
+		/* override category id  command  */
+		const command = { ...productRandom, categoryId: categoryRandom.id.value };
+
 		const product = ProductModelMother.from(command);
 
-		await handler.handle(command);
+		/* save category random  */
+		categoryRepository.returnOnFindById(categoryRandom);
+
+		await commandHandler.handle(command);
 		repository.assertSaveHaveBeenCalledWith(product);
 	});
-	it('should throw error if id invalid', async () => {
-		//		expect(async () => {
-		/* 			const command = ProductCreateCommandMother.invalid();
-			const commandInvalid = {
-				...command,
-				id: '22',
-			};
-			const Product = ProductModelMother.from(commandInvalid);
 
-			await handler.handle(command);
+	it('should throw error if category Id not exist', async () => {
+		const command = ProductCreateCommandMother.random();
 
-			repository.assertSaveHaveBeenCalledWith(Product);
-	 */
-		// }).toThrow(VOFormatException);
+		const product = ProductModelMother.random();
+
+		try {
+			await commandHandler.handle(command);
+		} catch (error) {
+			expect(error).toBeInstanceOf(CategoryIdNotFoundException);
+		}
 	});
 });

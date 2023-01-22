@@ -16,4 +16,8 @@ export class PasswordVO extends ValueObject<string> {
 		const hash = bcrypt.hashSync(password, salt);
 		return new PasswordVO(hash);
 	}
+
+	public async compare(password: PasswordVO): Promise<boolean> {
+		return await bcrypt.compare(password.value, this.value);
+	}
 }

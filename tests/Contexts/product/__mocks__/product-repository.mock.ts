@@ -14,12 +14,10 @@ export class ProductRepositoryMock implements IProductRepository {
     this.saveMock(course);
   } */
 	async create(product: ProductModel): Promise<ProductModel | null> {
-		console.log('product created', product);
 		return this.saveMock(product);
 	}
 
 	assertSaveHaveBeenCalledWith(expected: ProductModel): void {
-		console.log('expected', expected);
 		expect(this.saveMock).toHaveBeenCalledWith(expected);
 	}
 

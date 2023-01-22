@@ -16,7 +16,7 @@ export class UserLoginUseCase {
 	async execute(email: string, password: string): Promise<void> {
 		const userEmail = new EmailVO(email);
 		const userPassword = new PasswordVO(password);
-		console.log(userPassword);
+
 		const userFound = await this._userRepository.findByEmail(userEmail);
 
 		if (!userFound) throw new UserNotFoundException();
