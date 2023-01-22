@@ -3,7 +3,7 @@
 
 Este proyecto es una API ecommerce que basado en el diseño Doman-Driven Desing **(DDD)** y también implementa un patrón **CQRS**.
 
-En DDD se separa las distintas partes del sistema “dominios” distintos cada uno con su propia lógica y reglas de negocio. Cada dominio se divide a su vez en "subdominios" que se enfocan en una tarea específica. Para manejar los eventos de dominios utilizaremos RabbitMQ, que nos permite intercambiar mensajes de manera asíncrona y escalable.
+En DDD se separa las distintas partes del sistema “dominios” distintos cada uno con su propia lógica y reglas de negocio. Cada dominio se divide a su vez en "subdominios" que se enfocan en una tarea específica. Para manejar los eventos de dominios utilizaremos RabbitMQ que nos permite intercambiar mensajes de manera asíncrona y escalable.
 Por ahora  este proyecto cuenta con 3 dominios
 
 -  **User**
