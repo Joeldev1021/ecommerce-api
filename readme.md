@@ -1,24 +1,23 @@
 # E-commerce API!
 ##  Description 
 
-Este proyecto es una API ecommerce que basado en el diseño Doman-Driven Desing **(DDD)** y también implementa un patrón **CQRS**.
+This project is an e-commerce API that is based on Domain-Driven Design (DDD) and also implements a CQRS pattern.
 
-En DDD se separa las distintas partes del sistema “dominios” distintos cada uno con su propia lógica y reglas de negocio. Cada dominio se divide a su vez en "subdominios" que se enfocan en una tarea específica. Para manejar los eventos de dominios utilizaremos RabbitMQ que nos permite intercambiar mensajes de manera asíncrona y escalable.
-Por ahora  este proyecto cuenta con 3 dominios
+In DDD, the different parts of the system are separated into different "domains", each with its own logic and business rules. Each domain is further divided into "subdomains" that focus on a specific task. To handle domain events, we will use RabbitMQ, which allows us to exchange messages asynchronously and scalably. Currently, this project has 3 domains.
 
 -  **User**
 -  **Category**
 -  **Product**
   
-> **Note:** Tenga en cuenta que no soy un experto en estas tecnologías, métodos y patrones , si tiene algún consejo o feedback será bienvenida.
+> **Note:** Please note that I am not an expert in these technologies, methods, and patterns. If you have any advice or feedback, it will be welcome.
 
 ![ E-commerce API](https://res.cloudinary.com/practicaldev/image/fetch/s--NIfW82Gj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/r8iufg4qjc63uu8jzf6y.jpg)
 
-## Tecnologias
+## Technologies
 
 > Nodejs, Express, Typescript, Typeorm, Inversify, amqplib, Eslint, Prettier, Docker
 
-##  Estructura del proyecto ☘️
+##  Structure project  ☘️
 
 ```tree
 
@@ -86,8 +85,6 @@ git clone https://github.com/Joeldev1021/ecommerce-api
 ```
 npm install
 npm run docker:up
-
 npm run rabbit:config:command
-
 npm run dev 
 ```
