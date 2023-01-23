@@ -1,4 +1,7 @@
+import { ProductCreateCommandHandler } from './../../../../Contexts/product/application/create/product-create-command-handler';
 import { Container } from 'inversify';
+import { ProductFindAllQueryHandler } from './../../../../Contexts/product/application/find-all/product-find-all-query-handler';
+import { UserLoginQueryHandler } from './../../../../Contexts/user/application/login/user-login-query-handler';
 import { CONTAINER_TYPES, TagHandler } from './container.types';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
@@ -12,18 +15,13 @@ import { ProductUpdateController } from '../controllers/product/product-update.c
 import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
 import { UserRegisterController } from '../controllers/user/user-register.controller';
 import { UserLoginController } from '../controllers/user/user-login.controller';
-import { UserLoginUseCase } from '../../../../Contexts/user/application/login/user-login.usecase';
 import { UserRegisterUseCase } from '../../../../Contexts/user/application/register/user-register.usecase';
 import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
 import { CategoryCreateUseCase } from '../../../../Contexts/category/application/create/category-create.usecase';
-import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/find-by-id/category-find-by-id.usecase';
 import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/delete/category-delete.usecase';
 import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/update/category-update.usecase';
-import { CategoryFindAllUseCase } from '../../../../Contexts/category/application/find-all/category-find-all.usecase';
 import { CategoryRepository } from '../../../../Contexts/category/infrastructure/repositories/category.repository';
 import { ProductCreateUseCase } from '../../../../Contexts/product/application/create/product-create-usecase';
-import { ProductFindAllUseCase } from '../../../../Contexts/product/application/find-all/product-find-all.usecase';
-import { ProductFindByIdUseCase } from '../../../../Contexts/product/application/find-by-id/product-find-by-id.usecase';
 import { ProductDeleteUseCase } from '../../../../Contexts/product/application/delete/product-delete.usecase';
 import { ProductUpdateUseCase } from '../../../../Contexts/product/application/update/product-update.usecase';
 import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
@@ -36,7 +34,6 @@ import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastrutu
 import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/command-bus/in-memory-command-bus';
 import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
 import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
-import { CategoryFindCounterUseCase } from '../../../../Contexts/category/application/find-counter/category-find-counter.usecase';
 import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/find-counter/category-find-counter.query-handler';
 import { IEventBus } from '../../../../Contexts/shared/domain/interface/event-bus';
 import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/events/category-created.handler';
@@ -50,6 +47,9 @@ import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/appli
 import { IProductRepository } from '../../../../Contexts/product/domain/repositories/product.repository';
 import { ICategoryRepository } from '../../../../Contexts/category/domain/repositories/category.repository';
 import { JwtService } from '../../../../Contexts/shared/infrastruture/services/jwt.service';
+import { ProductFindByIdQueryHandler } from '../../../../Contexts/product/application/find-by-id/product-find-by-id-query-handler';
+import { ProductDeleteCommandHandler } from '../../../../Contexts/product/application/delete/product-delete-command-handler';
+import { ProductUpdateCommandHandler } from '../../../../Contexts/product/application/update/product-update-command-handler';
 const container = new Container();
 
 container
@@ -59,10 +59,6 @@ container
 container
 	.bind<UserLoginController>(CONTAINER_TYPES.userLoginController)
 	.to(UserLoginController);
-
-container
-	.bind<UserLoginUseCase>(CONTAINER_TYPES.userLoginUseCase)
-	.to(UserLoginUseCase);
 
 container
 	.bind<UserRegisterUseCase>(CONTAINER_TYPES.userRegisterUseCase)
@@ -101,18 +97,12 @@ container
 	.to(CategoryCreateUseCase);
 
 container
-	.bind<CategoryFindByIdUseCase>(CONTAINER_TYPES.categoryFindByIdUseCase)
-	.to(CategoryFindByIdUseCase);
-container
 	.bind<CategoryDeleteUseCase>(CONTAINER_TYPES.categoryDeleteUseCase)
 	.to(CategoryDeleteUseCase);
 container
 	.bind<CategoryUpdateUseCase>(CONTAINER_TYPES.categoryUpdateUseCase)
 	.to(CategoryUpdateUseCase);
 
-container
-	.bind<CategoryFindAllUseCase>(CONTAINER_TYPES.categoryFindAllUseCase)
-	.to(CategoryFindAllUseCase);
 container
 	.bind<ICategoryRepository>(CONTAINER_TYPES.categoryRepository)
 	.to(CategoryRepository);
@@ -141,17 +131,11 @@ container
 	.bind<ProductCreateUseCase>(CONTAINER_TYPES.productCreateUseCase)
 	.to(ProductCreateUseCase);
 container
-	.bind<ProductFindByIdUseCase>(CONTAINER_TYPES.productFindByIdUseCase)
-	.to(ProductFindByIdUseCase);
-container
 	.bind<ProductDeleteUseCase>(CONTAINER_TYPES.productDeleteUseCase)
 	.to(ProductDeleteUseCase);
 container
 	.bind<ProductUpdateUseCase>(CONTAINER_TYPES.productUpdateUseCase)
 	.to(ProductUpdateUseCase);
-container
-	.bind<ProductFindAllUseCase>(CONTAINER_TYPES.productFindAllUseCase)
-	.to(ProductFindAllUseCase);
 container
 	.bind<IProductRepository>(CONTAINER_TYPES.productRepository)
 	.to(ProductRepository);
@@ -190,19 +174,22 @@ container.bind<ICommandBus>(CONTAINER_TYPES.commandBus).to(InMemoryCommandBus);
 /* query  */
 container.bind<IQueryBus>(CONTAINER_TYPES.queryBus).to(InMemoryQueryBus);
 
-container
-	.bind<CategoryFindCounterUseCase>(CONTAINER_TYPES.categoryFindCounterUseCase)
-	.to(CategoryFindCounterUseCase);
-
-/* tag */
+/*======================= tag ====================================*/
+/* ======================query ================================== */
+container.bind(TagHandler.QueryHandlers).to(UserLoginQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(CategoryFindCounterQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(CategoryFindAllQueryHandler);
-
+container.bind(TagHandler.QueryHandlers).to(ProductFindAllQueryHandler);
+container.bind(TagHandler.QueryHandlers).to(ProductFindByIdQueryHandler);
+/*====================== event domain ===============================*/
 container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
 
+/* ======================query ===================================== */
 container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
-
 container.bind(TagHandler.CommandHandlers).to(CategoryDeleteCommandHandler);
+container.bind(TagHandler.CommandHandlers).to(ProductCreateCommandHandler);
+container.bind(TagHandler.CommandHandlers).to(ProductDeleteCommandHandler);
+container.bind(TagHandler.CommandHandlers).to(ProductUpdateCommandHandler);
 
 /* ==================== test ========================= */
 container

@@ -7,7 +7,6 @@ import { UserNameMother } from './user-name.mother';
 import { UserPasswordMother } from './user-password.mother';
 import { UserStateMother } from './user-state.mother';
 import {
-	IUserPrimitives,
 	UserModel,
 } from '../../../../src/Contexts/user/domain/models/user.model';
 import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
@@ -15,7 +14,9 @@ import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/emai
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
 import { UserRoleVO } from '../../../../src/Contexts/user/domain/value-objects/user-role.vo';
 import { UserRoleMother } from './user-role.mother';
+
 export class UserModelMother {
+
 	static create(
 		id: UuidVO,
 		username: UsernameVO,
@@ -37,6 +38,7 @@ export class UserModelMother {
 			UserRoleMother.create(command.role ? command.role : 'admin')
 		);
 	}
+
 
 	static random(): UserModel {
 		return this.create(

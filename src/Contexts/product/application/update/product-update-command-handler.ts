@@ -29,7 +29,7 @@ export class ProductUpdateCommandHandler
 			new ProductId(command.id),
 			new ProductName(command.name),
 			new ProductDesc(command.description),
-			new ProductId(command.productId),
+			new ProductId(command.categoryId),
 			new PriceVO(command.price),
 			new QuantityVO(command.quantity),
 			new StateVO(command.state)

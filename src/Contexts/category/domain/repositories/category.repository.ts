@@ -11,7 +11,7 @@ export interface ICategoryRepository {
 
 	delete(categoryId: CategoryId): Promise<void>;
 
-	findAll(): Promise<CategoryModel[] | null>;
+	findAll(): Promise<CategoryModel[]>;
 
 	update(category: CategoryModel): Promise<CategoryModel | null>;
 }
