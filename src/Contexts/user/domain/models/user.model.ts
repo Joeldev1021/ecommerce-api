@@ -7,6 +7,7 @@ import {
 	AggregateRoot,
 	AggregateRootPrimitives,
 } from '../../../shared/domain/aggregate-root';
+import { UserRoleVO } from '../value-objects/user-role.vo';
 export interface IUserPrimitives extends AggregateRootPrimitives {
 	userId: string;
 	username: string;
@@ -14,6 +15,7 @@ export interface IUserPrimitives extends AggregateRootPrimitives {
 	password: string;
 	avatar?: string;
 	state: boolean;
+	role: string;
 }
 
 export class UserModel extends AggregateRoot {
@@ -22,7 +24,8 @@ export class UserModel extends AggregateRoot {
 		public username: UsernameVO,
 		public email: EmailVO,
 		public password: PasswordVO,
-		public state: StateVO
+		public state: StateVO,
+		public role: UserRoleVO
 	) {
 		super();
 	}
@@ -33,7 +36,8 @@ export class UserModel extends AggregateRoot {
 			new UsernameVO(user.username),
 			new EmailVO(user.email),
 			new PasswordVO(user.password),
-			new StateVO(user.state)
+			new StateVO(user.state),
+			new UserRoleVO(user.role)
 		);
 	}
 
@@ -44,6 +48,7 @@ export class UserModel extends AggregateRoot {
 			email: this.email.value,
 			password: this.password.value,
 			state: this.state.value,
+			role: this.role.value,
 		};
 	}
 }

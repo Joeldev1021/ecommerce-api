@@ -4,12 +4,13 @@ import { UserEmailAlreadyInUseException } from '../errors/user-email-already-in-
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { inject, injectable } from 'inversify';
-import { UserModel } from '../../..//user/domain/models/user.model';
+import { UserModel } from '../../domain/models/user.model';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { StateVO } from '../../../shared/domain/value-objects/state.vo';
+import { UserRoleVO } from '../../domain/value-objects/user-role.vo';
 
 @injectable()
 export class UserRegisterUseCase {
@@ -19,30 +20,22 @@ export class UserRegisterUseCase {
 	) {}
 
 	async execute(
-		id: string,
-		username: string,
-		email: string,
-		password: string,
-		state: boolean
+		id: UuidVO,
+		username: UsernameVO,
+		email: EmailVO,
+		password: PasswordVO,
+		state: StateVO,
+		role: UserRoleVO
 	): Promise<void> {
-		const userId = new UuidVO(id);
-		const userFound = await this._userRepository.findById(userId);
-		if (userFound != null) throw new UserIdAlreadyInUseException();
+		const userFound = await this._userRepository.findById(id);
+		if (userFound) throw new UserIdAlreadyInUseException();
 
-		const userEmail = new EmailVO(email);
-		const userFoundEmail = await this._userRepository.findByEmail(userEmail);
-		if (userFoundEmail != null) throw new UserEmailAlreadyInUseException();
+		const userFoundEmail = await this._userRepository.findByEmail(email);
 
-		//await PasswordVO.create(password),
-		//todo hash password
+		if (userFoundEmail) throw new UserEmailAlreadyInUseException();
+
 		await this._userRepository.register(
-			new UserModel(
-				userId,
-				new UsernameVO(username),
-				userEmail,
-				PasswordVO.create(password),
-				new StateVO(state)
-			)
+			new UserModel(id, username, email, password, state, role)
 		);
 	}
 }

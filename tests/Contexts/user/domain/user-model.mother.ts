@@ -1,3 +1,4 @@
+import { UserRegisterCommand } from './../../../../src/Contexts/user/domain/command/user-register-command';
 import { StateVO } from '../../../../src/Contexts/shared/domain/value-objects/state.vo';
 import { UuidVO } from '../../../../src/Contexts/shared/domain/value-objects/uuid.vo';
 import { UserEmailMother } from './user-email.mother';
@@ -12,34 +13,39 @@ import {
 import { UsernameVO } from '../../../../src/Contexts/user/domain/value-objects/username.vo';
 import { EmailVO } from '../../../../src/Contexts/user/domain/value-objects/email.vo';
 import { PasswordVO } from '../../../../src/Contexts/user/domain/value-objects/password.vo';
+import { UserRoleVO } from '../../../../src/Contexts/user/domain/value-objects/user-role.vo';
+import { UserRoleMother } from './user-role.mother';
 export class UserModelMother {
 	static create(
 		id: UuidVO,
 		username: UsernameVO,
 		email: EmailVO,
 		password: PasswordVO,
-		state: StateVO
+		state: StateVO,
+		role: UserRoleVO
 	): UserModel {
-		return new UserModel(id, username, email, password, state);
+		return new UserModel(id, username, email, password, state, role);
 	}
 
-	static fromRequest(request: IUserPrimitives): UserModel {
+	static from(command: UserRegisterCommand): UserModel {
 		return this.create(
-			new UuidVO(request.userId),
-			new UsernameVO(request.username),
-			new EmailVO(request.email),
-			new PasswordVO(request.password),
-			new StateVO(request.state)
+			UserIdMother.create(command.id),
+			UserNameMother.create(command.name),
+			UserEmailMother.create(command.email),
+			UserPasswordMother.create(command.password),
+			UserStateMother.create(command.state),
+			UserRoleMother.create(command.role ? command.role : 'admin')
 		);
 	}
 
-	static async random(): Promise<UserModel> {
+	static random(): UserModel {
 		return this.create(
 			UserIdMother.random(),
 			UserNameMother.random(),
 			UserEmailMother.random(),
 			UserPasswordMother.random(),
-			UserStateMother.random()
+			UserStateMother.random(),
+			UserRoleMother.random()
 		);
 	}
 }

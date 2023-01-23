@@ -31,6 +31,10 @@ export const CONTAINER_TYPES = {
 	productUpdateUseCase: Symbol.for('productUpdateUseCase'),
 	productFindAllUseCase: Symbol.for('productFindAllUseCase'),
 	productRepository: Symbol.for('productRepository'),
+
+	/* ====================: Services =========================*/
+	jwtService: Symbol.for('jwtService'),
+
 	/* ====================: Symbol.for(product ========================*/
 	eventBus: Symbol.for('eventBus'),
 	categoryCreatedHandler: Symbol.for('categoryCreatedHandler'),
@@ -41,6 +45,7 @@ export const CONTAINER_TYPES = {
 	rabbitMQConfigurer: Symbol.for('rabbitMQConfigurer'),
 	domainEventFailoverPublisher: Symbol.for('domainEventFailoverPublisher'),
 	domainEventDeserializer: Symbol.for('domainEventDeserializer'),
+
 	/* ====================: Symbol.for(CQRS =========================*/
 	commandBus: Symbol.for('commandBus'),
 	queryBus: Symbol.for('queryBus'),

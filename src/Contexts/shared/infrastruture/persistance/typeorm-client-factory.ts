@@ -27,6 +27,7 @@ export class TypeOrmClientFactory {
 			console.log('connection to database');
 			this.connection = connection;
 		} catch (error) {
+			console.log(error);
 			throw new Error(`Typeorm connection error`);
 		}
 	}

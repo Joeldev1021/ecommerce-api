@@ -12,8 +12,8 @@ import { ProductUpdateController } from '../controllers/product/product-update.c
 import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
 import { UserRegisterController } from '../controllers/user/user-register.controller';
 import { UserLoginController } from '../controllers/user/user-login.controller';
-import { UserLoginUseCase } from '../../../../Contexts/user/application/usecase/user-login.usecase';
-import { UserRegisterUseCase } from '../../../../Contexts/user/application/usecase/user-register.usecase';
+import { UserLoginUseCase } from '../../../../Contexts/user/application/login/user-login.usecase';
+import { UserRegisterUseCase } from '../../../../Contexts/user/application/register/user-register.usecase';
 import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
 import { CategoryCreateUseCase } from '../../../../Contexts/category/application/create/category-create.usecase';
 import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/find-by-id/category-find-by-id.usecase';
@@ -49,6 +49,7 @@ import { CategoryDeleteCommandHandler } from '../../../../Contexts/category/appl
 import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/application/find-all/category-find-all.query-handler';
 import { IProductRepository } from '../../../../Contexts/product/domain/repositories/product.repository';
 import { ICategoryRepository } from '../../../../Contexts/category/domain/repositories/category.repository';
+import { JwtService } from '../../../../Contexts/shared/infrastruture/services/jwt.service';
 const container = new Container();
 
 container
@@ -154,6 +155,10 @@ container
 container
 	.bind<IProductRepository>(CONTAINER_TYPES.productRepository)
 	.to(ProductRepository);
+
+/*=================service ======================== */
+container.bind<JwtService>(CONTAINER_TYPES.jwtService).to(JwtService);
+
 /* event bus */
 
 container.bind<IEventBus>(CONTAINER_TYPES.eventBus).to(EventBus);

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { AuthMiddleware } from '../../../../Contexts/shared/infrastruture/middlewares/auth-middleware';
 import { CategoryCreateController } from '../controllers/category/category-create.controller';
 import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
 import { CategoryFindAllController } from '../controllers/category/category-find-all.controller';
@@ -40,6 +41,7 @@ router.get(
 
 router.post(
 	'/',
+	AuthMiddleware,
 	categoryCreateController.execute.bind(categoryCreateController)
 );
 router.get(
