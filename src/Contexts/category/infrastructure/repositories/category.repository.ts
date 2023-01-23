@@ -9,7 +9,6 @@ import { ObjectType } from 'typeorm';
 import { TypeOrmRepository } from '../../../shared/infrastruture/persistance/typeorm-repository';
 import { CategoryId } from '../../domain/value-objects/category-id.vo';
 import { CategoryName } from '../../domain/value-objects/category-name.vo';
-import { ProductEntity } from '../../../shared/infrastruture/entity/product';
 
 @injectable()
 export class CategoryRepository
@@ -20,10 +19,9 @@ export class CategoryRepository
 		return CategoryEntity;
 	}
 
-	async findAll(): Promise<CategoryModel[] | null> {
+	async findAll(): Promise<CategoryModel[]> {
 		const repository = await this.repository();
 		const category = await repository.find();
-		if (!category) return null;
 		return category.map(ctg => CategoryModel.toDomain(ctg));
 	}
 

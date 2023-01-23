@@ -1,14 +1,14 @@
+import { ProductDeleteCommand } from './../../../../../Contexts/product/domain/command/product-delete-command';
+import { ICommandBus } from './../../../../../Contexts/shared/domain/interface/command-bust';
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { ProductDeleteUseCase } from '../../../../../Contexts/product/application/delete/product-delete.usecase';
-import { UuidVO } from '../../../../../Contexts/shared/domain/value-objects/uuid.vo';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';
 
 @injectable()
 export class ProductDeleteController {
 	constructor(
-		@inject(CONTAINER_TYPES.productDeleteUseCase)
-		private readonly _productDeleteUseCase: ProductDeleteUseCase
+		@inject(CONTAINER_TYPES.eventBus)
+		private readonly _commandBus: ICommandBus
 	) {}
 
 	async execute(
@@ -18,7 +18,9 @@ export class ProductDeleteController {
 	): Promise<void> {
 		const productId = req.params.id;
 		try {
-			const product = this._productDeleteUseCase.execute(new UuidVO(productId));
+			const command = new ProductDeleteCommand(productId);
+			const product = await this._commandBus.dispatch(command);
+
 			res.status(200).send(product);
 		} catch (error) {
 			next(error);

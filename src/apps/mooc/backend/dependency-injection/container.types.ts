@@ -2,7 +2,6 @@ export const CONTAINER_TYPES = {
 	userRegisterController: Symbol.for('userRegisterController'),
 	userLoginController: Symbol.for('userLoginController'),
 	userRegisterUseCase: Symbol.for('userRegisterUseCase'),
-	userLoginUseCase: Symbol.for('userLoginUseCase'),
 	userRepository: Symbol.for('userRepository'),
 	/* ====================: Symbol.for(category =======================: Symbol.for(*/
 	categoryCreateController: Symbol.for('categoryCreateController'),
@@ -13,10 +12,8 @@ export const CONTAINER_TYPES = {
 	categoryFindCounterController: Symbol.for('categoryFindCounterController'),
 	/* usecase */
 	categoryCreateUseCase: Symbol.for('categoryCreateUseCase'),
-	categoryFindByIdUseCase: Symbol.for('categoryFindByIdUseCase'),
 	categoryDeleteUseCase: Symbol.for('categoryDeleteUseCase'),
 	categoryUpdateUseCase: Symbol.for('categoryUpdateUseCase'),
-	categoryFindAllUseCase: Symbol.for('categoryFindAllUseCase'),
 	categoryRepository: Symbol.for('categoryRepository'),
 	/* ====================: Symbol.for(category =======================: Symbol.for(*/
 	productCreateController: Symbol.for('productCreateController'),
@@ -26,10 +23,8 @@ export const CONTAINER_TYPES = {
 	productFindAllController: Symbol.for('productFindAllController'),
 	/*===================: Symbol.for(Product usecase===================: Symbol.for(*/
 	productCreateUseCase: Symbol.for('productCreateUseCase'),
-	productFindByIdUseCase: Symbol.for('productFindByIdUseCase'),
 	productDeleteUseCase: Symbol.for('productDeleteUseCase'),
 	productUpdateUseCase: Symbol.for('productUpdateUseCase'),
-	productFindAllUseCase: Symbol.for('productFindAllUseCase'),
 	productRepository: Symbol.for('productRepository'),
 
 	/* ====================: Services =========================*/
