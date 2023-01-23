@@ -1,8 +1,6 @@
 import { UserLoginReponse } from './../../../../../Contexts/user/application/login/user-login.response';
 import { UserLoginQuery } from './../../../../../Contexts/user/application/login/user-login.query';
 import { IQueryBus } from './../../../../../Contexts/shared/domain/interface/query-bus';
-import { UserLoginCommand } from './../../../../../Contexts/user/domain/command/user-login.command';
-import { ICommandBus } from './../../../../../Contexts/shared/domain/interface/command-bust';
 import { inject, injectable } from 'inversify';
 import { NextFunction, Request, Response } from 'express';
 import { CONTAINER_TYPES } from '../../dependency-injection/container.types';

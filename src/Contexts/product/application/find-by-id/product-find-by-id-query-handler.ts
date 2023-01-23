@@ -2,11 +2,12 @@ import { ProductFindByIdResponse } from './product-find-by-id.response';
 import { ProductFindByIdQuery } from './product-find-by-id.query';
 import { IProductRepository } from './../../domain/repositories/product.repository';
 import { CONTAINER_TYPES } from './../../../../apps/mooc/backend/dependency-injection/container.types';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { IQueryHandler } from './../../../shared/domain/interface/query-handler';
 import { Query } from '../../../shared/domain/query';
 import { ProductId } from '../../domain/value-objects/product-id.vo';
 
+@injectable()
 export class ProductFindByIdQueryHandler
 	implements IQueryHandler<ProductFindByIdQuery, ProductFindByIdResponse>
 {

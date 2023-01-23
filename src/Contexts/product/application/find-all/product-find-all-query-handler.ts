@@ -1,10 +1,12 @@
 import { IProductRepository } from './../../domain/repositories/product.repository';
 import { CONTAINER_TYPES } from './../../../../apps/mooc/backend/dependency-injection/container.types';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { ProductFindAllResponse } from './product-find-all.response';
 import { ProductFindAllQuery } from './product-find-all.query';
 import { IQueryHandler } from './../../../shared/domain/interface/query-handler';
 import { Query } from '../../../shared/domain/query';
+
+@injectable()
 export class ProductFindAllQueryHandler
 	implements IQueryHandler<ProductFindAllQuery, ProductFindAllResponse>
 {

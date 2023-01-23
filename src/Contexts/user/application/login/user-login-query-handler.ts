@@ -2,7 +2,7 @@ import { InvalidLoginException } from './../errors/invalid-login.exception';
 import { UserNotFoundException } from './../errors/user-not-found.exception';
 import { IUserRepository } from './../../domain/repositories/user.repository';
 import { JwtService } from './../../../shared/infrastruture/services/jwt.service';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { Query } from '../../../shared/domain/query';
 import { EmailVO } from '../../domain/value-objects/email.vo';
@@ -11,6 +11,7 @@ import { IQueryHandler } from './../../../shared/domain/interface/query-handler'
 import { UserLoginQuery } from './user-login.query';
 import { UserLoginReponse } from './user-login.response';
 
+@injectable()
 export class UserLoginQueryHandler
 	implements IQueryHandler<UserLoginQuery, UserLoginReponse>
 {
