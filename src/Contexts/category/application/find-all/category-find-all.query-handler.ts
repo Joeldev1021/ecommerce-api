@@ -1,8 +1,8 @@
+import { ICategoryRepository } from './../../domain/repositories/category.repository';
 import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { IQueryHandler } from '../../../shared/domain/interface/query-handler';
 import { Query } from '../../../shared/domain/query';
-import { CategoryFindAllUseCase } from './category-find-all.usecase';
 import { CategoryFindAllQuery } from './category-find-all.query';
 import { CategoryFindAllResponse } from './category-find-all.response';
 
@@ -11,8 +11,8 @@ export class CategoryFindAllQueryHandler
 	implements IQueryHandler<CategoryFindAllQuery, CategoryFindAllResponse>
 {
 	constructor(
-		@inject(CONTAINER_TYPES.categoryFindAllUseCase)
-		private _categoryFindAllUseCase: CategoryFindAllUseCase
+		@inject(CONTAINER_TYPES.categoryRepository)
+		private _categoryRepository: ICategoryRepository
 	) {}
 
 	subscribeTo(): Query {
@@ -20,7 +20,7 @@ export class CategoryFindAllQueryHandler
 	}
 
 	async handle(query: CategoryFindAllQuery): Promise<CategoryFindAllResponse> {
-		const categories = await this._categoryFindAllUseCase.execute();
+		const categories = await this._categoryRepository.findAll();
 
 		return new CategoryFindAllResponse(categories);
 	}

@@ -16,10 +16,8 @@ import { UserLoginUseCase } from '../../../../Contexts/user/application/login/us
 import { UserRegisterUseCase } from '../../../../Contexts/user/application/register/user-register.usecase';
 import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
 import { CategoryCreateUseCase } from '../../../../Contexts/category/application/create/category-create.usecase';
-import { CategoryFindByIdUseCase } from '../../../../Contexts/category/application/find-by-id/category-find-by-id.usecase';
 import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/delete/category-delete.usecase';
 import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/update/category-update.usecase';
-import { CategoryFindAllUseCase } from '../../../../Contexts/category/application/find-all/category-find-all.usecase';
 import { CategoryRepository } from '../../../../Contexts/category/infrastructure/repositories/category.repository';
 import { ProductCreateUseCase } from '../../../../Contexts/product/application/create/product-create-usecase';
 import { ProductFindAllUseCase } from '../../../../Contexts/product/application/find-all/product-find-all.usecase';
@@ -101,18 +99,12 @@ container
 	.to(CategoryCreateUseCase);
 
 container
-	.bind<CategoryFindByIdUseCase>(CONTAINER_TYPES.categoryFindByIdUseCase)
-	.to(CategoryFindByIdUseCase);
-container
 	.bind<CategoryDeleteUseCase>(CONTAINER_TYPES.categoryDeleteUseCase)
 	.to(CategoryDeleteUseCase);
 container
 	.bind<CategoryUpdateUseCase>(CONTAINER_TYPES.categoryUpdateUseCase)
 	.to(CategoryUpdateUseCase);
 
-container
-	.bind<CategoryFindAllUseCase>(CONTAINER_TYPES.categoryFindAllUseCase)
-	.to(CategoryFindAllUseCase);
 container
 	.bind<ICategoryRepository>(CONTAINER_TYPES.categoryRepository)
 	.to(CategoryRepository);

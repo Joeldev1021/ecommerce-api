@@ -1,4 +1,4 @@
-import { inject, injectable, multiInject } from 'inversify';
+import { injectable, multiInject } from 'inversify';
 import { TagHandler } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { Command } from '../../domain/command';
 import { CommandNotRegisteredError } from '../../domain/errors/command-not-registered.error';
@@ -20,7 +20,9 @@ export class InMemoryCommandBus implements ICommandBus {
 
 	async dispatch(command: Command): Promise<void> {
 		const handler = this.commandHandlers.get(command.constructor);
+
 		if (!handler) throw new CommandNotRegisteredError(command);
+
 		await handler.handle(command);
 	}
 }
