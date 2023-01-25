@@ -26,7 +26,6 @@ describe('CategoryReposiotry', () => {
 	describe('#create', () => {
 		it('should create a category', async () => {
 			const category = CategoryModelMother.random();
-
 			await repository.create(category);
 		});
 	});

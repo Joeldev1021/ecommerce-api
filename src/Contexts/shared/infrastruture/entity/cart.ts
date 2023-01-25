@@ -2,6 +2,7 @@ import {
 	Column,
 	Entity,
 	JoinColumn,
+	ManyToOne,
 	OneToMany,
 	OneToOne,
 	PrimaryColumn,
@@ -17,7 +18,7 @@ export enum CartStatusEnum {
 	CANCELLED = 'CANCELLED',
 }
 
-@Entity({ name: 'cart' })
+@Entity({ name: 'cartItem' })
 export class CartItemEntity {
 	@PrimaryColumn()
 	cartItemId: string;
@@ -32,6 +33,9 @@ export class CartItemEntity {
 	productId: string;
 
 	@Column()
+	cartId: string;
+
+	@Column()
 	purchasePrice: number;
 
 	@Column({
@@ -41,9 +45,13 @@ export class CartItemEntity {
 	})
 	status: string;
 
-	@OneToMany(() => ProductEntity, product => product.productId)
+	@OneToOne(() => ProductEntity, product => product.productId)
 	@JoinColumn({ name: 'productId' })
 	product: ProductEntity;
+
+	@ManyToOne(() => CartEntity, cart => cart.cartId)
+	@JoinColumn({ name: 'cartId' })
+	cart: CartEntity;
 }
 
 @Entity({ name: 'cart' })
@@ -58,10 +66,6 @@ export class CartEntity {
 	@Column()
 	createdAt: Date;
 
-	@Column()
-	cartItemId: string;
-
-	@OneToMany(() => CartItemEntity, cart => cart.cartItemId)
-	@JoinColumn({ name: 'cartItems' })
+	@OneToMany(() => CartItemEntity, cartItem => cartItem.cartId)
 	cartItems: CartItemEntity[];
 }

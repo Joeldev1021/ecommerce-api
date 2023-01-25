@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ProductEntity } from './product';
 
 @Entity({ name: 'category' })
@@ -18,7 +18,6 @@ export class CategoryEntity {
 	@Column({ default: true })
 	state: boolean;
 
-	@OneToMany(() => ProductEntity, product => product.category)
-	@JoinColumn({ name: 'products' })
+	@OneToMany(() => ProductEntity, product => product.categoryId)
 	products: ProductEntity[];
 }
