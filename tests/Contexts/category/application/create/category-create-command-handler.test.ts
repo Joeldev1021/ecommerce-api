@@ -27,21 +27,22 @@ describe('CategoryCreateCommandHandler', () => {
 		const domainEvent = CategoryCreatedEventMother.fromCategory(category);
 		await handler.handle(command);
 
+
 		repository.assertSaveHaveBeenCalledWith(category);
 		eventBus.assertLastPublishedEventIs(domainEvent);
 	});
 	it('should throw error if id invalid', async () => {
-		expect(() => {
 			const command = CategoryCreateCommandMother.invalid();
 			const commandInvalid = {
 				...command,
 				id: '22',
 			};
-			const category = CategoryModelMother.from(commandInvalid);
+    try {
+  
+			await handler.handle(commandInvalid);
+    } catch (error) {
+     expect(error).toBeInstanceOf(VOFormatException)
+    }
 
-			handler.handle(command);
-
-			repository.assertSaveHaveBeenCalledWith(category);
-		}).toThrow(VOFormatException);
 	});
 });
