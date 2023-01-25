@@ -5,26 +5,18 @@ import { CategoryName } from '../../../../src/Contexts/category/domain/value-obj
 
 export class CategoryRepositoryMock implements ICategoryRepository {
 	private saveMock: jest.Mock;
+	private deleteMock: jest.Mock;
 	private CategoryFind: CategoryModel;
 	private findByIdMock: jest.Mock;
+
 	constructor() {
 		this.saveMock = jest.fn();
 		this.findByIdMock = jest.fn();
+		this.deleteMock = jest.fn();
 	}
 
-	/* async (category: CategoryModel): Promise<void> {
-    this.saveMock(course);
-  } */
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
 		return this.saveMock(category);
-	}
-
-	returnOnFindById(category: CategoryModel) {
-		this.CategoryFind = category;
-	}
-
-	assertSaveHaveBeenCalledWith(expected: CategoryModel): void {
-		expect(this.saveMock).toHaveBeenCalledWith(expected);
 	}
 
 	async findAll(): Promise<CategoryModel[] | null> {
@@ -40,9 +32,23 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 		return null;
 	}
 
-	async delete(categoryId: CategoryId): Promise<void> {}
+	async delete(categoryId: CategoryId): Promise<void> {
+		this.deleteMock(categoryId);
+	}
 
 	async update(category: CategoryModel): Promise<CategoryModel | null> {
 		return null;
+	}
+
+	public returnOnFindById(category: CategoryModel): void {
+		this.CategoryFind = category;
+	}
+
+	public assertSaveHaveBeenCalledWith(expected: CategoryModel): void {
+		expect(this.saveMock).toHaveBeenCalledWith(expected);
+	}
+
+	public assetDeleteHaveBeenCalledWith(expected: CategoryId): void {
+		expect(this.deleteMock).toHaveBeenCalledWith(expected);
 	}
 }

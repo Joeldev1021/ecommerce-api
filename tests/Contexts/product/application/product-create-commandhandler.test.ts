@@ -46,7 +46,6 @@ describe('ProductCreateCommandHandler', () => {
 	it('should throw error if category Id not exist', async () => {
 		const command = ProductCreateCommandMother.random();
 
-		const product = ProductModelMother.random();
 
 		try {
 			await commandHandler.handle(command);
