@@ -11,11 +11,13 @@ import { ProductName } from '../value-objects/product-name.vo';
 import { ProductDesc } from '../value-objects/product-description.vo';
 import { ProductState } from '../value-objects/product-state.vo';
 import { ProductCreatedAt } from '../value-objects/product-created-at.vo';
+import { BrandId } from '../../../brand/domain/value-objects/brand-id.vo';
 export interface IProductPrimitives extends AggregateRootPrimitives {
 	productId: string;
 	name: string;
 	description: string;
 	imageUrl?: string;
+	brandId: string;
 	price: number;
 	quantity: number;
 	createdAt: Date;
@@ -33,7 +35,8 @@ export class ProductModel extends AggregateRoot {
 		public price: PriceVO,
 		public quantity: QuantityVO,
 		public state: ProductState,
-		public createdAt: ProductCreatedAt
+		public createdAt: ProductCreatedAt,
+		public brandId: BrandId
 	) {
 		super();
 	}
@@ -48,7 +51,8 @@ export class ProductModel extends AggregateRoot {
 			new PriceVO(product.price),
 			new QuantityVO(product.quantity),
 			new ProductState(product.state),
-			new CreatedAtVO(product.createdAt)
+			new CreatedAtVO(product.createdAt),
+			new BrandId(product.brandId)
 		);
 	}
 
@@ -63,6 +67,7 @@ export class ProductModel extends AggregateRoot {
 			quantity: this.quantity.value,
 			state: this.state.value,
 			createdAt: this.createdAt.value,
+			brandId: this.brandId.value,
 		};
 	}
 }

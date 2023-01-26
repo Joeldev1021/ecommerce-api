@@ -3,7 +3,8 @@ import { ProductEntity } from './product';
 
 @Entity({ name: 'brand' })
 export class BrandEntity {
-	@PrimaryColumn() brandId: string;
+	@PrimaryColumn()
+	brandId: string;
 
 	@Column()
 	name: string;
@@ -19,9 +20,6 @@ export class BrandEntity {
 
 	@Column()
 	state: boolean;
-
-	@Column()
-	createdAt: Date;
 
 	@OneToMany(() => ProductEntity, product => product.brandId)
 	products: ProductEntity[];

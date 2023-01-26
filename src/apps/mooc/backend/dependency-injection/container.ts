@@ -3,28 +3,6 @@ import { Container } from 'inversify';
 import { ProductFindAllQueryHandler } from './../../../../Contexts/product/application/find-all/product-find-all-query-handler';
 import { UserLoginQueryHandler } from './../../../../Contexts/user/application/login/user-login-query-handler';
 import { CONTAINER_TYPES, TagHandler } from './container.types';
-import { CategoryCreateController } from '../controllers/category/category-create.controller';
-import { CategoryFindByIdController } from '../controllers/category/category-find-by-id.controller';
-import { CategoryDeleteController } from '../controllers/category/category-delete.controller';
-import { CategoryUpdateController } from '../controllers/category/category-update.controller';
-import { CategoryFindAllController } from '../controllers/category/category-find-all.controller';
-import { ProductCreateController } from '../controllers/product/product-create.controller';
-import { ProductFindByIdController } from '../controllers/product/product-find-by-id.controller';
-import { ProductDeleteController } from '../controllers/product/product-delete.controller';
-import { ProductUpdateController } from '../controllers/product/product-update.controller';
-import { ProductFindAllController } from '../controllers/product/product-find-all.controller';
-import { UserRegisterController } from '../controllers/user/user-register.controller';
-import { UserLoginController } from '../controllers/user/user-login.controller';
-import { UserRegisterUseCase } from '../../../../Contexts/user/application/register/user-register.usecase';
-import { UserRepository } from '../../../../Contexts/user/infrastructure/repositories/user.repository';
-import { CategoryCreateUseCase } from '../../../../Contexts/category/application/create/category-create.usecase';
-import { CategoryDeleteUseCase } from '../../../../Contexts/category/application/delete/category-delete.usecase';
-import { CategoryUpdateUseCase } from '../../../../Contexts/category/application/update/category-update.usecase';
-import { CategoryRepository } from '../../../../Contexts/category/infrastructure/repositories/category.repository';
-import { ProductCreateUseCase } from '../../../../Contexts/product/application/create/product-create-usecase';
-import { ProductDeleteUseCase } from '../../../../Contexts/product/application/delete/product-delete.usecase';
-import { ProductUpdateUseCase } from '../../../../Contexts/product/application/update/product-update.usecase';
-import { ProductRepository } from '../../../../Contexts/product/infrastructure/repositories/product.repository';
 import { EventBus } from '../../../../Contexts/shared/infrastruture/event-bus/event-bus';
 import { RabbitMqEventBus } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-eventbus';
 import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
@@ -33,7 +11,6 @@ import { DomainEventFailoverPublisher } from '../../../../Contexts/shared/infras
 import { DomainEventDeserializer } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-deserializer';
 import { InMemoryCommandBus } from '../../../../Contexts/shared/infrastruture/command-bus/in-memory-command-bus';
 import { InMemoryQueryBus } from '../../../../Contexts/shared/infrastruture/query-bus/in-memory-query-bus';
-import { CategoryFindCounterController } from '../controllers/category/category-find-counter.controller';
 import { CategoryFindCounterQueryHandler } from '../../../../Contexts/category/application/find-counter/category-find-counter.query-handler';
 import { IEventBus } from '../../../../Contexts/shared/domain/interface/event-bus';
 import { CategoryCreatedHandler } from '../../../../Contexts/category/domain/events/category-created.handler';
@@ -44,113 +21,34 @@ import { IEnvironmentArranger } from '../../../../../tests/Contexts/shared/infra
 import { TypeOrmEnvironmentArranger } from '../../../../../tests/Contexts/shared/infrastructure/persistance/typeorm-environment-arranger';
 import { CategoryDeleteCommandHandler } from '../../../../Contexts/category/application/delete/category-delete-command-handler';
 import { CategoryFindAllQueryHandler } from '../../../../Contexts/category/application/find-all/category-find-all.query-handler';
-import { IProductRepository } from '../../../../Contexts/product/domain/repositories/product.repository';
-import { ICategoryRepository } from '../../../../Contexts/category/domain/repositories/category.repository';
 import { JwtService } from '../../../../Contexts/shared/infrastruture/services/jwt.service';
 import { ProductFindByIdQueryHandler } from '../../../../Contexts/product/application/find-by-id/product-find-by-id-query-handler';
 import { ProductDeleteCommandHandler } from '../../../../Contexts/product/application/delete/product-delete-command-handler';
 import { ProductUpdateCommandHandler } from '../../../../Contexts/product/application/update/product-update-command-handler';
+import { BrandCreateUseCase } from '../../../../Contexts/brand/application/create/brand-create.usecase';
+import { BrandCreateCommandHandler } from '../../../../Contexts/brand/application/create/brand-create-command-handler';
+import { IBrandRepository } from '../../../../Contexts/brand/domain/repository/brand.repository';
+import { BrandRepository } from '../../../../Contexts/brand/infrastruture/repository/brand.repository';
 const container = new Container();
 
+/*================= Brand  ======================== */
 container
-	.bind<UserRegisterController>(CONTAINER_TYPES.userRegisterController)
-	.to(UserRegisterController);
-
+	.bind<BrandCreateUseCase>(CONTAINER_TYPES.brandCreateUseCase)
+	.to(BrandCreateUseCase);
 container
-	.bind<UserLoginController>(CONTAINER_TYPES.userLoginController)
-	.to(UserLoginController);
-
-container
-	.bind<UserRegisterUseCase>(CONTAINER_TYPES.userRegisterUseCase)
-	.to(UserRegisterUseCase);
-
-container
-	.bind<UserRepository>(CONTAINER_TYPES.userRepository)
-	.to(UserRepository);
-container
-	.bind<CategoryCreateController>(CONTAINER_TYPES.categoryCreateController)
-	.to(CategoryCreateController);
-
-container
-	.bind<CategoryFindByIdController>(CONTAINER_TYPES.categoryFindByIdController)
-	.to(CategoryFindByIdController);
-container
-	.bind<CategoryFindAllController>(CONTAINER_TYPES.categoryFindAllController)
-	.to(CategoryFindAllController);
-
-container
-	.bind<CategoryDeleteController>(CONTAINER_TYPES.categoryDeleteController)
-	.to(CategoryDeleteController);
-
-container
-	.bind<CategoryUpdateController>(CONTAINER_TYPES.categoryUpdateController)
-	.to(CategoryUpdateController);
-
-container
-	.bind<CategoryFindCounterController>(
-		CONTAINER_TYPES.categoryFindCounterController
-	)
-	.to(CategoryFindCounterController);
-/* category usecase */
-container
-	.bind<CategoryCreateUseCase>(CONTAINER_TYPES.categoryCreateUseCase)
-	.to(CategoryCreateUseCase);
-
-container
-	.bind<CategoryDeleteUseCase>(CONTAINER_TYPES.categoryDeleteUseCase)
-	.to(CategoryDeleteUseCase);
-container
-	.bind<CategoryUpdateUseCase>(CONTAINER_TYPES.categoryUpdateUseCase)
-	.to(CategoryUpdateUseCase);
-
-container
-	.bind<ICategoryRepository>(CONTAINER_TYPES.categoryRepository)
-	.to(CategoryRepository);
-
-/* product  controller*/
-container
-	.bind<ProductCreateController>(CONTAINER_TYPES.productCreateController)
-	.to(ProductCreateController);
-
-container
-	.bind<ProductFindByIdController>(CONTAINER_TYPES.productFindByIdController)
-	.to(ProductFindByIdController);
-container
-	.bind<ProductDeleteController>(CONTAINER_TYPES.productDeleteController)
-	.to(ProductDeleteController);
-container
-	.bind<ProductUpdateController>(CONTAINER_TYPES.productUpdateController)
-	.to(ProductUpdateController);
-
-container
-	.bind<ProductFindAllController>(CONTAINER_TYPES.productFindAllController)
-	.to(ProductFindAllController);
-/* product usecase */
-
-container
-	.bind<ProductCreateUseCase>(CONTAINER_TYPES.productCreateUseCase)
-	.to(ProductCreateUseCase);
-container
-	.bind<ProductDeleteUseCase>(CONTAINER_TYPES.productDeleteUseCase)
-	.to(ProductDeleteUseCase);
-container
-	.bind<ProductUpdateUseCase>(CONTAINER_TYPES.productUpdateUseCase)
-	.to(ProductUpdateUseCase);
-container
-	.bind<IProductRepository>(CONTAINER_TYPES.productRepository)
-	.to(ProductRepository);
+	.bind<IBrandRepository>(CONTAINER_TYPES.brandRepository)
+	.to(BrandRepository);
 
 /*=================service ======================== */
 container.bind<JwtService>(CONTAINER_TYPES.jwtService).to(JwtService);
 
-/* event bus */
-
+/* ================event bus====================== */
 container.bind<IEventBus>(CONTAINER_TYPES.eventBus).to(EventBus);
 container
 	.bind<IEventBus>(CONTAINER_TYPES.rabbitMqEventBus)
 	.to(RabbitMqEventBus);
 
-/* rabbit mq */
+/*============== rabbit mq =====================*/
 container
 	.bind<RabbitMQConnection>(CONTAINER_TYPES.rabbitMQConnection)
 	.to(RabbitMQConnection);
@@ -167,29 +65,26 @@ container
 container
 	.bind<DomainEventDeserializer>(CONTAINER_TYPES.domainEventDeserializer)
 	.to(DomainEventDeserializer);
+
 /* ============ CQRS ===================== */
-/* command */
-container.bind<ICommandBus>(CONTAINER_TYPES.commandBus).to(InMemoryCommandBus);
-
-/* query  */
-container.bind<IQueryBus>(CONTAINER_TYPES.queryBus).to(InMemoryQueryBus);
-
-/*======================= tag ====================================*/
 /* ======================query ================================== */
+container.bind<IQueryBus>(CONTAINER_TYPES.queryBus).to(InMemoryQueryBus);
 container.bind(TagHandler.QueryHandlers).to(UserLoginQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(CategoryFindCounterQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(CategoryFindAllQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(ProductFindAllQueryHandler);
 container.bind(TagHandler.QueryHandlers).to(ProductFindByIdQueryHandler);
-/*====================== event domain ===============================*/
-container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
-
-/* ======================query ===================================== */
+/* ====================== command ===================================== */
+container.bind<ICommandBus>(CONTAINER_TYPES.commandBus).to(InMemoryCommandBus);
 container.bind(TagHandler.CommandHandlers).to(CategoryCreateCommandHandler);
 container.bind(TagHandler.CommandHandlers).to(CategoryDeleteCommandHandler);
 container.bind(TagHandler.CommandHandlers).to(ProductCreateCommandHandler);
 container.bind(TagHandler.CommandHandlers).to(ProductDeleteCommandHandler);
 container.bind(TagHandler.CommandHandlers).to(ProductUpdateCommandHandler);
+container.bind(TagHandler.CommandHandlers).to(BrandCreateCommandHandler);
+
+/*====================== event domain ===============================*/
+container.bind(TagHandler.EventHandlers).to(CategoryCreatedHandler);
 
 /* ==================== test ========================= */
 container
