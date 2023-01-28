@@ -3,29 +3,34 @@ export const CONTAINER_TYPES = {
 	userLoginController: Symbol.for('userLoginController'),
 	userRegisterUseCase: Symbol.for('userRegisterUseCase'),
 	userRepository: Symbol.for('userRepository'),
-	/* ====================: Symbol.for(category =======================: Symbol.for(*/
+	/* ==================== Symbol category =======================*/
 	categoryCreateController: Symbol.for('categoryCreateController'),
 	categoryFindByIdController: Symbol.for('categoryFindByIdController'),
 	categoryDeleteController: Symbol.for('categoryDeleteController'),
 	categoryUpdateController: Symbol.for('categoryUpdateController'),
 	categoryFindAllController: Symbol.for('categoryFindAllController'),
 	categoryFindCounterController: Symbol.for('categoryFindCounterController'),
-	/* usecase */
+	/* ================usecase================== */
 	categoryCreateUseCase: Symbol.for('categoryCreateUseCase'),
 	categoryDeleteUseCase: Symbol.for('categoryDeleteUseCase'),
 	categoryUpdateUseCase: Symbol.for('categoryUpdateUseCase'),
 	categoryRepository: Symbol.for('categoryRepository'),
-	/* ====================: Symbol.for(category =======================: Symbol.for(*/
+	/* ==================== Symbol category ======================= */
 	productCreateController: Symbol.for('productCreateController'),
 	productFindByIdController: Symbol.for('productFindByIdController'),
 	productDeleteController: Symbol.for('productDeleteController'),
 	productUpdateController: Symbol.for('productUpdateController'),
 	productFindAllController: Symbol.for('productFindAllController'),
-	/*===================: Symbol.for(Product usecase===================: Symbol.for(*/
+	/*=================== Product ===================*/
 	productCreateUseCase: Symbol.for('productCreateUseCase'),
 	productDeleteUseCase: Symbol.for('productDeleteUseCase'),
 	productUpdateUseCase: Symbol.for('productUpdateUseCase'),
 	productRepository: Symbol.for('productRepository'),
+	/*=================== Brand ===================*/
+
+	brandCreateController: Symbol.for('brandCreateController'),
+	brandCreateUseCase: Symbol.for('brandCreateUseCase'),
+	brandRepository: Symbol.for('brandRepository'),
 
 	/* ====================: Services =========================*/
 	jwtService: Symbol.for('jwtService'),

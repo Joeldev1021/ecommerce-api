@@ -1,3 +1,4 @@
+import { BrandId } from './../../../brand/domain/value-objects/brand-id.vo';
 import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
 import { Command } from '../../../shared/domain/command';
@@ -32,7 +33,8 @@ export class ProductUpdateCommandHandler
 			new ProductId(command.categoryId),
 			new PriceVO(command.price),
 			new QuantityVO(command.quantity),
-			new StateVO(command.state)
+			new StateVO(command.state),
+			new BrandId(command.brandId)
 		);
 	}
 }

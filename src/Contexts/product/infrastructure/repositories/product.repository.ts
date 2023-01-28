@@ -1,3 +1,4 @@
+import { IProductRepository } from './../../domain/repositories/product.repository';
 import { injectable } from 'inversify';
 import { ObjectType } from 'typeorm';
 import { ProductEntity } from '../../../shared/infrastruture/entity/product';
@@ -6,7 +7,6 @@ import {
 	IProductPrimitives,
 	ProductModel,
 } from '../../domain/models/product.model';
-import { IProductRepository } from '../../domain/repositories/product.repository';
 import { ProductId } from '../../domain/value-objects/product-id.vo';
 import { ProductName } from '../../domain/value-objects/product-name.vo';
 

@@ -1,3 +1,4 @@
+import { BrandEntity } from './brand';
 import {
 	Column,
 	CreateDateColumn,
@@ -28,9 +29,8 @@ export class ProductEntity {
 	@Column()
 	categoryId: string;
 
-	@ManyToOne(() => CategoryEntity, category => category.products)
-	@JoinColumn({ name: 'categoryId' })
-	category: CategoryEntity;
+	@Column()
+	brandId: string;
 
 	@Column()
 	price: number;
@@ -40,4 +40,12 @@ export class ProductEntity {
 
 	@CreateDateColumn()
 	createdAt: Date;
+
+	@ManyToOne(() => BrandEntity, brand => brand.products)
+	@JoinColumn({ name: 'brandId' })
+	brand: BrandEntity;
+
+	@ManyToOne(() => CategoryEntity, category => category.products)
+	@JoinColumn({ name: 'categoryId' })
+	category: CategoryEntity;
 }

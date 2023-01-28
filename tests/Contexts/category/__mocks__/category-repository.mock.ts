@@ -5,14 +5,12 @@ import { CategoryName } from '../../../../src/Contexts/category/domain/value-obj
 
 export class CategoryRepositoryMock implements ICategoryRepository {
 	private saveMock: jest.Mock;
-	private deleteMock: jest.Mock;
 	private CategoryFind: CategoryModel;
 	private findByIdMock: jest.Mock;
 
 	constructor() {
 		this.saveMock = jest.fn();
 		this.findByIdMock = jest.fn();
-		this.deleteMock = jest.fn();
 	}
 
 	async create(category: CategoryModel): Promise<CategoryModel | null> {
@@ -33,10 +31,11 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 	}
 
 	async delete(categoryId: CategoryId): Promise<void> {
-		this.deleteMock(categoryId);
+		this.saveMock(categoryId);
 	}
 
 	async update(category: CategoryModel): Promise<CategoryModel | null> {
+		this.saveMock(category);
 		return null;
 	}
 
@@ -49,6 +48,10 @@ export class CategoryRepositoryMock implements ICategoryRepository {
 	}
 
 	public assetDeleteHaveBeenCalledWith(expected: CategoryId): void {
-		expect(this.deleteMock).toHaveBeenCalledWith(expected);
+		expect(this.saveMock).toHaveBeenCalledWith(expected);
+	}
+
+	public assertUpdateHaveBeenCalledWith(expected: CategoryModel): void {
+		expect(this.saveMock).toHaveBeenCalledWith(expected);
 	}
 }

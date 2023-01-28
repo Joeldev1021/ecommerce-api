@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ProductEntity } from './product';
 
-@Entity({ name: 'category' })
-export class CategoryEntity {
+@Entity({ name: 'brand' })
+export class BrandEntity {
 	@PrimaryColumn()
-	categoryId: string;
+	brandId: string;
 
 	@Column()
 	name: string;
@@ -12,12 +12,15 @@ export class CategoryEntity {
 	@Column()
 	description: string;
 
-	@Column({ nullable: true })
-	image: string;
+	@Column()
+	logo: string;
 
-	@Column({ default: true })
+	@Column()
+	slug: string;
+
+	@Column()
 	state: boolean;
 
-	@OneToMany(() => ProductEntity, product => product.categoryId)
+	@OneToMany(() => ProductEntity, product => product.brandId)
 	products: ProductEntity[];
 }

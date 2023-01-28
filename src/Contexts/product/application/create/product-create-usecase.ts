@@ -1,3 +1,4 @@
+import { BrandId } from './../../../brand/domain/value-objects/brand-id.vo';
 import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
 import { ProductIdAlreadyInUseException } from '../errors/product-id-already.in-use.exception';
 import { ProductModel } from '../../domain/models/product.model';
@@ -33,7 +34,8 @@ export class ProductCreateUseCase {
 		price: PriceVO,
 		quantity: QuantityVO,
 		state: ProductState,
-		createdAt: ProductCreatedAt
+		createdAt: ProductCreatedAt,
+		brandId: BrandId
 	): Promise<ProductModel | null> {
 		const categoryExists = await this._categoryRepository.findById(categoryId);
 
@@ -56,7 +58,8 @@ export class ProductCreateUseCase {
 				price,
 				quantity,
 				state,
-				createdAt
+				createdAt,
+				brandId
 			)
 		);
 	}

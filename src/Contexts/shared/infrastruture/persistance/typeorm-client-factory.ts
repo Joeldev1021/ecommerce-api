@@ -1,3 +1,4 @@
+import { BrandEntity } from './../entity/brand';
 import { DataSource } from 'typeorm';
 import { CategoryEntity } from '../entity/category';
 import { ProductEntity } from '../entity/product';
@@ -18,7 +19,7 @@ export class TypeOrmClientFactory {
 				username: process.env.MYSQL_USER,
 				password: process.env.MYSQL_PASSWORD,
 				database: process.env.DB_NAME,
-				entities: [UserEntity, CategoryEntity, ProductEntity],
+				entities: [UserEntity, CategoryEntity, ProductEntity, BrandEntity],
 				synchronize: true,
 				logging: false,
 			});
@@ -27,7 +28,6 @@ export class TypeOrmClientFactory {
 			console.log('connection to database');
 			this.connection = connection;
 		} catch (error) {
-			console.log(error);
 			throw new Error(`Typeorm connection error`);
 		}
 	}
