@@ -16,8 +16,16 @@ export class ProductCreateController {
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		const { id, name, description, categoryId, price, quantity, state } =
-			req.body;
+		const {
+			id,
+			name,
+			description,
+			categoryId,
+			price,
+			quantity,
+			state,
+			brandId,
+		} = req.body;
 		try {
 			const command = new ProductCreateCommand(
 				id,
@@ -27,7 +35,8 @@ export class ProductCreateController {
 				price,
 				quantity,
 				state,
-				new Date() // createdAt
+				new Date(), // createdAt
+				brandId
 			);
 			const product = this._commandBus.dispatch(command);
 			res.status(200).send(product);

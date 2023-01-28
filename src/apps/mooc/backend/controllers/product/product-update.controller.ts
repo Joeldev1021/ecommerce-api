@@ -16,8 +16,16 @@ export class ProductUpdateController {
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		const { id, name, description, state, price, quantity, categoryId } =
-			req.body;
+		const {
+			id,
+			name,
+			description,
+			state,
+			price,
+			quantity,
+			categoryId,
+			brandId,
+		} = req.body;
 		try {
 			const command = new ProductUpdateCommand(
 				id,
@@ -26,7 +34,8 @@ export class ProductUpdateController {
 				categoryId,
 				price,
 				quantity,
-				state
+				state,
+				brandId
 			);
 			const product = this._commandBus.dispatch(command);
 			res.status(200).send(product);

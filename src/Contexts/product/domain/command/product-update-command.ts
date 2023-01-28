@@ -8,6 +8,7 @@ export class ProductUpdateCommand implements Command {
 		readonly categoryId: string,
 		readonly price: number,
 		readonly quantity: number,
-		readonly state: boolean
+		readonly state: boolean,
+		readonly brandId: string
 	) {}
 }

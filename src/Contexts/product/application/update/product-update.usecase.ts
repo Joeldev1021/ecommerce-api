@@ -1,6 +1,6 @@
+import { BrandId } from './../../../brand/domain/value-objects/brand-id.vo';
 import { inject, injectable } from 'inversify';
 import { CONTAINER_TYPES } from '../../../../apps/mooc/backend/dependency-injection/container.types';
-import { StateVO } from '../../../shared/domain/value-objects/state.vo';
 import { IProductRepository } from '../../domain/repositories/product.repository';
 import { PriceVO } from '../../../shared/domain/value-objects/price.vo';
 import { QuantityVO } from '../../../shared/domain/value-objects/quantity.vo';
@@ -27,7 +27,8 @@ export class ProductUpdateUseCase {
 		categoryId: CategoryId,
 		price: PriceVO,
 		quantity: QuantityVO,
-		state: ProductState
+		state: ProductState,
+		brandId: BrandId
 	): Promise<void> {
 		const productFound = await this._productRepository.findById(id);
 		if (!productFound) throw new ProductNotFoundException();
@@ -42,7 +43,8 @@ export class ProductUpdateUseCase {
 				price,
 				quantity,
 				state,
-				productFound.createdAt
+				productFound.createdAt,
+				brandId
 			)
 		);
 	}

@@ -1,12 +1,10 @@
 import 'reflect-metadata';
-import { RabbitMQConfigFactory } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-confg-factory';
 import { RabbitMQConnection } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbit-mq-connection';
 import { CONTAINER_TYPES } from '../dependency-injection/container.types';
 import { container } from '../dependency-injection/container';
 import { DomainEventSubscribers } from '../../../../Contexts/shared/infrastruture/event-bus/domain-event-subscribers';
 import { RabbitMqConfigurer } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/rabbitmq-configurer';
 import { configSettings } from '../../../../Contexts/shared/infrastruture/event-bus/rabbitmq/config';
-
 export class ConfigureRabbitMQCommand {
 	static async run(): Promise<void> {
 		const connection = container.get<RabbitMQConnection>(
