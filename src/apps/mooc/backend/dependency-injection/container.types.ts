@@ -31,11 +31,14 @@ export const CONTAINER_TYPES = {
 	brandCreateController: Symbol.for('brandCreateController'),
 	brandCreateUseCase: Symbol.for('brandCreateUseCase'),
 	brandRepository: Symbol.for('brandRepository'),
+	/* ====================: Symbol.for( Cart ) ========================*/
+	cartAddItemController: Symbol.for('cartAddItemController'),
+	cartAddItemUseCase: Symbol.for('cartAddItemUseCase'),
 
 	/* ====================: Services =========================*/
 	jwtService: Symbol.for('jwtService'),
 
-	/* ====================: Symbol.for(product ========================*/
+	/* ====================: Symbol.for(rabbitmq) ========================*/
 	eventBus: Symbol.for('eventBus'),
 	categoryCreatedHandler: Symbol.for('categoryCreatedHandler'),
 	rabbitMqEventBus: Symbol.for('rabbitMqEventBus'),

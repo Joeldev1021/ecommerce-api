@@ -1,3 +1,5 @@
+import { CartAddItemUseCase } from './../../../../Contexts/cart/application/cart-add-item/cart-add-item.usecase';
+import { CartAddItemController } from './../controllers/cart/cart-add-item.controller';
 import { ProductUpdateUseCase } from './../../../../Contexts/product/application/update/product-update.usecase';
 import { ProductDeleteUseCase } from './../../../../Contexts/product/application/delete/product-delete.usecase';
 import { ProductCreateUseCase } from './../../../../Contexts/product/application/create/product-create-usecase';
@@ -76,7 +78,7 @@ container
 	.bind<IUserRepository>(CONTAINER_TYPES.userRepository)
 	.to(UserRepository);
 
-/* ================category ========================== */
+/* ================== category ========================== */
 container
 	.bind<CategoryCreateController>(CONTAINER_TYPES.categoryCreateController)
 	.to(CategoryCreateController);
@@ -162,6 +164,15 @@ container
 	.bind<IBrandRepository>(CONTAINER_TYPES.brandRepository)
 	.to(BrandRepository);
 
+/* ========================= cart =================================== */
+
+container
+	.bind<CartAddItemController>(CONTAINER_TYPES.cartAddItemController)
+	.to(CartAddItemController);
+container
+	.bind<CartAddItemUseCase>(CONTAINER_TYPES.cartAddItemUseCase)
+	.to(CartAddItemUseCase);
+
 /*================================ service ==========c======================== */
 container.bind<JwtService>(CONTAINER_TYPES.jwtService).to(JwtService);
 
@@ -171,7 +182,7 @@ container
 	.bind<IEventBus>(CONTAINER_TYPES.rabbitMqEventBus)
 	.to(RabbitMqEventBus);
 
-/*============== rabbit mq =====================*/
+/*====================== rabbit mq ==============================*/
 container
 	.bind<RabbitMQConnection>(CONTAINER_TYPES.rabbitMQConnection)
 	.to(RabbitMQConnection);

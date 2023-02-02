@@ -1,6 +1,6 @@
+import { Router } from 'express';
 import { UserLoginController } from '../controllers/user/user-login.controller';
 import { UserRegisterController } from '../controllers/user/user-register.controller';
-import { Router } from 'express';
 import { CONTAINER_TYPES } from '../dependency-injection/container.types';
 import { container } from '../dependency-injection/container';
 

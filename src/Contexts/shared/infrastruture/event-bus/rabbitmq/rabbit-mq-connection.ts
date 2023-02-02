@@ -22,7 +22,7 @@ export class RabbitMQConnection {
 	async connect(): Promise<void> {
 		this.connection = await this.createConnection();
 		this.channel = await this.createChannel();
-		console.log('RabbitMq conected');
+		console.log('RabbitMq connected');
 	}
 
 	private async createConnection(): Promise<amqplib.Connection> {

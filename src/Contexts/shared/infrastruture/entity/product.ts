@@ -38,7 +38,7 @@ export class ProductEntity {
 	@Column({ default: true })
 	state: boolean;
 
-	@CreateDateColumn()
+	@Column()
 	createdAt: Date;
 
 	@ManyToOne(() => BrandEntity, brand => brand.products)
