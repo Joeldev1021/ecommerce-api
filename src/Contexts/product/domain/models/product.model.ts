@@ -26,6 +26,19 @@ export interface IProductPrimitives extends AggregateRootPrimitives {
 }
 
 export class ProductModel extends AggregateRoot {
+	/**
+	 * The constructor function is a function that is called when a new instance of a class is created
+	 * @param {ProductId} id - ProductId
+	 * @param {ProductName} name - ProductName,
+	 * @param {ProductDesc} description - ProductDesc
+	 * @param imageUrl - null,
+	 * @param {CategoryId} categoryId - The category id of the product
+	 * @param {PriceVO} price - PriceVO
+	 * @param {QuantityVO} quantity - QuantityVO
+	 * @param {ProductState} state - ProductState
+	 * @param {ProductCreatedAt} createdAt - ProductCreatedAt
+	 * @param {BrandId} brandId - BrandId
+	 */
 	constructor(
 		public readonly id: ProductId,
 		public name: ProductName,

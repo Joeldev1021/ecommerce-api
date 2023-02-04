@@ -19,6 +19,17 @@ export interface IUserPrimitives extends AggregateRootPrimitives {
 }
 
 export class UserModel extends AggregateRoot {
+	/**
+	 * The constructor function is a public function that takes in a UuidVO, UsernameVO, EmailVO,
+	 * PasswordVO, StateVO, and UserRoleVO and assigns them to the class properties
+	 * @param {UuidVO} id - UuidVO - The user's unique identifier.
+	 * @param {UsernameVO} username - UsernameVO
+	 * @param {EmailVO} email - EmailVO
+	 * @param {PasswordVO} password - PasswordVO
+	 * @param {StateVO} state - StateVO - this is the state of the user, whether it's active, inactive,
+	 * etc.
+	 * @param {UserRoleVO} role - UserRoleVO
+	 */
 	constructor(
 		public readonly id: UuidVO,
 		public username: UsernameVO,

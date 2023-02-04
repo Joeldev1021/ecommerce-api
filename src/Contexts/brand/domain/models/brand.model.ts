@@ -17,6 +17,16 @@ export interface IBrandPrimitives extends AggregateRootPrimitives {
 }
 
 export class BrandModel extends AggregateRoot {
+	/**
+	 * The constructor function is a function that is called when a new instance of a class is created
+	 * @param {BrandId} id - The unique identifier for the brand.
+	 * @param {BrandName} name - The name of the brand.
+	 * @param {BrandDescription} description - BrandDescription
+	 * @param logo - null,
+	 * @param {string} slug - The slug is a unique identifier for the brand. It is used in the URL to
+	 * identify the brand.
+	 * @param {BrandState} state - BrandState
+	 */
 	constructor(
 		public readonly id: BrandId,
 		public name: BrandName,

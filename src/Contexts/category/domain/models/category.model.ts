@@ -17,6 +17,13 @@ export interface ICategoryPrimitives extends AggregateRootPrimitives {
 }
 
 export class CategoryModel extends AggregateRoot {
+	/**
+	 * The constructor function is a function that is called when a new instance of a class is created
+	 * @param {CategoryId} id - The unique identifier for the category.
+	 * @param {CategoryName} name - The name of the category.
+	 * @param {CategoryDesc} description - CategoryDesc
+	 * @param {CategoryState} state - CategoryState
+	 */
 	constructor(
 		public readonly id: CategoryId,
 		public name: CategoryName,
