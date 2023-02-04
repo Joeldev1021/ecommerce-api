@@ -1,3 +1,4 @@
+import { BrandId } from './../../../../src/Contexts/brand/domain/value-objects/brand-id.vo';
 import { ProductCreateCommand } from '../../../../src/Contexts/product/domain/command/product-create.command';
 import { ProductId } from '../../../../src/Contexts/product/domain/value-objects/product-id.vo';
 import { ProductName } from '../../../../src/Contexts/product/domain/value-objects/product-name.vo';
@@ -15,6 +16,7 @@ import { ProductPriceMother } from '../domain/product-price.mother';
 import { ProductQuantityMother } from '../domain/product-quantity.mother';
 import { ProductCreatedAt } from '../../../../src/Contexts/product/domain/value-objects/product-created-at.vo';
 import { ProductCreatedAtMother } from '../domain/product-created-at.vo';
+import { BrandIdMother } from '../../brand/domain/brand-id.vo';
 
 export class ProductCreateCommandMother {
 	static create(
@@ -25,7 +27,8 @@ export class ProductCreateCommandMother {
 		price: PriceVO,
 		quantity: QuantityVO,
 		state: ProductState,
-		createdAt: ProductCreatedAt
+		createdAt: ProductCreatedAt,
+		brandId: BrandId
 	): ProductCreateCommand {
 		return {
 			id: id.value,
@@ -36,6 +39,7 @@ export class ProductCreateCommandMother {
 			quantity: quantity.value,
 			state: state.value,
 			createdAt: createdAt.value,
+			brandId: brandId.value,
 		};
 	}
 
@@ -48,7 +52,8 @@ export class ProductCreateCommandMother {
 			ProductPriceMother.random(),
 			ProductQuantityMother.random(),
 			ProductStateMother.random(),
-			ProductCreatedAtMother.random()
+			ProductCreatedAtMother.random(),
+			BrandIdMother.random()
 		);
 	}
 
@@ -63,6 +68,7 @@ export class ProductCreateCommandMother {
 			quantity: ProductQuantityMother.random().value,
 			state: ProductStateMother.random().value,
 			createdAt: ProductCreatedAtMother.random().value,
+			brandId: BrandIdMother.random().value,
 		};
 	}
 }
