@@ -34,13 +34,14 @@ export class CartAddItemCommandHandler
 	async handle(command: CartAddItemCommand): Promise<void> {
 		const cartProductsVO = command.cartProducts.map(product => {
 			return {
-				id: new CartItemId(product.cartItemId),
+				id: new CartItemId(product.id),
 				cartId: new CartId(product.cartId),
 				productId: new ProductId(product.productId),
 				price: new CartItemPrice(product.price),
 				quantity: new CartItemQuantity(product.quantity),
 			};
 		});
+
 		await this._cartAddItemUseCase.execute(cartProductsVO);
 	}
 }

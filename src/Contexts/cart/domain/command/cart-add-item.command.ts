@@ -1,7 +1,7 @@
 import { Command } from '../../../shared/domain/command';
 
 export interface ICartProducts {
-	cartItemId: string;
+	id: string;
 	cartId: string;
 	productId: string;
 	quantity: number;

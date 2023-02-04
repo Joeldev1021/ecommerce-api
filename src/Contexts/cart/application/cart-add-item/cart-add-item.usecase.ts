@@ -10,6 +10,7 @@ export class CartAddItemUseCase {
 			const totalPrice = parseFloat(
 				Number(product.price.value * product.quantity.value).toFixed(2)
 			);
+
 			return new CartItemModel(
 				product.id,
 				product.cartId,
@@ -18,6 +19,7 @@ export class CartAddItemUseCase {
 				new CartItemTotalPrice(totalPrice)
 			);
 		});
+
 		console.log(cartProducts);
 	}
 }
