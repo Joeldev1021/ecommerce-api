@@ -34,8 +34,7 @@ export class CategoryCreateCommandMother {
 
 	//todo error
 	static invalid(): CategoryCreateCommand {
-		return {
-			id: CategoryIdMother.random().value,
+		return { id: CategoryIdMother.random().value,
 			name: CategoryNameMother.random().value,
 			description: CategoryDescriptionMother.random().value,
 			state: CategoryStateMother.random().value,

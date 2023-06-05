@@ -16,6 +16,7 @@ import { ProductQuantityMother } from '../domain/product-quantity.mother';
 import { ProductCreatedAt } from '../../../../src/Contexts/product/domain/value-objects/product-created-at.vo';
 import { ProductCreatedAtMother } from '../domain/product-created-at.vo';
 
+//todo some changes 
 export class ProductCreateCommandMother {
 	static create(
 		id: ProductId,
